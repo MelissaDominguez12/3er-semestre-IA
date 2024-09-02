@@ -1,0 +1,307 @@
+SQL> --Cambiar idioma
+SQL> ALTER SESSION SET NLS_DATE_LANGUAGE  = 'ENGLISH';
+
+Sesión modificada.
+
+SQL> 
+SQL> --Borrar tablas
+SQL> DROP TABLE VEHICLE CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE CAR     CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE TRUCK   CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> 
+SQL> --Crear tablas
+SQL> 
+SQL> CREATE TABLE VEHICLE(
+  2  	VEHICLE_ID        VARCHAR2(8)   NOT NULL,
+  3  	PRICE             NUMBER(7,0)   NOT NULL,
+  4  	LICENSE_PLATE_NO  VARCHAR2(7)   NOT NULL);
+
+Tabla creada.
+
+SQL> 
+SQL> 
+SQL> CREATE TABLE CAR(
+  2  	MAX_SPEED         NUMBER(4,0)   NOT NULL,
+  3  	NO_OF_PASSENGERS  NUMBER(2,0)   NOT NULL,
+  4      VEHICLE_ID        VARCHAR(8)    NOT NULL);
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE TRUCK(
+  2  	NO_OF_AXLES       NUMBER(1,0)   NOT NULL,
+  3  	TONNAGE           NUMBER(4,0)   NOT NULL,
+  4  	VEHICLE_ID        VARCHAR(8)    NOT NULL);
+
+Tabla creada.
+
+SQL> 
+SQL> --Restricciones PK
+SQL> ALTER TABLE VEHICLE
+  2  	ADD CONSTRAINT PK_VEHICLE_ID_VEHICLE PRIMARY KEY (VEHICLE_ID);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE CAR
+  2  	ADD CONSTRAINT PK_VEHICLE_ID_CAR PRIMARY KEY (VEHICLE_ID);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE TRUCK
+  2  	ADD CONSTRAINT PK_VEHICLE_ID_TRUCK PRIMARY KEY (VEHICLE_ID);
+
+Tabla modificada.
+
+SQL> 
+SQL> 
+SQL> --Restricciones FK
+SQL> ALTER TABLE CAR
+  2  ADD CONSTRAINT FK_VEHICLE_ID_CAR FOREIGN KEY (VEHICLE_ID) REFERENCES VEHICLE(VEHICLE_ID);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE TRUCK
+  2  ADD CONSTRAINT FK_VEHICLE_ID_TRUCK FOREIGN KEY (VEHICLE_ID) REFERENCES VEHICLE(VEHICLE_ID);
+
+Tabla modificada.
+
+SQL> 
+SQL> 
+SQL> --Restricciones CHECK
+SQL> ALTER TABLE CAR
+  2  ADD CONSTRAINT CK_MAX_SPEED CHECK (MAX_SPEED<200);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE TRUCK
+  2  ADD CONSTRAINT CK_NO_OF_AXLES CHECK (NO_OF_AXLES<6);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE VEHICLE
+  2  ADD CONSTRAINT CK_PRICE CHECK (PRICE<1000000);
+
+Tabla modificada.
+
+SQL> 
+SQL> --Poblar tablas
+SQL> 
+SQL> INSERT INTO VEHICLE VALUES ('VEH-001', 100000, 'ABC-123');
+
+1 fila creada.
+
+SQL> INSERT INTO VEHICLE VALUES ('VEH-002', 200000, 'DEF-456');
+
+1 fila creada.
+
+SQL> INSERT INTO VEHICLE VALUES ('VEH-003', 300000, 'GHI-789');
+
+1 fila creada.
+
+SQL> INSERT INTO VEHICLE VALUES ('VEH-004', 400000, 'JKL-012');
+
+1 fila creada.
+
+SQL> INSERT INTO VEHICLE VALUES ('VEH-005', 500000, 'MNO-345');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO CAR VALUES (180, 2, 'VEH-001');
+
+1 fila creada.
+
+SQL> INSERT INTO CAR VALUES (220, 5, 'VEH-002');
+INSERT INTO CAR VALUES (220, 5, 'VEH-002')
+*
+ERROR en línea 1:
+ORA-02290: restricción de control (VEHICLE.CK_MAX_SPEED) violada 
+
+
+SQL> INSERT INTO CAR VALUES (140, 2, 'VEH-003');
+
+1 fila creada.
+
+SQL> INSERT INTO CAR VALUES (130, 5, 'VEH-004');
+
+1 fila creada.
+
+SQL> INSERT INTO CAR VALUES (170, 5, 'VEH-005');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO TRUCK VALUES (2, 1000, 'VEH-001');
+
+1 fila creada.
+
+SQL> INSERT INTO TRUCK VALUES (3, 2000, 'VEH-002');
+
+1 fila creada.
+
+SQL> INSERT INTO TRUCK VALUES (4, 3000, 'VEH-003');
+
+1 fila creada.
+
+SQL> INSERT INTO TRUCK VALUES (5, 4000, 'VEH-004');
+
+1 fila creada.
+
+SQL> INSERT INTO TRUCK VALUES (6, 5000, 'VEH-005');
+INSERT INTO TRUCK VALUES (6, 5000, 'VEH-005')
+*
+ERROR en línea 1:
+ORA-02290: restricción de control (VEHICLE.CK_NO_OF_AXLES) violada 
+
+
+SQL> 
+SQL> --Desplegar tablas
+SQL> SELECT * FROM VEHICLE;
+
+VEHICLE_ ||     PRICE ||LICENSE                                                                                                                                                                                                                                                                             
+-------- ||---------- ||-------                                                                                                                                                                                                                                                                             
+VEH-001  ||    100000 ||ABC-123                                                                                                                                                                                                                                                                             
+VEH-002  ||    200000 ||DEF-456                                                                                                                                                                                                                                                                             
+VEH-003  ||    300000 ||GHI-789                                                                                                                                                                                                                                                                             
+VEH-004  ||    400000 ||JKL-012                                                                                                                                                                                                                                                                             
+VEH-005  ||    500000 ||MNO-345                                                                                                                                                                                                                                                                             
+
+SQL> SELECT * FROM CAR;
+
+ MAX_SPEED ||NO_OF_PASSENGERS ||VEHICLE_                                                                                                                                                                                                                                                                    
+---------- ||---------------- ||--------                                                                                                                                                                                                                                                                    
+       180 ||               2 ||VEH-001                                                                                                                                                                                                                                                                     
+       140 ||               2 ||VEH-003                                                                                                                                                                                                                                                                     
+       130 ||               5 ||VEH-004                                                                                                                                                                                                                                                                     
+       170 ||               5 ||VEH-005                                                                                                                                                                                                                                                                     
+
+SQL> SELECT * FROM TRUCK;
+
+NO_OF_AXLES ||   TONNAGE ||VEHICLE_                                                                                                                                                                                                                                                                         
+----------- ||---------- ||--------                                                                                                                                                                                                                                                                         
+          2 ||      1000 ||VEH-001                                                                                                                                                                                                                                                                          
+          3 ||      2000 ||VEH-002                                                                                                                                                                                                                                                                          
+          4 ||      3000 ||VEH-003                                                                                                                                                                                                                                                                          
+          5 ||      4000 ||VEH-004                                                                                                                                                                                                                                                                          
+
+SQL> 
+SQL> --Natural Join
+SQL> SELECT VEHICLE_ID, PRICE PRECIO, LICENSE_PLATE_NO PLACA,MAX_SPEED VELMAX,NO_OF_PASSENGERS PASAJEROS FROM VEHICLE NATURAL JOIN CAR;
+
+VEHICLE_ ||    PRECIO ||PLACA   ||    VELMAX || PASAJEROS                                                                                                                                                                                                                                                   
+-------- ||---------- ||------- ||---------- ||----------                                                                                                                                                                                                                                                   
+VEH-001  ||    100000 ||ABC-123 ||       180 ||         2                                                                                                                                                                                                                                                   
+VEH-003  ||    300000 ||GHI-789 ||       140 ||         2                                                                                                                                                                                                                                                   
+VEH-004  ||    400000 ||JKL-012 ||       130 ||         5                                                                                                                                                                                                                                                   
+VEH-005  ||    500000 ||MNO-345 ||       170 ||         5                                                                                                                                                                                                                                                   
+
+SQL> SELECT VEHICLE_ID, PRICE PRECIO, LICENSE_PLATE_NO PLACA, NO_OF_AXLES EJES, TONNAGE TONELAJE FROM VEHICLE NATURAL JOIN TRUCK;
+
+VEHICLE_ ||    PRECIO ||PLACA   ||      EJES ||  TONELAJE                                                                                                                                                                                                                                                   
+-------- ||---------- ||------- ||---------- ||----------                                                                                                                                                                                                                                                   
+VEH-001  ||    100000 ||ABC-123 ||         2 ||      1000                                                                                                                                                                                                                                                   
+VEH-002  ||    200000 ||DEF-456 ||         3 ||      2000                                                                                                                                                                                                                                                   
+VEH-003  ||    300000 ||GHI-789 ||         4 ||      3000                                                                                                                                                                                                                                                   
+VEH-004  ||    400000 ||JKL-012 ||         5 ||      4000                                                                                                                                                                                                                                                   
+
+SQL> 
+SQL> --COLUMNAS DE USUARIO
+SQL> SELECT TABLE_NAME,COLUMN_NAME,DATA_TYPE,DATA_TYPE_MOD,DATA_LENGTH,DATA_PRECISION,
+  2  DATA_SCALE,NULLABLE,COLUMN_ID
+  3  FROM USER_TAB_COLUMNS
+  4  ORDER BY 3;
+
+TABLE_NAME                                                                                                                       ||COLUMN_NAME                                                                                                                                                              
+-------------------------------------------------------------------------------------------------------------------------------- ||--------------------------------------------------------------------------------------------------------------------------------                                         
+DATA_TYPE                                                                                                                        ||DAT ||DATA_LENGTH ||DATA_PRECISION ||DATA_SCALE ||N || COLUMN_ID                                                                                                         
+-------------------------------------------------------------------------------------------------------------------------------- ||--- ||----------- ||-------------- ||---------- ||- ||----------                                                                                                         
+CAR                                                                                                                              ||NO_OF_PASSENGERS                                                                                                                                                         
+NUMBER                                                                                                                           ||s/d ||         22 ||             2 ||         0 ||N ||         2                                                                                                         
+                                                                                                                                 ||ato ||            ||               ||           ||  ||                                                                                                                   
+                                                                                                                                                                                                                                                                                                            
+TRUCK                                                                                                                            ||TONNAGE                                                                                                                                                                  
+NUMBER                                                                                                                           ||s/d ||         22 ||             4 ||         0 ||N ||         2                                                                                                         
+                                                                                                                                 ||ato ||            ||               ||           ||  ||                                                                                                                   
+                                                                                                                                                                                                                                                                                                            
+TRUCK                                                                                                                            ||NO_OF_AXLES                                                                                                                                                              
+NUMBER                                                                                                                           ||s/d ||         22 ||             1 ||         0 ||N ||         1                                                                                                         
+                                                                                                                                 ||ato ||            ||               ||           ||  ||                                                                                                                   
+                                                                                                                                                                                                                                                                                                            
+CAR                                                                                                                              ||MAX_SPEED                                                                                                                                                                
+NUMBER                                                                                                                           ||s/d ||         22 ||             4 ||         0 ||N ||         1                                                                                                         
+                                                                                                                                 ||ato ||            ||               ||           ||  ||                                                                                                                   
+                                                                                                                                                                                                                                                                                                            
+VEHICLE                                                                                                                          ||PRICE                                                                                                                                                                    
+NUMBER                                                                                                                           ||s/d ||         22 ||             7 ||         0 ||N ||         2                                                                                                         
+                                                                                                                                 ||ato ||            ||               ||           ||  ||                                                                                                                   
+                                                                                                                                                                                                                                                                                                            
+CAR                                                                                                                              ||VEHICLE_ID                                                                                                                                                               
+VARCHAR2                                                                                                                         ||s/d ||          8 ||s/dato         ||s/dato     ||N ||         3                                                                                                         
+                                                                                                                                 ||ato ||            ||               ||           ||  ||                                                                                                                   
+                                                                                                                                                                                                                                                                                                            
+VEHICLE                                                                                                                          ||LICENSE_PLATE_NO                                                                                                                                                         
+VARCHAR2                                                                                                                         ||s/d ||          7 ||s/dato         ||s/dato     ||N ||         3                                                                                                         
+                                                                                                                                 ||ato ||            ||               ||           ||  ||                                                                                                                   
+                                                                                                                                                                                                                                                                                                            
+TRUCK                                                                                                                            ||VEHICLE_ID                                                                                                                                                               
+VARCHAR2                                                                                                                         ||s/d ||          8 ||s/dato         ||s/dato     ||N ||         3                                                                                                         
+                                                                                                                                 ||ato ||            ||               ||           ||  ||                                                                                                                   
+                                                                                                                                                                                                                                                                                                            
+VEHICLE                                                                                                                          ||VEHICLE_ID                                                                                                                                                               
+VARCHAR2                                                                                                                         ||s/d ||          8 ||s/dato         ||s/dato     ||N ||         1                                                                                                         
+                                                                                                                                 ||ato ||            ||               ||           ||  ||                                                                                                                   
+                                                                                                                                                                                                                                                                                                            
+
+9 filas seleccionadas.
+
+SQL> 
+SQL> --MOSTRAR Restricciones
+SQL> prompt USER CONSTRAINTS
+USER CONSTRAINTS
+SQL> COLUMN CONSTRAINT_NAME FORMAT A27
+SQL> column table_name format a12
+SQL> column owner format a9
+SQL> select owner,table_name,constraint_name,constraint_type,
+  2  	deferrable,deferred
+  3  	from user_constraints
+  4  	where table_name IN ('VEHICLE','CAR', 'TRUCK')
+  5  	ORDER BY 4;
+
+OWNER     ||TABLE_NAME   ||CONSTRAINT_NAME             ||C ||DEFERRABLE     ||DEFERRED                                                                                                                                                                                                                      
+--------- ||------------ ||--------------------------- ||- ||-------------- ||---------                                                                                                                                                                                                                     
+VEHICLE   ||VEHICLE      ||CK_PRICE                    ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||TRUCK        ||CK_NO_OF_AXLES              ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||VEHICLE      ||SYS_C009656                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||VEHICLE      ||SYS_C009657                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||CAR          ||SYS_C009658                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||CAR          ||CK_MAX_SPEED                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||VEHICLE      ||SYS_C009655                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||CAR          ||SYS_C009660                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||TRUCK        ||SYS_C009661                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||TRUCK        ||SYS_C009662                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||TRUCK        ||SYS_C009663                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||CAR          ||SYS_C009659                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||CAR          ||PK_VEHICLE_ID_CAR           ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||TRUCK        ||PK_VEHICLE_ID_TRUCK         ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||VEHICLE      ||PK_VEHICLE_ID_VEHICLE       ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||CAR          ||FK_VEHICLE_ID_CAR           ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+VEHICLE   ||TRUCK        ||FK_VEHICLE_ID_TRUCK         ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+
+17 filas seleccionadas.
+
+SQL> 
+SQL> spool off

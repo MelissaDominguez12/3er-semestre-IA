@@ -1,0 +1,86 @@
+SQL> 
+SQL> PROMPT CAP UNO
+CAP UNO
+SQL> 
+SQL> PROMPT "Ejercicio 1"
+"Ejercicio 1"
+SQL> CREATE table USUARIOS(
+  2      id_usuario int,
+  3      nombre char(10),
+  4      fecha_nacimiento date,
+  5      telefono char(10),
+  6      salario number(6,2)
+  7  );
+CREATE table USUARIOS(
+             *
+ERROR en línea 1:
+ORA-00955: este nombre ya lo está utilizando otro objeto existente 
+
+
+SQL> 
+SQL> PROMPT "TABLA CREADA"
+"TABLA CREADA"
+SQL> 
+SQL> PROMPT "Ejercicio 2"
+"Ejercicio 2"
+SQL> create table DEPARTAMENTOS(
+  2      id_departamento int,
+  3      nombre1 char(10),
+  4      id2_usuario int
+  5  );
+create table DEPARTAMENTOS(
+             *
+ERROR en línea 1:
+ORA-00955: este nombre ya lo está utilizando otro objeto existente 
+
+
+SQL> PROMPT "TABLA CREADA"
+"TABLA CREADA"
+SQL> 
+SQL> PROMPT "Ejercicio 3"
+"Ejercicio 3"
+SQL> create table PRODUCTOS(
+  2      id_producto int,
+  3      nombre2 char(10),
+  4      precio number(6,2),
+  5      id3_usuario int
+  6  );
+create table PRODUCTOS(
+             *
+ERROR en línea 1:
+ORA-00955: este nombre ya lo está utilizando otro objeto existente 
+
+
+SQL> PROMPT "TABLA CREADA"
+"TABLA CREADA"
+SQL> 
+SQL> PROMPT "Ejercicio 4"
+"Ejercicio 4"
+SQL> SELECT * FROM USUARIOS;
+
+ninguna fila seleccionada
+
+SQL> PROMPT "SELECT REALIZADO"
+"SELECT REALIZADO"
+SQL> 
+SQL> PROMPT"Ejercicio 5"
+"Ejercicio 5"
+SQL> SELECT * FROM DEPARTAMENTOS;
+
+ninguna fila seleccionada
+
+SQL> PROMPT "SELECT REALIZADO"
+"SELECT REALIZADO"
+SQL> 
+SQL> PROMPT "Ejercicio 6"
+"Ejercicio 6"
+SQL> SELECT * FROM PRODUCTOS;
+
+ninguna fila seleccionada
+
+SQL> PROMPT "SELECT REALIZADO"
+"SELECT REALIZADO"
+SQL> 
+SQL> 
+SQL> 
+SQL> spool off

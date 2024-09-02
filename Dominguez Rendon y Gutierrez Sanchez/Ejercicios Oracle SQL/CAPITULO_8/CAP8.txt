@@ -1,0 +1,187 @@
+SQL> 
+SQL> REM  File:        CAP8.sql
+SQL> REM  Description: Ejercicios del capitulo 8 del libro Oracle By Example
+SQL> REM  Created:    Noviembre 2023
+SQL> REM  Tittle:    Subqueries
+SQL> REM ******************************************************************
+SQL> 
+SQL> PROMPT CAP 8 ORACLE BY EXAMPLE
+CAP 8 ORACLE BY EXAMPLE
+SQL> PROMPT NOVIEMBRE 2023
+NOVIEMBRE 2023
+SQL> PROMPT "EJERCICIO 1: LAB 8.1 c)"
+"EJERCICIO 1: LAB 8.1 c)"
+SQL> REM (Rischert, 2010, 332)
+SQL> SELECT course_no, SUM(capacity)
+  2  FROM section
+  3  GROUP BY course_no
+  4  HAVING SUM(capacity) <
+  5  (SELECT AVG(capacity)
+  6  FROM section);
+
+ COURSE_NO SUM(CAPACITY)                                                        
+---------- -------------                                                        
+        10            15                                                        
+       144            15                                                        
+
+SQL> 
+SQL> PROMPT "EJERCICIO 2: LAB 8.2 b)"
+"EJERCICIO 2: LAB 8.2 b)"
+SQL> REM (Rischert, 2010, 347)
+SQL> SELECT e.section_id, COUNT(*), s.capacity
+  2  FROM enrollment e, section s
+  3  WHERE e.section_id = s.section_id
+  4  GROUP BY e.section_id, s.capacity
+  5  HAVING COUNT(*) > s.capacity;
+
+SECTION_ID   COUNT(*)   CAPACITY                                                
+---------- ---------- ----------                                                
+       101         12         10                                                
+
+SQL> 
+SQL> PROMPT "EJERCICIO 3: LAB 8.2 c)"
+"EJERCICIO 3: LAB 8.2 c)"
+SQL> REM (Rischert, 2010, 347)
+SQL> SELECT COUNT(*)
+  2  FROM student s
+  3  WHERE EXISTS
+  4  (SELECT NULL
+  5  FROM enrollment
+  6  WHERE student_id = s.student_id);
+
+  COUNT(*)                                                                      
+----------                                                                      
+       165                                                                      
+
+SQL> 
+SQL> PROMPT "EJERCICIO 4: LAB 8.3 c)"
+"EJERCICIO 4: LAB 8.3 c)"
+SQL> REM (Rischert, 2010, 310)
+SQL> SELECT COUNT(*) total_students, s.course_no
+  2  FROM enrollment e, section s
+  3  WHERE e.section_id = s.section_id
+  4  GROUP BY s.course_no;
+
+TOTAL_STUDENTS  COURSE_NO                                                       
+-------------- ----------                                                       
+             1         10                                                       
+             9         20                                                       
+            45         25                                                       
+            13        100                                                       
+            23        120                                                       
+            24        122                                                       
+             8        124                                                       
+             8        125                                                       
+             8        130                                                       
+             2        132                                                       
+             2        134                                                       
+
+TOTAL_STUDENTS  COURSE_NO                                                       
+-------------- ----------                                                       
+             4        135                                                       
+            15        140                                                       
+             7        142                                                       
+             2        145                                                       
+             3        146                                                       
+             5        147                                                       
+             1        204                                                       
+            14        230                                                       
+            13        240                                                       
+             4        310                                                       
+             3        330                                                       
+
+TOTAL_STUDENTS  COURSE_NO                                                       
+-------------- ----------                                                       
+             9        350                                                       
+             2        420                                                       
+             1        450                                                       
+
+25 filas seleccionadas.
+
+SQL> 
+SQL> SELECT SUM(capacity) total_capacity, course_no
+  2  FROM section
+  3  GROUP BY course_no;
+
+TOTAL_CAPACITY  COURSE_NO                                                       
+-------------- ----------                                                       
+            15         10                                                       
+            80         20                                                       
+           205         25                                                       
+           105        100                                                       
+           130        120                                                       
+           105        122                                                       
+            80        124                                                       
+           105        125                                                       
+            80        130                                                       
+            50        132                                                       
+            65        134                                                       
+
+TOTAL_CAPACITY  COURSE_NO                                                       
+-------------- ----------                                                       
+            80        135                                                       
+            65        140                                                       
+            65        142                                                       
+            15        144                                                       
+            50        145                                                       
+            40        146                                                       
+            25        147                                                       
+            25        204                                                       
+            25        210                                                       
+            25        220                                                       
+            27        230                                                       
+
+TOTAL_CAPACITY  COURSE_NO                                                       
+-------------- ----------                                                       
+            25        240                                                       
+            25        310                                                       
+            25        330                                                       
+            65        350                                                       
+            25        420                                                       
+            25        450                                                       
+
+28 filas seleccionadas.
+
+SQL> PROMPT "EJERCICIO 5:
+"EJERCICIO 5:
+SQL>  LAB 8.4 b)"
+SP2-0734: inicio "LAB 8.4 b)..." de comando desconocido - resto de la línea ignorado.
+SQL> REM (Rischert, 2010, 310)
+SQL> SELECT student_id, section_id, grade_type_code,
+  2  MAX(numeric_grade) max, MIN(numeric_grade) min
+  3  FROM grade
+  4  WHERE student_id = 179
+  5  AND section_id = 116
+  6  AND grade_type_code IN ('HM', 'FI')
+  7  GROUP BY student_id, section_id, grade_type_code;
+
+STUDENT_ID SECTION_ID GR        MAX        MIN                                  
+---------- ---------- -- ---------- ----------                                  
+       179        116 FI         90         90                                  
+       179        116 HM         99         99                                  
+
+SQL> 
+SQL> PROMPT "EJERCICIO 6: LAB 8.4 c)"
+"EJERCICIO 6: LAB 8.4 c)"
+SQL> REM (Rischert, 2010, 310)
+SQL> SELECT student_id, section_id, grade_type_code,
+  2  numeric_grade
+  3  FROM grade
+  4  WHERE student_id = 102
+  5  AND section_id = 86
+  6  AND grade_type_code IN ('HM', 'FI')
+  7  GROUP BY student_id, section_id, grade_type_code,
+  8  numeric_grade;
+
+STUDENT_ID SECTION_ID GR NUMERIC_GRADE                                          
+---------- ---------- -- -------------                                          
+       102         86 FI            85                                          
+       102         86 HM            90                                          
+       102         86 HM            99                                          
+       102         86 HM            82                                          
+
+SQL> 
+SQL> PROMPT "FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 8"
+"FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 8"
+SQL> 
+SQL> spool OFF

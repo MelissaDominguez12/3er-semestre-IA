@@ -1,0 +1,677 @@
+SQL> REM  File:        CAP7.sql
+SQL> REM  Description: Ejercicios del capitulo 7 del libro Oracle By Example
+SQL> REM  Created:    Octubre 2023
+SQL> REM  Tittle:     Equijoins
+SQL> REM ******************************************************************
+SQL> 
+SQL> PROMPT CAP 7 ORACLE BY EXAMPLE
+CAP 7 ORACLE BY EXAMPLE
+SQL> PROMPT OCTUBRE 2023
+OCTUBRE 2023
+SQL> PROMPT "EJERCICIO 1: LAB 7.1 a)"
+"EJERCICIO 1: LAB 7.1 a)"
+SQL> REM (Rischert, 2010, 294)
+SQL> SELECT s.last_name, s.zip, z.state, z.city
+  2  FROM student s, zipcode z
+  3  WHERE s.zip = z.zip
+  4  ORDER BY s.zip;
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Norman                    01247 MA North Adams                                  
+Kocka                     02124 MA Dorchester                                   
+Sethi                     02155 MA Tufts Univ. Bedford                          
+La Blank                  02189 MA Weymouth                                     
+Boremmann                 02563 MA Sandwich                                     
+Ancean                    06483 CT Oxford                                       
+Madej                     06605 CT Bridgeport                                   
+Thares                    06798 CT Woodbury                                     
+Scrittorale               06820 WV Georgetown                                   
+Padel                     06820 WV Georgetown                                   
+Kiraly                    06820 WV Georgetown                                   
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Meshaj                    06830 CT Greenwich                                    
+Dalvi                     06830 CT Greenwich                                    
+Dennis                    06830 CT Greenwich                                    
+Allende                   06850 CT Norwalk                                      
+Essner                    06851 CT Norwalk                                      
+Lopez                     06853 CT Rowayton                                     
+Andrew                    06870 CT Old Greenwich                                
+Tucker                    06877 CT Ridgefield                                   
+Miller                    06880 CT Westport                                     
+Cheevens                  06880 CT Westport                                     
+Bunnell                   06902 CT Stamford                                     
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Annina                    06903 CT Stamford                                     
+Segall                    06903 CT Stamford                                     
+Archor                    06905 CT Stamford                                     
+Caro                      06907 CT Stamford                                     
+Intal                     07003 NJ Bloomfiel                                    
+Wicelinski                07003 NJ Bloomfiel                                    
+Jameson                   07008 NJ Carteret                                     
+Mithane                   07010 NJ Cliffside Park                               
+Kelly                     07010 NJ Cliffside Park                               
+Tucker                    07010 NJ Cliffside Park                               
+Velasco                   07010 NJ Cliffside Park                               
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Mulroy                    07010 NJ Cliffside Park                               
+Lopez                     07010 NJ Cliffside Park                               
+Ordes                     07011 NJ Clifton                                      
+Orent                     07011 NJ Clifton                                      
+Owens                     07012 NJ Clifton                                      
+Tangaribuan               07012 NJ Clifton                                      
+Velasco                   07016 NJ Cranford                                     
+Cowie                     07016 NJ Cranford                                     
+Bresser, HR Rep.          07023 NJ Fanwood                                      
+Ginestra                  07024 NJ Ft. Lee                                      
+Porch                     07024 NJ Ft. Lee                                      
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Moskowitz                 07024 NJ Ft. Lee                                      
+Limate                    07024 NJ Ft. Lee                                      
+Delbrun                   07024 NJ Ft. Lee                                      
+Citron                    07024 NJ Ft. Lee                                      
+Walston                   07024 NJ Ft. Lee                                      
+Kwong                     07024 NJ Ft. Lee                                      
+Naso                      07024 NJ Ft. Lee                                      
+Cook                      07029 NJ Harrison                                     
+Edwards                   07036 NJ Lyndon                                       
+Thomas                    07036 NJ Lyndon                                       
+Edwards                   07040 NJ Maplewood                                    
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Moffat                    07042 NJ Montclair                                    
+Dewitt                    07042 NJ Montclair                                    
+Olvsade                   07042 NJ Montclair                                    
+Sheppard                  07042 NJ Montclair                                    
+Montanez                  07042 NJ Montclair                                    
+Grant                     07044 NJ Verona                                       
+Landry                    07047 NJ North Bergen                                 
+Dunkon                    07047 NJ North Bergen                                 
+Naso                      07047 NJ North Bergen                                 
+German                    07047 NJ North Bergen                                 
+Dusenberry                07047 NJ North Bergen                                 
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Martin                    07055 NJ Passaic                                      
+Leung                     07055 NJ Passaic                                      
+Jackson                   07057 NJ Wallington                                   
+Heedles                   07060 NJ Plainfield                                   
+Sprouse                   07060 NJ Plainfield                                   
+Miroff                    07060 NJ Plainfield                                   
+Griffith                  07065 NJ Rahway                                       
+Towle                     07070 NJ Rutherford                                   
+Noviello                  07070 NJ Rutherford                                   
+Porch                     07070 NJ Rutherford                                   
+Prochaska                 07078 NJ Short Hills                                  
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Garnes                    07078 NJ Short Hills                                  
+Buckberg                  07090 NJ Westfield                                    
+Benitez                   07093 NJ Guttenberg                                   
+Ocampo                    07094 NJ Secaucus                                     
+Dalvi                     07094 NJ Secaucus                                     
+Beitler                   07096 NJ Secaucus                                     
+Sikinger                  07104 NJ Newark                                       
+Reyes                     07107 NJ Newark                                       
+Thorton                   07111 NY Irvington                                    
+Braun                     07111 NY Irvington                                    
+Leopta                    07112 NJ Newark                                       
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Mehta                     07302 NJ Jersey City                                  
+De Armas                  07304 NJ Jersey City                                  
+Oates                     07304 NJ Jersey City                                  
+Gallo                     07306 NJ Jersey City                                  
+Ittoop                    07306 NJ Jersey City                                  
+Roberts                   07306 NJ Jersey City                                  
+Frost                     07306 NJ Jersey City                                  
+Garshman                  07307 NJ Jersey City                                  
+Harty                     07307 NJ Jersey City                                  
+Ellman                    07307 NJ Jersey City                                  
+Affinito                  07401 NJ Allendale                                    
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Eakheit                   07421 NJ Hewitt                                       
+Millstein                 07430 NJ Mahwah                                       
+Cadet                     07444 NJ Pompton Plains                               
+Goldsmith                 07450 NJ Ridgewood                                    
+Zapulla                   07450 NJ Ridgewood                                    
+Abdou                     10025 NY New York                                     
+Gillen                    10025 NY New York                                     
+Pace                      10025 NY New York                                     
+Lefkowitz                 10048 NY New York                                     
+Puetrino                  10954 NY Nannet                                       
+Jamerncy                  10956 NY New City                                     
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Pineda                    10956 NY New City                                     
+Robichaud                 10965 NY Pearl River                                  
+Perkins                   11021 NY Great Neck                                   
+McNeal                    11030 NY Manhasset                                    
+Lawson                    11042 NY Long Beach                                   
+Valentine                 11050 NY Fort Washington                              
+King                      11101 NY Long Island City                             
+Robles                    11101 NY Long Island City                             
+McLean                    11102 NY Astoria                                      
+Guarino                   11104 NY Sunnyside                                    
+Frangopoulos              11105 NY Astoria                                      
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Mierzwa                   11105 NY Astoria                                      
+Rothstein                 11106 NY Long Island City                             
+Moon                      11106 NY Long Island City                             
+Sheppard                  11106 NY Long Island City                             
+Kurtz                     11106 NY Long Island City                             
+Satterfield               11201 NY Brooklyn                                     
+Grant                     11201 NY Brooklyn                                     
+Masser                    11203 NY Brooklyn                                     
+Lindeman                  11204 NY Brooklyn                                     
+Zuckerberg                11204 NY Brooklyn                                     
+annunziato                11205 NY Brooklyn                                     
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Dermody                   11205 NY Brooklyn                                     
+Bullock                   11206 NY Brooklyn                                     
+Grant                     11207 NY Brooklyn                                     
+Radicola                  11208 NY Brooklyn                                     
+Williams                  11209 NY Brooklyn                                     
+Wilson                    11209 NY Brooklyn                                     
+Allende                   11209 NY Brooklyn                                     
+Winnicki                  11209 NY Brooklyn                                     
+Masser                    11209 NY Brooklyn                                     
+Boyce                     11212 NY Brooklyn                                     
+Eng                       11213 NY Brooklyn                                     
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Torres                    11213 NY Brooklyn                                     
+Tabs                      11214 NY Brooklyn                                     
+Walter                    11214 NY Brooklyn                                     
+Alexander                 11214 NY Brooklyn                                     
+Torres                    11215 NY Brooklyn                                     
+Page                      11215 NY Brooklyn                                     
+Perrin                    11215 NY Brooklyn                                     
+Smagler                   11216 NY Brooklyn                                     
+Smith                     11217 NY Brooklyn                                     
+Archer                    11218 NY Brooklyn                                     
+McGill                    11218 NY Brooklyn                                     
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Cahouet                   11219 NY Brooklyn                                     
+Carcia                    11220 NY Brooklyn                                     
+Thompson                  11220 NY Brooklyn                                     
+Bathmanapan               11221 NY Brooklyn                                     
+Mastandora                11222 NY Brooklyn                                     
+Yeroushalmi               11224 NY Brooklyn                                     
+Grant                     11224 NY Brooklyn                                     
+Murray                    11224 NY Brooklyn                                     
+Brown                     11225 NY Brooklyn                                     
+Ward                      11225 NY Brooklyn                                     
+Marten                    11225 NY Brooklyn                                     
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Mandel                    11226 NY Brooklyn                                     
+Jaele                     11226 NY Brooklyn                                     
+Smith                     11226 NY Brooklyn                                     
+Laporte                   11226 NY Brooklyn                                     
+Gallagher                 11228 NY Brooklyn                                     
+Daly                      11229 NY Brooklyn                                     
+Viotty                    11230 NY Brooklyn                                     
+Nyziak                    11230 NY Brooklyn                                     
+Biers                     11232 NY Brooklyn                                     
+Lin                       11233 NY Brooklyn                                     
+Saluja                    11233 NY Brooklyn                                     
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Draquez                   11234 NY Brooklyn                                     
+Daly                      11235 NY Brooklyn                                     
+Simmons                   11235 NY Brooklyn                                     
+Baltazar                  11236 NY Brooklyn                                     
+Hagel                     11236 NY Brooklyn                                     
+Lefbowitz                 11236 NY Brooklyn                                     
+Yourish                   11238 NY Brooklyn                                     
+M. Orent                  11303 NY Monbasset                                    
+MacDonald, Jr.            11354 NY Flushing                                     
+Axch                      11355 NY Flushing                                     
+Chirichella               11355 NY Flushing                                     
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Torres                    11355 NY Flushing                                     
+Kulina                    11355 NY Flushing                                     
+Avia                      11355 NY Flushing                                     
+Padron                    11357 NY Whitestone                                   
+Anglin                    11357 NY Whitestone                                   
+Abdou                     11358 NY Flushing                                     
+Milano                    11360 NY Bayside                                      
+Fielding                  11365 NY Fresh Meadows                                
+Segall                    11365 NY Fresh Meadows                                
+Joas                      11365 NY Fresh Meadows                                
+Jodoin                    11366 NY Flushing                                     
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Chatman                   11368 NY Corona                                       
+Hutheesing                11368 NY Corona                                       
+Griffen                   11368 NY Corona                                       
+Boyd                      11368 NY Corona                                       
+Lasseter                  11368 NY Corona                                       
+Miller                    11368 NY Corona                                       
+Malone                    11369 NY Elmhurst                                     
+Tripp                     11372 NY Jackson Heights                              
+M. Orent                  11372 NY Jackson Heights                              
+Valentine                 11372 NY Jackson Heights                              
+Engongoro                 11372 NY Jackson Heights                              
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Zopf                      11372 NY Jackson Heights                              
+Rosenberg                 11373 NY Amherst                                      
+Lippen                    11373 NY Amherst                                      
+Ramesh                    11373 NY Amherst                                      
+Philpotts                 11373 NY Amherst                                      
+Da Silva                  11373 NY Amherst                                      
+Barogh                    11373 NY Amherst                                      
+Callender                 11375 NY Forest Hills                                 
+Runyan                    11375 NY Forest Hills                                 
+Greenberg                 11375 NY Forest Hills                                 
+Saliternan                11375 NY Forest Hills                                 
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Lloyd                     11375 NY Forest Hills                                 
+Diokno                    11377 NY Woodside                                     
+Miller                    11377 NY Woodside                                     
+Kuehn                     11377 NY Woodside                                     
+Liggons                   11377 NY Woodside                                     
+Sentell                   11385 NY Ridgewood Queens                             
+Martin                    11385 NY Ridgewood Queens                             
+Austin                    11385 NY Ridgewood Queens                             
+Reed                      11412 NY Hollis                                       
+Shah                      11412 NY Hollis                                       
+Brownstein                11412 NY Hollis                                       
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Cross                     11413 NY Laurelton                                    
+Aung                      11413 NY Laurelton                                    
+Larcia                    11413 NY Laurelton                                    
+Kasperovich               11414 NY Howard Bank                                  
+Jung                      11415 NY Kew Gardens                                  
+De Simone                 11419 NY Richmond Hill                                
+Crocitto                  11419 NY Richmond Hill                                
+Galik                     11420 NY Jamaica                                      
+Velie                     11422 NY Laurelton                                    
+Arias                     11426 NY Bellrose                                     
+Jimenes                   11428 NY Queens Village                               
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Valamas                   11432 NY Jamaica                                      
+Kellam                    11433 NY Jamaica                                      
+Wetcel                    11434 NY Jamaica                                      
+Chamnonkool               11434 NY Jamaica                                      
+Enison                    11435 NY Jamaica                                      
+Galik                     11435 NY Jamaica                                      
+Allende                   11510 NY Baldwin                                      
+Schafer                   11530 NY Garden City                                  
+Airall                    11552 NY West Hempstead                               
+Vargas                    11561 NY Long Beach                                   
+Ross                      11565 NY Malverne                                     
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Merriman                  11565 NY Malverne                                     
+Abid                      11565 NY Malverne                                     
+Balterzar                 11576 NY Roslyn                                       
+McHowell                  11717 NJ Brentwood                                    
+Carey                     11743 NY Huntington                                   
+Krot                      11746 NY Dix Hills                                    
+Brendler                  11746 NY Dix Hills                                    
+Korka                     11746 NY Dix Hills                                    
+Galik                     11758 NY Massapequa                                   
+Waldman                   11766 NY Huntington                                   
+Gates                     11787 NY Smithtown                                    
+
+LAST_NAME                 ZIP   ST CITY                                         
+------------------------- ----- -- -------------------------                    
+Bose                      11787 NY Smithtown                                    
+Mwangi                    13760 NY Endicott                                     
+Gilloon                   43224 OH Columbus                                     
+Snow                      48104 MI Ann Arbor                                    
+
+268 filas seleccionadas.
+
+SQL> 
+SQL> PROMPT "EJERCICIO 2: LAB 7.1 b)"
+"EJERCICIO 2: LAB 7.1 b)"
+SQL> REM (Rischert, 2010, 294)
+SQL> SELECT DISTINCT s.first_name, s.last_name, s.student_id
+  2  FROM student s, enrollment e
+  3  WHERE s.student_id = e.student_id
+  4  ORDER BY s.last_name;
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+Mardig                    Abdou                            119                  
+Suzanne M.                Abid                             257                  
+Alan                      Affinito                         190                  
+Ralph                     Alexander                        120                  
+Edwin                     Allende                          198                  
+Genny                     Andrew                           162                  
+Freedon                   annunziato                       206                  
+Maria                     Arias                            172                  
+Gary                      Aung                             127                  
+Mary                      Axch                             202                  
+Derrick                   Baltazar                         140                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+P.                        Balterzar                        170                  
+Nana                      Barogh                           252                  
+John T.                   Beitler                          160                  
+Jose                      Benitez                          271                  
+Gerard                    Biers                            143                  
+Walter                    Boremmann                        253                  
+Regina                    Bose                             195                  
+Debra                     Boyce                            175                  
+Robert                    Boyd                             141                  
+Joel                      Brendler                         234                  
+Gene                      Bresser, HR Rep.                 200                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+Michael                   Brown                            174                  
+Denise                    Brownstein                       171                  
+Anthony                   Bullock                          181                  
+Frank                     Bunnell                          247                  
+Judy                      Cahouet                          147                  
+Michael                   Carcia                           235                  
+Charles                   Caro                             270                  
+Melvina                   Chamnonkool                      254                  
+Reynaldo                  Chatman                          215                  
+Jeffrey                   Citron                           217                  
+Angel                     Cook                             203                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+Fred                      Crocitto                         102                  
+Eric                      Da Silva                         218                  
+J.                        Dalvi                            197                  
+Irv                       Dalvi                            245                  
+Peter                     Daly                             165                  
+John                      De Simone                        274                  
+Jeffrey                   Delbrun                          182                  
+Dawn                      Dennis                           154                  
+M.                        Diokno                           224                  
+Madhav                    Dusenberry                       216                  
+Thomas                    Edwards                          159                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+Thomas                    Edwards                          152                  
+Bill                      Engongoro                        280                  
+Laetia                    Enison                           104                  
+David                     Essner                           144                  
+Evan                      Fielding                         250                  
+Catherine                 Frangopoulos                     251                  
+Rommel                    Frost                            237                  
+O.                        Garnes                           187                  
+Angelo                    Garshman                         139                  
+Regina                    Gates                            150                  
+Joseph                    German                           146                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+Nicole                    Gillen                           163                  
+Phil                      Gilloon                          188                  
+Jenny                     Goldsmith                        211                  
+Verona                    Grant                            194                  
+Omaira                    Grant                            129                  
+Eilene                    Grant                            161                  
+Scott                     Grant                            156                  
+Arun                      Griffen                          204                  
+Jean                      Griffith                         260                  
+Lorraine                  Harty                            264                  
+Bessie                    Heedles                          227                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+Alfred                    Hutheesing                       205                  
+Jonathan                  Jaele                            282                  
+Al                        Jamerncy                         193                  
+Shirley                   Jameson                          157                  
+Jim                       Joas                             167                  
+May                       Jodoin                           166                  
+Janet                     Jung                             232                  
+Lloyd                     Kellam                           209                  
+Radharam                  King                             263                  
+George                    Kocka                            230                  
+George                    Korka                            279                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+N                         Kuehn                            117                  
+Anil                      Kulina                           113                  
+Ricardo                   Kurtz                            178                  
+Julius                    Kwong                            267                  
+Thomas E.                 La Blank                         278                  
+J.                        Landry                           103                  
+Winsome                   Laporte                          114                  
+Hazel                     Lasseter                         136                  
+Michael                   Lefbowitz                        201                  
+Paul                      Lefkowitz                        145                  
+Evelyn                    Liggons                          277                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+Roy                       Limate                           158                  
+Julita                    Lippen                           122                  
+Adrienne                  Lopez                            229                  
+Hiedi                     Lopez                            118                  
+Steven                    M. Orent                         191                  
+Sheradha                  Malone                           221                  
+Maria                     Martin                           110                  
+Michelle                  Masser                           135                  
+Oscar                     McGill                           173                  
+Frantz                    McLean                           169                  
+Dennis                    Mehta                            185                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+George                    Merriman                         259                  
+Victor                    Meshaj                           196                  
+Catherine                 Mierzwa                          107                  
+James                     Miller                           137                  
+Edgar                     Moffat                           225                  
+Bernadette                Montanez                         207                  
+Vinnie                    Moon                             261                  
+Angel                     Moskowitz                        105                  
+Kathleen                  Mulroy                           233                  
+Sally                     Naso                             168                  
+Hedy                      Naso                             273                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+Peggy                     Noviello                         111                  
+Lula                      Oates                            130                  
+Virginia                  Ocampo                           281                  
+Judith                    Olvsade                          106                  
+Daniel                    Ordes                            242                  
+D.                        Orent                            148                  
+Meryl                     Owens                            246                  
+Frank                     Pace                             223                  
+Kate                      Page                             266                  
+Benita                    Perkins                          283                  
+Sylvia                    Perrin                           164                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+Mrudula                   Philpotts                        153                  
+Sean                      Pineda                           121                  
+Kevin                     Porch                            272                  
+Judith                    Prochaska                        149                  
+Pierre                    Radicola                         123                  
+Simon                     Ramesh                           179                  
+James                     Reed                             133                  
+Deborah                   Reyes                            189                  
+Bharat                    Roberts                          243                  
+Barbara                   Robichaud                        212                  
+George                    Ross                             275                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+Adele                     Rothstein                        265                  
+Jeff                      Runyan                           128                  
+Beth                      Satterfield                      176                  
+Z.A.                      Scrittorale                      240                  
+J.                        Segall                           199                  
+Robert                    Segall                           220                  
+Judy                      Sethi                            108                  
+Christine                 Sheppard                         186                  
+Arlyne                    Sheppard                         151                  
+John                      Smith                            138                  
+Roger                     Snow                             238                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+Ronald                    Tangaribuan                      268                  
+David                     Thares                           210                  
+Thomas                    Thomas                           112                  
+Sharon                    Thompson                         269                  
+E.A.                      Torres                           180                  
+Angela                    Torres                           134                  
+Gerry                     Tripp                            236                  
+A.                        Tucker                           208                  
+Florence                  Valamas                          276                  
+Mohamed                   Valentine                        228                  
+Lorrane                   Velasco                          256                  
+
+FIRST_NAME                LAST_NAME                 STUDENT_ID                  
+------------------------- ------------------------- ----------                  
+Suzanna                   Velasco                          258                  
+Frank                     Viotty                           192                  
+Monica                    Waldman                          142                  
+Donna                     Walston                          262                  
+Larry                     Walter                           109                  
+Daniel                    Wicelinski                       124                  
+Yvonne                    Williams                         214                  
+Sarah                     Wilson                           244                  
+Joseph                    Yourish                          241                  
+Tamara                    Zapulla                          248                  
+Salewa                    Zuckerberg                       184                  
+
+165 filas seleccionadas.
+
+SQL> 
+SQL> PROMPT "EJERCICIO 3: LAB 7.1 c)"
+"EJERCICIO 3: LAB 7.1 c)"
+SQL> REM (Rischert, 2010, 294)
+SQL> SELECT AVG(COALESCE(cost, 0))
+  2  FROM course;
+
+AVG(COALESCE(COST,0))                                                           
+---------------------                                                           
+               1158.5                                                           
+
+SQL> 
+SQL> PROMPT "EJERCICIO 4: LAB 7.2 c)"
+"EJERCICIO 4: LAB 7.2 c)"
+SQL> REM (Rischert, 2010, 310)
+SQL> SELECT s.student_id
+  2  FROM student s, enrollment e, zipcode z
+  3  WHERE s.student_id = e.student_id
+  4  AND s.zip = z.zip
+  5  AND z.state = 'CT';
+
+STUDENT_ID                                                                      
+----------                                                                      
+       118                                                                      
+       144                                                                      
+       154                                                                      
+       162                                                                      
+       196                                                                      
+       197                                                                      
+       198                                                                      
+       208                                                                      
+       210                                                                      
+       220                                                                      
+       247                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       270                                                                      
+       270                                                                      
+
+13 filas seleccionadas.
+
+SQL> PROMPT "EJERCICIO 5: LAB 7.2 e)"
+"EJERCICIO 5: LAB 7.2 e)"
+SQL> REM (Rischert, 2010, 310)
+SQL> SELECT student_id, course_no, numeric_grade
+  2  FROM student JOIN zipcode
+  3  USING (zip)
+  4  JOIN enrollment
+  5  USING (student_id)
+  6  JOIN section
+  7  USING (section_id)
+  8  JOIN grade g
+  9  USING (section_id, student_id)
+ 10  WHERE course_no = 420
+ 11  AND grade_type_code = 'FI'
+ 12  AND state = 'CT';
+
+STUDENT_ID  COURSE_NO NUMERIC_GRADE                                             
+---------- ---------- -------------                                             
+       196        420            84                                             
+       198        420            85                                             
+
+SQL> 
+SQL> PROMPT "EJERCICIO 6: LAB 7.2 f)"
+"EJERCICIO 6: LAB 7.2 f)"
+SQL> REM (Rischert, 2010, 310)
+SQL> SELECT g.student_id, g.section_id,
+  2  gw.percent_of_final_grade pct, g.grade_type_code,
+  3  g.numeric_grade grade, s.last_name
+  4  FROM grade_type_weight gw, grade g,
+  5  enrollment e, student s
+  6  WHERE g.grade_type_code = 'PJ'
+  7  AND gw.grade_type_code = g.grade_type_code
+  8  AND gw.section_id = g.section_id
+  9  AND g.numeric_grade <= 80
+ 10  AND g.section_id = e.section_id
+ 11  AND g.student_id = e.student_id
+ 12  AND e.student_id = s.student_id
+ 13  ORDER BY s.last_name;
+
+STUDENT_ID SECTION_ID        PCT GR      GRADE LAST_NAME                        
+---------- ---------- ---------- -- ---------- -------------------------        
+       245         82         75 PJ         77 Dalvi                            
+       176        115         75 PJ         76 Satterfield                      
+       244         82         75 PJ         76 Wilson                           
+       248        155         75 PJ         76 Zapulla                          
+
+SQL> 
+SQL> PROMPT "FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 8"
+"FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 8"
+SQL> 
+SQL> spool OFF

@@ -1,0 +1,1029 @@
+SQL> 
+SQL> set linesize 300
+SQL> set pagesize 90
+SQL> set feddback on
+SP2-0158: opción SET desconocida "feddback"
+SQL> set colsep ' ||'
+SQL> set null s/Registro
+SQL> clear screen
+
+SQL> 
+SQL> 
+SQL> --Cambiar idioma
+SQL> ALTER SESSION SET NLS_DATE_LANGUAGE  = 'ENGLISH';
+
+Sesión modificada.
+
+SQL> 
+SQL> --Borrar tablas
+SQL> DROP TABLE AIRPORT            CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE FLIGHT             CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE FLIGHT_LEG         CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE LEG_INSTANCE       CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE FARE               CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE AIRPLANE_TYPE      CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE CAN_LAND           CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE AIRPLANE           CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE SEAT_RESERVATION   CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> 
+SQL> --Crear tablas
+SQL> CREATE TABLE AIRPORT(
+  2  	AIRPORT_CODE      VARCHAR2(3),
+  3  	AIRPORT_NAME      VARCHAR2(15),
+  4  	CITY              VARCHAR2(10),
+  5  	STATE             VARCHAR2(10)
+  6  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE FLIGHT(
+  2  	FLIGHT_NUMBER     NUMBER(4,0),
+  3  	AIRLINE           VARCHAR2(10),
+  4  	WEEKDAYS          VARCHAR2(10)
+  5  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE FLIGHT_LEG(
+  2  	FLIGHT_NUMBER            NUMBER(4,0),
+  3  	LEG_NUMBER               NUMBER(2,0),
+  4  	DEPARTURE_AIRPORT_CODE   VARCHAR2(3),
+  5  	SCHEDULE_DEPARTURE_TIME  TIMESTAMP,
+  6  	ARRIVAL_AIRPORT_CODE     VARCHAR2(3),
+  7  	SCHEDULE_ARRIVAL_TIME    TIMESTAMP
+  8  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE LEG_INSTANCE(
+  2  	FLIGHT_NUMBER           NUMBER(4,0),
+  3  	LEG_NUMBER              NUMBER(2,0),
+  4  	LEG_DATE                TIMESTAMP,
+  5  	NUMBER_OF_AVIABLE_SEATS NUMBER(4,0),
+  6  	AIRPLANE_ID             NUMBER(5,0),
+  7  	DEPARTURE_AIRPORT_CODE  VARCHAR2(3),
+  8  	DEPARTURE_TIME          TIMESTAMP,
+  9  	ARRIVAL_AIRPORT_CODE    VARCHAR2(3),
+ 10  	ARRIVAL_TIME            TIMESTAMP
+ 11  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE FARE(
+  2  	FLIGHT_NUMBER           NUMBER(4,0),
+  3  	FARE_CODE	            VARCHAR2(1),
+  4  	AMOUNT                  NUMBER(7,2),
+  5  	RESTRICTIONS            VARCHAR2(3)
+  6  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE AIRPLANE_TYPE(
+  2  	AIRPLANE_TYPE_NAME      VARCHAR2(5),
+  3  	MAX_SEATS               NUMBER(3,0),
+  4  	COMPANY                 VARCHAR2(2)
+  5  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE CAN_LAND(
+  2  	AIRPLANE_TYPE_NAME      VARCHAR2(5),
+  3  	AIRPORT_CODE            VARCHAR2(3)
+  4  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE AIRPLANE(
+  2  	AIRPLANE_ID             NUMBER(5,0),
+  3  	TOTAL_NUMBER_OF_SEATS  NUMBER(3,0),
+  4  	AIRPLANE_TYPE          VARCHAR2(5)
+  5  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE SEAT_RESERVATION(
+  2  	FLIGHT_NUMBER          NUMBER(4,0),
+  3  	LEG_NUMBER             NUMBER(2,0),
+  4  	LEG_DATE              TIMESTAMP,
+  5  	SEAT_NUMBER            VARCHAR2(4),
+  6  	CUSTOMER_NAME          VARCHAR2(18),
+  7  	CUSTOMER_PHONE         VARCHAR2(12)
+  8  );
+
+Tabla creada.
+
+SQL> 
+SQL> --Restricciones NOT NULL
+SQL> ALTER TABLE AIRPORT
+  2   	MODIFY(AIRPORT_CODE            CONSTRAINT NN_AIRPORT_CODE NOT NULL)
+  3   	MODIFY(AIRPORT_NAME                    CONSTRAINT NN_NAME NOT NULL)
+  4   	MODIFY(CITY                    CONSTRAINT NN_CITY NOT NULL);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE FLIGHT
+  2  	MODIFY(FLIGHT_NUMBER           CONSTRAINT NN_FLIGHT_NUMBER NOT NULL)
+  3  	MODIFY(AIRLINE                 CONSTRAINT NN_AIRLINE NOT NULL)
+  4  	MODIFY(WEEKDAYS                CONSTRAINT NN_WEEDAYS NOT NULL);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE FLIGHT_LEG
+  2  	MODIFY(FLIGHT_NUMBER           CONSTRAINT NN1_FLIGHT_NUMBER NOT NULL)
+  3  	MODIFY(LEG_NUMBER              CONSTRAINT NN_LEG_NUMBER NOT NULL)
+  4  	MODIFY(DEPARTURE_AIRPORT_CODE  CONSTRAINT NN_DEPARTURE_AIRPORT_CODE NOT NULL)
+  5  	MODIFY(SCHEDULE_DEPARTURE_TIME CONSTRAINT NN_SCHEDULE_DEPARTURE_TIME NOT NULL)
+  6  	MODIFY(ARRIVAL_AIRPORT_CODE    CONSTRAINT NN_ARRIVAL_AIRPORT_CODE NOT NULL)
+  7  	MODIFY(SCHEDULE_ARRIVAL_TIME   CONSTRAINT NN_SCHEDULE_ARRIVAL_TIME NOT NULL);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE LEG_INSTANCE
+  2  	MODIFY(FLIGHT_NUMBER           CONSTRAINT NN2_FLIGHT_NUMBER NOT NULL)
+  3  	MODIFY(LEG_NUMBER              CONSTRAINT NN1_LEG_NUMBER NOT NULL)
+  4  	MODIFY(LEG_DATE                CONSTRAINT NN_LEG_DATE NOT NULL)
+  5  	MODIFY(NUMBER_OF_AVIABLE_SEATS CONSTRAINT NN_NUMBER_AVIABLE_SEATS NOT NULL)
+  6  	MODIFY(AIRPLANE_ID             CONSTRAINT NN_AIRPLANE_ID NOT NULL)
+  7  	MODIFY(DEPARTURE_AIRPORT_CODE  CONSTRAINT NN1_DEPARTURE_AIRPORT_CODE NOT NULL)
+  8  	MODIFY(DEPARTURE_TIME          CONSTRAINT NN_DEPARTURE_TIME NOT NULL)
+  9  	MODIFY(ARRIVAL_AIRPORT_CODE    CONSTRAINT NN1_ARRIVAL_AIRPORT_CODE NOT NULL)
+ 10  	MODIFY(ARRIVAL_TIME            CONSTRAINT NN_ARRIVAL_TIME NOT NULL);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE FARE
+  2  	MODIFY(FLIGHT_NUMBER           CONSTRAINT NN3_FLIGHT_NUMBER NOT NULL)
+  3  	MODIFY(FARE_CODE               CONSTRAINT NN_FARE_CODE NOT NULL)
+  4  	MODIFY(AMOUNT                  CONSTRAINT NN_AMOUNT NOT NULL)
+  5  	MODIFY(RESTRICTIONS            CONSTRAINT NN_RESTRICTIONS NOT NULL);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE AIRPLANE_TYPE
+  2  	MODIFY(AIRPLANE_TYPE_NAME      CONSTRAINT NN_AIRPLANE_TYPE_NAME NOT NULL)
+  3  	MODIFY(MAX_SEATS               CONSTRAINT NN_MAX_SEATS NOT NULL)
+  4  	MODIFY(COMPANY                 CONSTRAINT NN_COMPANY NOT NULL);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE CAN_LAND
+  2  	MODIFY(AIRPLANE_TYPE_NAME       CONSTRAINT NNATN_AIRPLANE_TYPE_NAME NOT NULL)
+  3  	MODIFY(AIRPORT_CODE            CONSTRAINT NN1_AIRPORT_CODE NOT NULL);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE AIRPLANE
+  2  	MODIFY(AIRPLANE_ID             CONSTRAINT NN1_AIRPLANE_ID NOT NULL)
+  3  	MODIFY(TOTAL_NUMBER_OF_SEATS   CONSTRAINT NN_TOTAL_NUMBER_OF_SEATS NOT NULL)
+  4  	MODIFY(AIRPLANE_TYPE           CONSTRAINT NN_AIRPLANE_TYPE NOT NULL);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE SEAT_RESERVATION
+  2  	MODIFY(FLIGHT_NUMBER           CONSTRAINT NN4_FLIGHT_NUMBER NOT NULL)
+  3  	MODIFY(LEG_NUMBER              CONSTRAINT NN2_LEG_NUMBER NOT NULL)
+  4  	MODIFY(LEG_DATE               CONSTRAINT NN_SEAT_DATE NOT NULL)
+  5  	MODIFY(SEAT_NUMBER             CONSTRAINT NN_SEAT_NUMBER NOT NULL)
+  6  	MODIFY(CUSTOMER_PHONE          CONSTRAINT NN_CUSTOMER_PHONE NOT NULL);
+
+Tabla modificada.
+
+SQL> 
+SQL> --Restricciones PK
+SQL> 
+SQL> ALTER TABLE AIRPORT
+  2  	ADD CONSTRAINT PK_AIRPORT PRIMARY KEY (AIRPORT_CODE);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE FLIGHT
+  2  	ADD CONSTRAINT PK_FLIGHT PRIMARY KEY (FLIGHT_NUMBER);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE FLIGHT_LEG
+  2  	ADD CONSTRAINT PK_FLIGHT_LEG PRIMARY KEY (FLIGHT_NUMBER, LEG_NUMBER);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE LEG_INSTANCE
+  2  	ADD CONSTRAINT PK_LEG_INSTANCE PRIMARY KEY (FLIGHT_NUMBER, LEG_NUMBER, LEG_DATE);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE FARE
+  2  	ADD CONSTRAINT PK_FARE PRIMARY KEY (FLIGHT_NUMBER, FARE_CODE);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE AIRPLANE_TYPE
+  2  	ADD CONSTRAINT PK_AIRPLANE_TYPE PRIMARY KEY (AIRPLANE_TYPE_NAME);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE CAN_LAND
+  2  	ADD CONSTRAINT PK_CAN_LAND PRIMARY KEY (AIRPLANE_TYPE_NAME, AIRPORT_CODE);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE AIRPLANE
+  2  	ADD CONSTRAINT PK_AIRPLANE PRIMARY KEY (AIRPLANE_ID);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE SEAT_RESERVATION
+  2  	ADD CONSTRAINT PK_SEAT_RESERVATION PRIMARY KEY (FLIGHT_NUMBER, LEG_NUMBER, LEG_DATE, SEAT_NUMBER);
+
+Tabla modificada.
+
+SQL> 
+SQL> --Restricciones FK
+SQL> 
+SQL> ALTER TABLE FLIGHT_LEG
+  2  	ADD CONSTRAINT FK_FLIGHT_LEG FOREIGN KEY (FLIGHT_NUMBER) REFERENCES FLIGHT(FLIGHT_NUMBER)
+  3  	ADD CONSTRAINT FK_FLIGHT_LEG1 FOREIGN KEY (DEPARTURE_AIRPORT_CODE) REFERENCES AIRPORT(AIRPORT_CODE)
+  4  	ADD CONSTRAINT FK_FLIGHT_LEG2 FOREIGN KEY (ARRIVAL_AIRPORT_CODE) REFERENCES AIRPORT(AIRPORT_CODE)
+  5  	;
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE LEG_INSTANCE
+  2  	ADD CONSTRAINT FK_LEG_INSTANCE FOREIGN KEY (FLIGHT_NUMBER) REFERENCES FLIGHT(FLIGHT_NUMBER)
+  3  	ADD CONSTRAINT FK_LEG_INSTANCE2 FOREIGN KEY (DEPARTURE_AIRPORT_CODE) REFERENCES AIRPORT(AIRPORT_CODE)
+  4  	ADD CONSTRAINT FK_LEG_INSTANCE3 FOREIGN KEY (ARRIVAL_AIRPORT_CODE) REFERENCES AIRPORT(AIRPORT_CODE)
+  5  	ADD CONSTRAINT FK_LEG_INSTANCE4 FOREIGN KEY (FLIGHT_NUMBER, LEG_NUMBER) REFERENCES FLIGHT_LEG(FLIGHT_NUMBER, LEG_NUMBER);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE FARE
+  2  	ADD CONSTRAINT FK_FARE FOREIGN KEY (FLIGHT_NUMBER) REFERENCES FLIGHT(FLIGHT_NUMBER);
+
+Tabla modificada.
+
+SQL> 
+SQL> 
+SQL> ALTER TABLE CAN_LAND
+  2  	ADD CONSTRAINT FK_CAN_LAND FOREIGN KEY (AIRPLANE_TYPE_NAME) REFERENCES AIRPLANE_TYPE(AIRPLANE_TYPE_NAME)
+  3  	ADD CONSTRAINT FK_CAN_LAND1 FOREIGN KEY (AIRPORT_CODE) REFERENCES AIRPORT(AIRPORT_CODE);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE AIRPLANE
+  2  	ADD CONSTRAINT FK_AIRPLANE FOREIGN KEY (AIRPLANE_TYPE) REFERENCES AIRPLANE_TYPE(AIRPLANE_TYPE_NAME);
+
+Tabla modificada.
+
+SQL> 
+SQL> 
+SQL> --Restricciones CHECK
+SQL> 
+SQL> ALTER TABLE AIRPORT
+  2  	ADD CONSTRAINT CK_AIRPORT CHECK ( AIRPORT_CODE IN  ('MEX','MTY','JFK','YHU','YYZ'));
+
+Tabla modificada.
+
+SQL> 
+SQL> 
+SQL> --POBLAR TABLAS
+SQL> 
+SQL> --AIRPORT
+SQL> INSERT INTO AIRPORT VALUES ('MEX','MEXICO CITY','MEXICO','MEXICO');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPORT VALUES ('MTY','MONTERREY','MEXICO','MEXICO');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPORT VALUES ('JFK','NEW YORK','NEW YORK','USA');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPORT VALUES ('YYZ','TORONTO','ONTARIO','CANADA');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPORT VALUES ('YHU','MONTREAL','QUEBEC','CANADA');
+
+1 fila creada.
+
+SQL> 
+SQL> --FLIGHT
+SQL> INSERT INTO FLIGHT VALUES (1001,'AEROMEXICO','MONDAY');
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT VALUES (1002,'AEROMEXICO','TUESDAY');
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT VALUES (1003,'VOLARIS','WEDNESDAY');
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT VALUES (1004,'VOLARIS','THURSDAY');
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT VALUES (1005,'DELTA','FRIDAY');
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT VALUES (1006,'DELTA','SATURDAY');
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT VALUES (1007,'AIR CANADA','SUNDAY');
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT VALUES (2001,'AIR CANADA','MONDAY');
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT VALUES (2002,'AIR CANADA','TUESDAY');
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT VALUES (2003,'AIR CANADA','WEDNESDAY');
+
+1 fila creada.
+
+SQL> 
+SQL> --FLIGHT_LEG
+SQL> INSERT INTO FLIGHT_LEG VALUES (1001,12,'MEX',TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 09:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT_LEG VALUES (1002,13,'MTY',TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'JFK',TO_TIMESTAMP('2023-09-20 13:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT_LEG VALUES (1003,14,'MEX',TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 09:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT_LEG VALUES (1004,15,'MTY',TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'JFK',TO_TIMESTAMP('2023-09-20 13:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT_LEG VALUES (1005,16,'JFK',TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 09:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT_LEG VALUES (1006,17,'JFK',TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MEX',TO_TIMESTAMP('2023-09-20 13:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT_LEG VALUES (1007,18,'YHU',TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 09:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT_LEG VALUES (2001,19,'YHU',TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 13:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT_LEG VALUES (2002,20,'YYZ',TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 09:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO FLIGHT_LEG VALUES (2003,21,'YYZ',TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 13:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> 
+SQL> 
+SQL> --LEG_INSTANCE
+SQL> 
+SQL> INSERT INTO LEG_INSTANCE VALUES (1001,12,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),10,12345,'MEX',TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 09:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO LEG_INSTANCE VALUES (1002,13,TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),25,12346,'MTY',TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'JFK',TO_TIMESTAMP('2023-09-20 13:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO LEG_INSTANCE VALUES (1003,14,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),60,12329,'MEX',TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 09:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO LEG_INSTANCE VALUES (1004,15,TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),75,22123,'MTY',TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'JFK',TO_TIMESTAMP('2023-09-20 13:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO LEG_INSTANCE VALUES (1005,16,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),40,09871,'JFK',TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 09:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO LEG_INSTANCE VALUES (1006,17,TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),60,32765,'JFK',TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MEX',TO_TIMESTAMP('2023-09-20 13:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO LEG_INSTANCE VALUES (1007,18,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),50,96341,'YHU',TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 09:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO LEG_INSTANCE VALUES (2001,19,TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),55,12964,'YHU',TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 13:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO LEG_INSTANCE VALUES (2002,20,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),56,73178,'YYZ',TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 09:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO LEG_INSTANCE VALUES (2003,21,TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),43,54203,'YYZ',TO_TIMESTAMP('2023-09-20 10:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'MTY',TO_TIMESTAMP('2023-09-20 13:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> 
+SQL> --FARE
+SQL> INSERT INTO FARE VALUES (1001,'A',1000,'NOR');
+
+1 fila creada.
+
+SQL> INSERT INTO FARE VALUES (1002,'B',2000,'NOR');
+
+1 fila creada.
+
+SQL> INSERT INTO FARE VALUES (1003,'C',3000,'NOR');
+
+1 fila creada.
+
+SQL> INSERT INTO FARE VALUES (1004,'D',4000,'NOR');
+
+1 fila creada.
+
+SQL> INSERT INTO FARE VALUES (1005,'E',5000,'NOR');
+
+1 fila creada.
+
+SQL> INSERT INTO FARE VALUES (1006,'F',6000,'NOR');
+
+1 fila creada.
+
+SQL> INSERT INTO FARE VALUES (1007,'G',7000,'NOR');
+
+1 fila creada.
+
+SQL> INSERT INTO FARE VALUES (2001,'H',8000,'NOR');
+
+1 fila creada.
+
+SQL> INSERT INTO FARE VALUES (2002,'I',9000,'NOR');
+
+1 fila creada.
+
+SQL> INSERT INTO FARE VALUES (2003,'J',10000,'NOR');
+
+1 fila creada.
+
+SQL> 
+SQL> --AIRPLANE_TYPE
+SQL> INSERT INTO AIRPLANE_TYPE VALUES ('A320',100,'AM');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE_TYPE VALUES ('A330',200,'AM');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE_TYPE VALUES ('A340',300,'AM');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE_TYPE VALUES ('B737',100,'AM');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE_TYPE VALUES ('B747',200,'AM');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE_TYPE VALUES ('B757',300,'AM');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE_TYPE VALUES ('B767',100,'AM');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE_TYPE VALUES ('B777',200,'AM');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE_TYPE VALUES ('B787',300,'AM');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE_TYPE VALUES ('A32',100,'AC');
+
+1 fila creada.
+
+SQL> 
+SQL> --CAN_LAND
+SQL> INSERT INTO CAN_LAND VALUES ('A320','MEX');
+
+1 fila creada.
+
+SQL> INSERT INTO CAN_LAND VALUES ('A330','MEX');
+
+1 fila creada.
+
+SQL> INSERT INTO CAN_LAND VALUES ('A340','MEX');
+
+1 fila creada.
+
+SQL> INSERT INTO CAN_LAND VALUES ('B737','MEX');
+
+1 fila creada.
+
+SQL> INSERT INTO CAN_LAND VALUES ('B747','MEX');
+
+1 fila creada.
+
+SQL> INSERT INTO CAN_LAND VALUES ('B757','MEX');
+
+1 fila creada.
+
+SQL> INSERT INTO CAN_LAND VALUES ('B767','MEX');
+
+1 fila creada.
+
+SQL> INSERT INTO CAN_LAND VALUES ('B777','MEX');
+
+1 fila creada.
+
+SQL> INSERT INTO CAN_LAND VALUES ('B787','MEX');
+
+1 fila creada.
+
+SQL> INSERT INTO CAN_LAND VALUES ('A320','MTY');
+
+1 fila creada.
+
+SQL> 
+SQL> --AIRPLANE
+SQL> INSERT INTO AIRPLANE VALUES (12345,100,'A320');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE VALUES (12346,200,'A330');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE VALUES (12329,300,'A340');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE VALUES (22123,100,'B737');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE VALUES (09871,200,'B747');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE VALUES (32765,300,'B757');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE VALUES (96341,100,'B767');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE VALUES (12964,200,'B777');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE VALUES (73178,300,'B787');
+
+1 fila creada.
+
+SQL> INSERT INTO AIRPLANE VALUES (54203,100,'A320');
+
+1 fila creada.
+
+SQL> 
+SQL> --SEAT_RESERVATION
+SQL> INSERT INTO SEAT_RESERVATION VALUES (1001,12,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'1A','JUAN PEREZ','5534667890');
+
+1 fila creada.
+
+SQL> INSERT INTO SEAT_RESERVATION VALUES (1001,13,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'1B','MARIA LOPEZ','5555555555');
+
+1 fila creada.
+
+SQL> INSERT INTO SEAT_RESERVATION VALUES (1001,14,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'1C','JOSE GARCIA','5512334387');
+
+1 fila creada.
+
+SQL> INSERT INTO SEAT_RESERVATION VALUES (1001,15,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'1D','IVAN MENDOZA','5522317658');
+
+1 fila creada.
+
+SQL> INSERT INTO SEAT_RESERVATION VALUES (1001,16,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'2A','MARILU SANCHEZ','5544765789');
+
+1 fila creada.
+
+SQL> INSERT INTO SEAT_RESERVATION VALUES (1001,16,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'2B','JIMENA LUNA','5534567890');
+
+1 fila creada.
+
+SQL> INSERT INTO SEAT_RESERVATION VALUES (1001,17,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'2C','JAMES JHONS','5598237645');
+
+1 fila creada.
+
+SQL> INSERT INTO SEAT_RESERVATION VALUES (1001,18,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'2D','HAILEY RICH','5534667890');
+
+1 fila creada.
+
+SQL> INSERT INTO SEAT_RESERVATION VALUES (1001,19,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'3A','LILA MENDEZ','5534663890');
+
+1 fila creada.
+
+SQL> INSERT INTO SEAT_RESERVATION VALUES (1001,20,TO_TIMESTAMP('2023-09-20 08:00:00.000000000','YYYY-MM-DD HH24:MI:SS.FF'),'3B','JUAN PEREZ','5534667890');
+
+1 fila creada.
+
+SQL> 
+SQL> 
+SQL> --Mostrar tablas
+SQL> SELECT * FROM AIRPORT;
+
+AIR ||AIRPORT_NAME    ||CITY       ||STATE                                                                                                                                                                                                                                                                  
+--- ||--------------- ||---------- ||----------                                                                                                                                                                                                                                                             
+MEX ||MEXICO CITY     ||MEXICO     ||MEXICO                                                                                                                                                                                                                                                                 
+MTY ||MONTERREY       ||MEXICO     ||MEXICO                                                                                                                                                                                                                                                                 
+JFK ||NEW YORK        ||NEW YORK   ||USA                                                                                                                                                                                                                                                                    
+YYZ ||TORONTO         ||ONTARIO    ||CANADA                                                                                                                                                                                                                                                                 
+YHU ||MONTREAL        ||QUEBEC     ||CANADA                                                                                                                                                                                                                                                                 
+
+SQL> SELECT * FROM FLIGHT;
+
+FLIGHT_NUMBER ||AIRLINE    ||WEEKDAYS                                                                                                                                                                                                                                                                       
+------------- ||---------- ||----------                                                                                                                                                                                                                                                                     
+         1001 ||AEROMEXICO ||MONDAY                                                                                                                                                                                                                                                                         
+         1002 ||AEROMEXICO ||TUESDAY                                                                                                                                                                                                                                                                        
+         1003 ||VOLARIS    ||WEDNESDAY                                                                                                                                                                                                                                                                      
+         1004 ||VOLARIS    ||THURSDAY                                                                                                                                                                                                                                                                       
+         1005 ||DELTA      ||FRIDAY                                                                                                                                                                                                                                                                         
+         1006 ||DELTA      ||SATURDAY                                                                                                                                                                                                                                                                       
+         1007 ||AIR CANADA ||SUNDAY                                                                                                                                                                                                                                                                         
+         2001 ||AIR CANADA ||MONDAY                                                                                                                                                                                                                                                                         
+         2002 ||AIR CANADA ||TUESDAY                                                                                                                                                                                                                                                                        
+         2003 ||AIR CANADA ||WEDNESDAY                                                                                                                                                                                                                                                                      
+
+10 filas seleccionadas.
+
+SQL> SELECT * FROM FLIGHT_LEG;
+
+FLIGHT_NUMBER ||LEG_NUMBER ||DEP ||SCHEDULE_DEPARTURE_TIME                                                     ||ARR ||SCHEDULE_ARRIVAL_TIME                                                                                                                                                                
+------------- ||---------- ||--- ||--------------------------------------------------------------------------- ||--- ||---------------------------------------------------------------------------                                                                                                          
+         1001 ||        12 ||MEX ||20/09/23 08:00:00.000000                                                    ||MTY ||20/09/23 09:00:00.000000                                                                                                                                                             
+         1002 ||        13 ||MTY ||20/09/23 10:00:00.000000                                                    ||JFK ||20/09/23 13:00:00.000000                                                                                                                                                             
+         1003 ||        14 ||MEX ||20/09/23 08:00:00.000000                                                    ||MTY ||20/09/23 09:00:00.000000                                                                                                                                                             
+         1004 ||        15 ||MTY ||20/09/23 10:00:00.000000                                                    ||JFK ||20/09/23 13:00:00.000000                                                                                                                                                             
+         1005 ||        16 ||JFK ||20/09/23 08:00:00.000000                                                    ||MTY ||20/09/23 09:00:00.000000                                                                                                                                                             
+         1006 ||        17 ||JFK ||20/09/23 10:00:00.000000                                                    ||MEX ||20/09/23 13:00:00.000000                                                                                                                                                             
+         1007 ||        18 ||YHU ||20/09/23 08:00:00.000000                                                    ||MTY ||20/09/23 09:00:00.000000                                                                                                                                                             
+         2001 ||        19 ||YHU ||20/09/23 10:00:00.000000                                                    ||MTY ||20/09/23 13:00:00.000000                                                                                                                                                             
+         2002 ||        20 ||YYZ ||20/09/23 08:00:00.000000                                                    ||MTY ||20/09/23 09:00:00.000000                                                                                                                                                             
+         2003 ||        21 ||YYZ ||20/09/23 10:00:00.000000                                                    ||MTY ||20/09/23 13:00:00.000000                                                                                                                                                             
+
+10 filas seleccionadas.
+
+SQL> SELECT * FROM LEG_INSTANCE;
+
+FLIGHT_NUMBER ||LEG_NUMBER ||LEG_DATE                                                                    ||NUMBER_OF_AVIABLE_SEATS ||AIRPLANE_ID ||DEP ||DEPARTURE_TIME                                                              ||ARR                                                                  
+------------- ||---------- ||--------------------------------------------------------------------------- ||----------------------- ||----------- ||--- ||--------------------------------------------------------------------------- ||---                                                                  
+ARRIVAL_TIME                                                                                                                                                                                                                                                                                                
+---------------------------------------------------------------------------                                                                                                                                                                                                                                 
+         1001 ||        12 ||20/09/23 08:00:00.000000                                                    ||                     10 ||      12345 ||MEX ||20/09/23 08:00:00.000000                                                    ||MTY                                                                  
+20/09/23 09:00:00.000000                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                            
+         1002 ||        13 ||20/09/23 10:00:00.000000                                                    ||                     25 ||      12346 ||MTY ||20/09/23 10:00:00.000000                                                    ||JFK                                                                  
+20/09/23 13:00:00.000000                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                            
+         1003 ||        14 ||20/09/23 08:00:00.000000                                                    ||                     60 ||      12329 ||MEX ||20/09/23 08:00:00.000000                                                    ||MTY                                                                  
+20/09/23 09:00:00.000000                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                            
+         1004 ||        15 ||20/09/23 10:00:00.000000                                                    ||                     75 ||      22123 ||MTY ||20/09/23 10:00:00.000000                                                    ||JFK                                                                  
+20/09/23 13:00:00.000000                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                            
+         1005 ||        16 ||20/09/23 08:00:00.000000                                                    ||                     40 ||       9871 ||JFK ||20/09/23 08:00:00.000000                                                    ||MTY                                                                  
+20/09/23 09:00:00.000000                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                            
+         1006 ||        17 ||20/09/23 10:00:00.000000                                                    ||                     60 ||      32765 ||JFK ||20/09/23 10:00:00.000000                                                    ||MEX                                                                  
+20/09/23 13:00:00.000000                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                            
+         1007 ||        18 ||20/09/23 08:00:00.000000                                                    ||                     50 ||      96341 ||YHU ||20/09/23 08:00:00.000000                                                    ||MTY                                                                  
+20/09/23 09:00:00.000000                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                            
+         2001 ||        19 ||20/09/23 10:00:00.000000                                                    ||                     55 ||      12964 ||YHU ||20/09/23 10:00:00.000000                                                    ||MTY                                                                  
+20/09/23 13:00:00.000000                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                            
+         2002 ||        20 ||20/09/23 08:00:00.000000                                                    ||                     56 ||      73178 ||YYZ ||20/09/23 08:00:00.000000                                                    ||MTY                                                                  
+20/09/23 09:00:00.000000                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                            
+         2003 ||        21 ||20/09/23 10:00:00.000000                                                    ||                     43 ||      54203 ||YYZ ||20/09/23 10:00:00.000000                                                    ||MTY                                                                  
+20/09/23 13:00:00.000000                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                            
+
+10 filas seleccionadas.
+
+SQL> SELECT * FROM FARE;
+
+FLIGHT_NUMBER ||F ||    AMOUNT ||RES                                                                                                                                                                                                                                                                        
+------------- ||- ||---------- ||---                                                                                                                                                                                                                                                                        
+         1001 ||A ||      1000 ||NOR                                                                                                                                                                                                                                                                        
+         1002 ||B ||      2000 ||NOR                                                                                                                                                                                                                                                                        
+         1003 ||C ||      3000 ||NOR                                                                                                                                                                                                                                                                        
+         1004 ||D ||      4000 ||NOR                                                                                                                                                                                                                                                                        
+         1005 ||E ||      5000 ||NOR                                                                                                                                                                                                                                                                        
+         1006 ||F ||      6000 ||NOR                                                                                                                                                                                                                                                                        
+         1007 ||G ||      7000 ||NOR                                                                                                                                                                                                                                                                        
+         2001 ||H ||      8000 ||NOR                                                                                                                                                                                                                                                                        
+         2002 ||I ||      9000 ||NOR                                                                                                                                                                                                                                                                        
+         2003 ||J ||     10000 ||NOR                                                                                                                                                                                                                                                                        
+
+10 filas seleccionadas.
+
+SQL> SELECT * FROM AIRPLANE_TYPE;
+
+AIRPL || MAX_SEATS ||CO                                                                                                                                                                                                                                                                                     
+----- ||---------- ||--                                                                                                                                                                                                                                                                                     
+A320  ||       100 ||AM                                                                                                                                                                                                                                                                                     
+A330  ||       200 ||AM                                                                                                                                                                                                                                                                                     
+A340  ||       300 ||AM                                                                                                                                                                                                                                                                                     
+B737  ||       100 ||AM                                                                                                                                                                                                                                                                                     
+B747  ||       200 ||AM                                                                                                                                                                                                                                                                                     
+B757  ||       300 ||AM                                                                                                                                                                                                                                                                                     
+B767  ||       100 ||AM                                                                                                                                                                                                                                                                                     
+B777  ||       200 ||AM                                                                                                                                                                                                                                                                                     
+B787  ||       300 ||AM                                                                                                                                                                                                                                                                                     
+A32   ||       100 ||AC                                                                                                                                                                                                                                                                                     
+
+10 filas seleccionadas.
+
+SQL> SELECT * FROM CAN_LAND;
+
+AIRPL ||AIR                                                                                                                                                                                                                                                                                                 
+----- ||---                                                                                                                                                                                                                                                                                                 
+A320  ||MEX                                                                                                                                                                                                                                                                                                 
+A320  ||MTY                                                                                                                                                                                                                                                                                                 
+A330  ||MEX                                                                                                                                                                                                                                                                                                 
+A340  ||MEX                                                                                                                                                                                                                                                                                                 
+B737  ||MEX                                                                                                                                                                                                                                                                                                 
+B747  ||MEX                                                                                                                                                                                                                                                                                                 
+B757  ||MEX                                                                                                                                                                                                                                                                                                 
+B767  ||MEX                                                                                                                                                                                                                                                                                                 
+B777  ||MEX                                                                                                                                                                                                                                                                                                 
+B787  ||MEX                                                                                                                                                                                                                                                                                                 
+
+10 filas seleccionadas.
+
+SQL> SELECT * FROM AIRPLANE;
+
+AIRPLANE_ID ||TOTAL_NUMBER_OF_SEATS ||AIRPL                                                                                                                                                                                                                                                                 
+----------- ||--------------------- ||-----                                                                                                                                                                                                                                                                 
+      12345 ||                  100 ||A320                                                                                                                                                                                                                                                                  
+      12346 ||                  200 ||A330                                                                                                                                                                                                                                                                  
+      12329 ||                  300 ||A340                                                                                                                                                                                                                                                                  
+      22123 ||                  100 ||B737                                                                                                                                                                                                                                                                  
+       9871 ||                  200 ||B747                                                                                                                                                                                                                                                                  
+      32765 ||                  300 ||B757                                                                                                                                                                                                                                                                  
+      96341 ||                  100 ||B767                                                                                                                                                                                                                                                                  
+      12964 ||                  200 ||B777                                                                                                                                                                                                                                                                  
+      73178 ||                  300 ||B787                                                                                                                                                                                                                                                                  
+      54203 ||                  100 ||A320                                                                                                                                                                                                                                                                  
+
+10 filas seleccionadas.
+
+SQL> SELECT * FROM SEAT_RESERVATION;
+
+FLIGHT_NUMBER ||LEG_NUMBER ||LEG_DATE                                                                    ||SEAT ||CUSTOMER_NAME      ||CUSTOMER_PHO                                                                                                                                                         
+------------- ||---------- ||--------------------------------------------------------------------------- ||---- ||------------------ ||------------                                                                                                                                                         
+         1001 ||        12 ||20/09/23 08:00:00.000000                                                    ||1A   ||JUAN PEREZ         ||5534667890                                                                                                                                                           
+         1001 ||        13 ||20/09/23 08:00:00.000000                                                    ||1B   ||MARIA LOPEZ        ||5555555555                                                                                                                                                           
+         1001 ||        14 ||20/09/23 08:00:00.000000                                                    ||1C   ||JOSE GARCIA        ||5512334387                                                                                                                                                           
+         1001 ||        15 ||20/09/23 08:00:00.000000                                                    ||1D   ||IVAN MENDOZA       ||5522317658                                                                                                                                                           
+         1001 ||        16 ||20/09/23 08:00:00.000000                                                    ||2A   ||MARILU SANCHEZ     ||5544765789                                                                                                                                                           
+         1001 ||        16 ||20/09/23 08:00:00.000000                                                    ||2B   ||JIMENA LUNA        ||5534567890                                                                                                                                                           
+         1001 ||        17 ||20/09/23 08:00:00.000000                                                    ||2C   ||JAMES JHONS        ||5598237645                                                                                                                                                           
+         1001 ||        18 ||20/09/23 08:00:00.000000                                                    ||2D   ||HAILEY RICH        ||5534667890                                                                                                                                                           
+         1001 ||        19 ||20/09/23 08:00:00.000000                                                    ||3A   ||LILA MENDEZ        ||5534663890                                                                                                                                                           
+         1001 ||        20 ||20/09/23 08:00:00.000000                                                    ||3B   ||JUAN PEREZ         ||5534667890                                                                                                                                                           
+
+10 filas seleccionadas.
+
+SQL> 
+SQL> 
+SQL> --SELECT * FROM USER_CONSTRAINTS;
+SQL> 	prompt USER_OBJECTS
+USER_OBJECTS
+SQL> REM ***********************
+SQL> REM DESPLEGAR OBJETOS
+SQL> REM ***********************
+SQL> COL OBJECT_NAME FORMAT A25
+SQL> COL OBJECT__TYPE FORMAT A12
+SQL> COL OBJECT_ID   FORMAT 99,999
+SQL> SELECT OBJECT_NAME, OBJECT_TYPE, OBJECT_ID
+  2  	FROM USER_OBJECTS
+  3  	WHERE OBJECT_NAME IN ('AIRPORT','FLIGHT', 'FLIGHT_LEG', 'LEG_INSTANCE', 'FARE', 'AIRPLANE_TYPE', 'CAN_LAND', 'AIRPLANE', 'SEAT_RESERVATION')
+  4  	ORDER BY 2,1;
+
+OBJECT_NAME               ||OBJECT_TYPE             ||OBJECT_ID                                                                                                                                                                                                                                             
+------------------------- ||----------------------- ||---------                                                                                                                                                                                                                                             
+AIRPLANE                  ||TABLE                   ||   78,269                                                                                                                                                                                                                                             
+AIRPLANE_TYPE             ||TABLE                   ||   78,267                                                                                                                                                                                                                                             
+AIRPORT                   ||TABLE                   ||   78,262                                                                                                                                                                                                                                             
+CAN_LAND                  ||TABLE                   ||   78,268                                                                                                                                                                                                                                             
+FARE                      ||TABLE                   ||   78,266                                                                                                                                                                                                                                             
+FLIGHT                    ||TABLE                   ||   78,263                                                                                                                                                                                                                                             
+FLIGHT_LEG                ||TABLE                   ||   78,264                                                                                                                                                                                                                                             
+LEG_INSTANCE              ||TABLE                   ||   78,265                                                                                                                                                                                                                                             
+SEAT_RESERVATION          ||TABLE                   ||   78,270                                                                                                                                                                                                                                             
+
+9 filas seleccionadas.
+
+SQL> 
+SQL> 	prompt USER_TAB_COLUMNS
+USER_TAB_COLUMNS
+SQL> REM ***********************
+SQL> REM DESPLEGAR USER_CONS_COLUMNS
+SQL> REM ***********************
+SQL> COLUMN     OWNER FORMAT A10
+SQL> COLUMN     CONSTRAINT_NAME FORMAT A27
+SQL> COLUMN     TABLE_NAME   FORMAT A12
+SQL> COLUMN     COLUMN_NAME  FORMAT A18
+SQL> COLUMN     POSITION     FORMAT 99
+SQL> SELECT OWNER, CONSTRAINT_NAME, TABLE_NAME,
+  2  	COLUMN_NAME, POSITION
+  3  	FROM USER_CONS_COLUMNS
+  4  	WHERE TABLE_NAME IN ('AIRPORT','FLIGHT', 'FLIGHT_LEG', 'LEG_INSTANCE', 'FARE', 'AIRPLANE_TYPE', 'CAN_LAND', 'AIRPLANE', 'SEAT_RESERVATION'));
+	WHERE TABLE_NAME IN ('AIRPORT','FLIGHT', 'FLIGHT_LEG', 'LEG_INSTANCE', 'FARE', 'AIRPLANE_TYPE', 'CAN_LAND', 'AIRPLANE', 'SEAT_RESERVATION'))
+	                                                                                                                                           *
+ERROR en línea 4:
+ORA-00933: comando SQL no terminado correctamente 
+
+
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM ***********************
+SQL> REM DESPLEGAR USER_CONSTRAINTS
+SQL> REM ***********************
+SQL> 
+SQL> prompt USER CONSTRAINTS
+USER CONSTRAINTS
+SQL> COLUMN CONSTRAINT_NAME FORMAT A27
+SQL> column table_name format a12
+SQL> column owner format a9
+SQL> select owner,table_name,constraint_name,constraint_type,
+  2  	deferrable,deferred
+  3  	from user_constraints
+  4  	where table_name IN ('AIRPORT','FLIGHT', 'FLIGHT_LEG', 'LEG_INSTANCE', 'FARE', 'AIRPLANE_TYPE', 'CAN_LAND', 'AIRPLANE', 'SEAT_RESERVATION')
+  5  	ORDER BY 4;
+
+OWNER     ||TABLE_NAME   ||CONSTRAINT_NAME             ||C ||DEFERRABLE     ||DEFERRED                                                                                                                                                                                                                      
+--------- ||------------ ||--------------------------- ||- ||-------------- ||---------                                                                                                                                                                                                                     
+AEROMOSA  ||AIRPORT      ||CK_AIRPORT                  ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||AIRPLANE_TYP ||NN_COMPANY                  ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||E            ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+AEROMOSA  ||SEAT_RESERVA ||NN_SEAT_NUMBER              ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||TION         ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+AEROMOSA  ||SEAT_RESERVA ||NN_SEAT_DATE                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||TION         ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+AEROMOSA  ||SEAT_RESERVA ||NN2_LEG_NUMBER              ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||TION         ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+AEROMOSA  ||SEAT_RESERVA ||NN4_FLIGHT_NUMBER           ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||TION         ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+AEROMOSA  ||AIRPLANE     ||NN_AIRPLANE_TYPE            ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||AIRPLANE     ||NN_TOTAL_NUMBER_OF_SEATS    ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||AIRPLANE     ||NN1_AIRPLANE_ID             ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||CAN_LAND     ||NN1_AIRPORT_CODE            ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||CAN_LAND     ||NNATN_AIRPLANE_TYPE_NAME    ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||AIRPORT      ||NN_AIRPORT_CODE             ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||AIRPORT      ||NN_NAME                     ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||AIRPORT      ||NN_CITY                     ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT       ||NN_FLIGHT_NUMBER            ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT       ||NN_AIRLINE                  ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT       ||NN_WEEDAYS                  ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT_LEG   ||NN1_FLIGHT_NUMBER           ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT_LEG   ||NN_LEG_NUMBER               ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT_LEG   ||NN_DEPARTURE_AIRPORT_CODE   ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT_LEG   ||NN_SCHEDULE_DEPARTURE_TIME  ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT_LEG   ||NN_ARRIVAL_AIRPORT_CODE     ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT_LEG   ||NN_SCHEDULE_ARRIVAL_TIME    ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||NN2_FLIGHT_NUMBER           ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||NN1_LEG_NUMBER              ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||NN_LEG_DATE                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||NN_NUMBER_AVIABLE_SEATS     ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||NN_AIRPLANE_ID              ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||NN1_DEPARTURE_AIRPORT_CODE  ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||NN_DEPARTURE_TIME           ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||NN1_ARRIVAL_AIRPORT_CODE    ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||NN_ARRIVAL_TIME             ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FARE         ||NN3_FLIGHT_NUMBER           ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FARE         ||NN_FARE_CODE                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FARE         ||NN_AMOUNT                   ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FARE         ||NN_RESTRICTIONS             ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||AIRPLANE_TYP ||NN_AIRPLANE_TYPE_NAME       ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||E            ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+AEROMOSA  ||AIRPLANE_TYP ||NN_MAX_SEATS                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||E            ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+AEROMOSA  ||SEAT_RESERVA ||NN_CUSTOMER_PHONE           ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||TION         ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+AEROMOSA  ||SEAT_RESERVA ||PK_SEAT_RESERVATION         ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||TION         ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+AEROMOSA  ||AIRPLANE     ||PK_AIRPLANE                 ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||CAN_LAND     ||PK_CAN_LAND                 ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||AIRPLANE_TYP ||PK_AIRPLANE_TYPE            ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||E            ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+AEROMOSA  ||FARE         ||PK_FARE                     ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||PK_LEG_INSTANCE             ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT_LEG   ||PK_FLIGHT_LEG               ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT       ||PK_FLIGHT                   ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||AIRPORT      ||PK_AIRPORT                  ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT_LEG   ||FK_FLIGHT_LEG1              ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT_LEG   ||FK_FLIGHT_LEG               ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FLIGHT_LEG   ||FK_FLIGHT_LEG2              ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||FK_LEG_INSTANCE             ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||FK_LEG_INSTANCE2            ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||AIRPLANE     ||FK_AIRPLANE                 ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||FK_LEG_INSTANCE4            ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||FARE         ||FK_FARE                     ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||CAN_LAND     ||FK_CAN_LAND                 ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||CAN_LAND     ||FK_CAN_LAND1                ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AEROMOSA  ||LEG_INSTANCE ||FK_LEG_INSTANCE3            ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+
+59 filas seleccionadas.
+
+SQL> 
+SQL> 
+SQL>  spool off

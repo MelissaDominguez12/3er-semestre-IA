@@ -1,0 +1,210 @@
+SQL> --BORRAR TABLAS
+SQL> DROP TABLE Empleado CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE Electrodomestico CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE Empl_Elect CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> --CREAR TABLAS
+SQL> 
+SQL> CREATE TABLE Empleado (
+  2      nif VARCHAR2(10),
+  3      nombre VARCHAR2(20),
+  4      apellidos VARCHAR2(20),
+  5      nivel NUMBER(2,0),
+  6      ocupacion VARCHAR2(20)
+  7  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE Electrodomestico (
+  2      aparato VARCHAR2(20),
+  3      marca VARCHAR2(20),
+  4      modelo VARCHAR2(20)
+  5  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE Empl_Elect (
+  2    nif VARCHAR2(10),
+  3    aparato VARCHAR2(20),
+  4    ultima_fecha DATE
+  5  );
+
+Tabla creada.
+
+SQL> 
+SQL> 
+SQL> --Agregar Restricciones
+SQL> ALTER TABLE Empleado ADD CONSTRAINT pk_empleado PRIMARY KEY (nif);
+
+Tabla modificada.
+
+SQL> ALTER TABLE Electrodomestico ADD CONSTRAINT pk_electrodomestico PRIMARY KEY (aparato);
+
+Tabla modificada.
+
+SQL> ALTER TABLE Empl_Elect ADD CONSTRAINT pk_empl_elect PRIMARY KEY (nif, aparato);
+
+Tabla modificada.
+
+SQL> ALTER TABLE Empl_Elect ADD CONSTRAINT fk_empleado FOREIGN KEY (nif) REFERENCES Empleado(nif);
+
+Tabla modificada.
+
+SQL> ALTER TABLE Empl_Elect ADD CONSTRAINT fk_electrodomestico FOREIGN KEY (aparato) REFERENCES Electrodomestico(aparato);
+
+Tabla modificada.
+
+SQL> 
+SQL> --INSERTAR DATOS
+SQL>     INSERT INTO Empleado VALUES ('12345678A', 'Juan', 'Perez', 1, 'Reparador');
+
+1 fila creada.
+
+SQL>     INSERT INTO Empleado VALUES ('87654321B', 'Maria', 'Garcia', 2, 'Reparador');
+
+1 fila creada.
+
+SQL>     INSERT INTO Empleado VALUES ('12345678C', 'Pedro', 'Lopez', 3, 'Reparador');
+
+1 fila creada.
+
+SQL>     INSERT INTO Empleado VALUES ('87654321D', 'Ana', 'Gomez', 4, 'Reparador');
+
+1 fila creada.
+
+SQL>     INSERT INTO Empleado VALUES ('12345678E', 'Luis', 'Rodriguez', 5, 'Reparador');
+
+1 fila creada.
+
+SQL> 
+SQL>     INSERT INTO Electrodomestico VALUES ('Lavadora', 'Bosch', 'A1');
+
+1 fila creada.
+
+SQL>     INSERT INTO Electrodomestico VALUES ('Licuadora', 'Bosch', 'A2');
+
+1 fila creada.
+
+SQL>     INSERT INTO Electrodomestico VALUES ('Secdora', 'Bosch', 'A3');
+
+1 fila creada.
+
+SQL>     INSERT INTO Electrodomestico VALUES ('Refrigerador', 'Bosch', 'A4');
+
+1 fila creada.
+
+SQL>     INSERT INTO Electrodomestico VALUES ('Estufa', 'Bosch', 'A5');
+
+1 fila creada.
+
+SQL> 
+SQL>     INSERT INTO Empl_Elect VALUES ('12345678A', 'Lavadora', '01/01/2020');
+
+1 fila creada.
+
+SQL>     INSERT INTO Empl_Elect VALUES ('87654321B', 'Licuadora', '04/01/2020');
+
+1 fila creada.
+
+SQL>     INSERT INTO Empl_Elect VALUES ('12345678C', 'Secdora', '01/05/2020');
+
+1 fila creada.
+
+SQL>     INSERT INTO Empl_Elect VALUES ('87654321D', 'Refrigerador', '03/01/2020');
+
+1 fila creada.
+
+SQL>     INSERT INTO Empl_Elect VALUES ('12345678E', 'Estufa', '01/09/2020');
+
+1 fila creada.
+
+SQL> 
+SQL> --CONSULTAS
+SQL> --1. Mostrar los empleados que han reparado un electrodomestico
+SQL> SELECT e.nombre, e.apellidos, ee.aparato
+  2  FROM Empleado e, Empl_Elect ee
+  3  WHERE e.nif = ee.nif;
+
+NOMBRE               APELLIDOS            APARATO                               
+-------------------- -------------------- --------------------                  
+Juan                 Perez                Lavadora                              
+Pedro                Lopez                Secdora                               
+Luis                 Rodriguez            Estufa                                
+Maria                Garcia               Licuadora                             
+Ana                  Gomez                Refrigerador                          
+
+SQL> 
+SQL> --2. Mostrar los electrodomesticos que han sido reparados por un empleado
+SQL> SELECT e.aparato, e.marca, e.modelo, ee.nif
+  2  FROM Electrodomestico e, Empl_Elect ee
+  3  WHERE e.aparato = ee.aparato;
+
+APARATO              MARCA                MODELO               NIF              
+-------------------- -------------------- -------------------- ----------       
+Lavadora             Bosch                A1                   12345678A        
+Secdora              Bosch                A3                   12345678C        
+Estufa               Bosch                A5                   12345678E        
+Licuadora            Bosch                A2                   87654321B        
+Refrigerador         Bosch                A4                   87654321D        
+
+SQL> 
+SQL> -- 3.Mostar tablas
+SQL> SELECT * FROM Empleado;
+
+NIF        NOMBRE               APELLIDOS                 NIVEL                 
+---------- -------------------- -------------------- ----------                 
+OCUPACION                                                                       
+--------------------                                                            
+12345678A  Juan                 Perez                         1                 
+Reparador                                                                       
+                                                                                
+87654321B  Maria                Garcia                        2                 
+Reparador                                                                       
+                                                                                
+12345678C  Pedro                Lopez                         3                 
+Reparador                                                                       
+                                                                                
+
+NIF        NOMBRE               APELLIDOS                 NIVEL                 
+---------- -------------------- -------------------- ----------                 
+OCUPACION                                                                       
+--------------------                                                            
+87654321D  Ana                  Gomez                         4                 
+Reparador                                                                       
+                                                                                
+12345678E  Luis                 Rodriguez                     5                 
+Reparador                                                                       
+                                                                                
+
+SQL> SELECT * FROM Electrodomestico;
+
+APARATO              MARCA                MODELO                                
+-------------------- -------------------- --------------------                  
+Lavadora             Bosch                A1                                    
+Licuadora            Bosch                A2                                    
+Secdora              Bosch                A3                                    
+Refrigerador         Bosch                A4                                    
+Estufa               Bosch                A5                                    
+
+SQL> SELECT * FROM Empl_Elect;
+
+NIF        APARATO              ULTIMA_F                                        
+---------- -------------------- --------                                        
+12345678A  Lavadora             01/01/20                                        
+87654321B  Licuadora            04/01/20                                        
+12345678C  Secdora              01/05/20                                        
+87654321D  Refrigerador         03/01/20                                        
+12345678E  Estufa               01/09/20                                        
+
+SQL> 
+SQL> spool off

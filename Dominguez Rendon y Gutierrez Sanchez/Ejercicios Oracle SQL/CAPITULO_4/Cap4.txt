@@ -1,0 +1,90 @@
+SQL> PROMPT CAP 4 ORACLE BY EXAMPLE
+CAP 4 ORACLE BY EXAMPLE
+SQL> PROMPT SEPTIEMBRE 2023
+SEPTIEMBRE 2023
+SQL> PROMPT "EJERCICIO 1: LAB 4.1 a)"
+"EJERCICIO 1: LAB 4.1 a)"
+SQL> rem (Rischert, 2010, 190)
+SQL> SELECT description "Description",
+  2  INITCAP(description) "Initcap Description"
+  3  FROM course
+  4  WHERE description LIKE '%SQL%';
+
+Description                         | * |Initcap Description                                                                                                                                                                                              
+------------------------------------| * |--------------------------------------------------                                                                                                                                                               
+Intro to SQL                        | * |Intro To Sql                                                                                                                                                                                                     
+PL/SQL Programming                  | * |Pl/Sql Programming                                                                                                                                                                                               
+
+SQL> 
+SQL> PROMPT "EJERCICIO 2: LAB 4.1 b=f)"
+"EJERCICIO 2: LAB 4.1 b=f)"
+SQL> rem (Rischert, 2010, 191)
+SQL> SELECT TRANSLATE('555-1212', '0123456789',
+  2  '##########')
+  3  FROM dual;
+
+TRANSLAT                                                                                                                                                                                                                                                  
+--------                                                                                                                                                                                                                                                  
+###-####                                                                                                                                                                                                                                                  
+
+SQL> 
+SQL> 
+SQL> PROMPT "EJERCICIO 3: LAB 4.2 a)"
+"EJERCICIO 3: LAB 4.2 a)"
+SQL> rem (Rischert, 2010, 206)
+SQL> SELECT 10.245, ROUND(10.245, 1), ROUND(10.245, -1)
+  2  FROM dual;
+
+    10.245| * |ROUND(10.245,1)| * |ROUND(10.245,-1)                                                                                                                                                                                                       
+----------| * |---------------| * |----------------                                                                                                                                                                                                       
+    10.245| * |           10.2| * |              10                                                                                                                                                                                                       
+
+SQL> 
+SQL> PROMPT "EJERCICIO 4: LAB 4.2 b)"
+"EJERCICIO 4: LAB 4.2 b)"
+SQL> rem (Rischert, 2010, 206)
+SQL> SELECT DISTINCT cost, cost*1.75, ROUND(cost*1.75)
+  2  FROM course;
+
+    COST| * | COST*1.75| * |ROUND(COST*1.75)                                                                                                                                                                                                              
+--------| * |----------| * |----------------                                                                                                                                                                                                              
+ 1195.00| * |   2091.25| * |            2091                                                                                                                                                                                                              
+ 1595.00| * |   2791.25| * |            2791                                                                                                                                                                                                              
+ 1095.00| * |   1916.25| * |            1916                                                                                                                                                                                                              
+        | * |          | * |                                                                                                                                                                                                                              
+
+SQL> 
+SQL> PROMPT "EJERCICIO 5: LAB 4.3 a)"
+"EJERCICIO 5: LAB 4.3 a)"
+SQL> rem (Rischert, 2010, 222)
+SQL> SELECT first_name||' '|| last_name name,
+  2  phone oldphone,
+  3  NVL(phone, '212-555-1212') newphone
+  4  FROM student
+  5  WHERE phone IS NULL;
+
+NAME                                               | * |OLDPHONE       | * |NEWPHONE                                                                                                                                                                      
+---------------------------------------------------| * |---------------| * |---------------                                                                                                                                                               
+Peggy Noviello                                     | * |               | * |212-555-1212                                                                                                                                                                  
+
+SQL> 
+SQL> PROMPT "EJERCICIO 6: LAB 4.3 D)"
+"EJERCICIO 6: LAB 4.3 D)"
+SQL> rem (Rischert, 2010, 169)
+SQL> SELECT student_id, first_name||' '|| last_name name,
+  2  phone,
+  3  DECODE(phone, NULL, 'No phone# exists.', 'Phone# exists.')
+  4  "Get this result"
+  5  FROM student
+  6  WHERE student_id IN (111, 112)
+  7  ORDER BY 1 DESC;
+
+STUDENT_ID| * |NAME                                               | * |PHONE          | * |Get this result                                                                                                                                                
+----------| * |---------------------------------------------------| * |---------------| * |-----------------                                                                                                                                              
+       112| * |Thomas Thomas                                      | * |201-555-5555   | * |Phone# exists.                                                                                                                                                 
+       111| * |Peggy Noviello                                     | * |               | * |No phone# exists.                                                                                                                                              
+
+SQL> 
+SQL> PROMPT "FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 4"
+"FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 4"
+SQL> spool off

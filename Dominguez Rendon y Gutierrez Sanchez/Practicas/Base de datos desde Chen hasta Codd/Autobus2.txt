@@ -1,0 +1,267 @@
+SQL> --Borrar tablas
+SQL> DROP TABLE AUTOBUS      CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE CONDUCTOR    CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE LUGAR        CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE AUT_CON_LUG  CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> 
+SQL> --Crear tablas
+SQL> CREATE TABLE AUTOBUS(
+  2  	MATRICULA    VARCHAR2(6)  NOT NULL,
+  3  	LICENCIA     VARCHAR2(8)  NOT NULL,
+  4  	CATEGORIA    VARCHAR(1)   NOT NULL);
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE CONDUCTOR(
+  2  	NO_CARNET    NUMBER(4,0) NOT NULL,
+  3  	NOMBRE       VARCHAR(25) NOT NULL,
+  4  	EXPERIENCIA  NUMBER(2,0));
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE LUGAR(
+  2  	CIUDAD       VARCHAR2(15) NOT NULL,
+  3  	SITIO        VARCHAR(15)  NOT NULL,
+  4  	ACTIVIDAD    VARCHAR(15));
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE AUT_CON_LUG(
+  2  	NO_CARNET    NUMBER(4,0)  NOT NULL,
+  3  	MATRICULA    VARCHAR2(6)  NOT NULL,
+  4  	CIUDAD       VARCHAR2(15) NOT NULL,
+  5  	SITIO        VARCHAR(15)  NOT NULL,
+  6  	FECHA        TIMESTAMP    NOT NULL);
+
+Tabla creada.
+
+SQL> 
+SQL> --Restricciones PK
+SQL> ALTER TABLE AUTOBUS
+  2  ADD CONSTRAINT PK_MATRICULA_AUTOBUS PRIMARY KEY (MATRICULA);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE CONDUCTOR
+  2  ADD CONSTRAINT PK_NO_CARNET_CONDUCTOR PRIMARY KEY(NO_CARNET);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE LUGAR
+  2  ADD CONSTRAINT PK_CIUDAD_SITIO_LUGAR PRIMARY KEY(CIUDAD, SITIO);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE AUT_CON_LUG
+  2  ADD CONSTRAINT PK_NO_CARNET_MATRICULA_CIUDAD_SITIO_AUT_CON_LUG PRIMARY KEY (NO_CARNET, MATRICULA, CIUDAD, SITIO);
+
+Tabla modificada.
+
+SQL> 
+SQL> --Restricciones FK
+SQL> ALTER TABLE AUT_CON_LUG
+  2  ADD CONSTRAINT FK_NO_CARNET_AUT_CON_LUG FOREIGN KEY (NO_CARNET) REFERENCES CONDUCTOR(NO_CARNET)
+  3  ADD CONSTRAINT FK_MATRICULA_AUT_CON_LUG FOREIGN KEY (MATRICULA) REFERENCES AUTOBUS(MATRICULA)
+  4  ADD CONSTRAINT FK_CIUDAD_SITIO_AUT_CON_LUG FOREIGN KEY (CIUDAD,SITIO) REFERENCES LUGAR(CIUDAD,SITIO);
+
+Tabla modificada.
+
+SQL> 
+SQL> --Restricciones CHECK
+SQL> ALTER TABLE AUTOBUS
+  2  	ADD CONSTRAINT CK_CATEGORIA CHECK ( CATEGORIA IN  ('A','B','C','D','F'));
+
+Tabla modificada.
+
+SQL> 
+SQL> --INSERTAR DATOS
+SQL> INSERT INTO AUTOBUS VALUES ('123456','12345678','A');
+
+1 fila creada.
+
+SQL> INSERT INTO AUTOBUS VALUES ('654321','87654321','B');
+
+1 fila creada.
+
+SQL> INSERT INTO AUTOBUS VALUES ('654123','12345678','C');
+
+1 fila creada.
+
+SQL> INSERT INTO AUTOBUS VALUES ('321654','87654321','D');
+
+1 fila creada.
+
+SQL> INSERT INTO AUTOBUS VALUES ('321456','12345678','F');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO CONDUCTOR VALUES (1234,'MELISSA',2);
+
+1 fila creada.
+
+SQL> INSERT INTO CONDUCTOR VALUES (4321,'JUAN',7);
+
+1 fila creada.
+
+SQL> INSERT INTO CONDUCTOR VALUES (1234,'MARIA',4);
+INSERT INTO CONDUCTOR VALUES (1234,'MARIA',4)
+*
+ERROR en línea 1:
+ORA-00001: restricción única (AUTOBUS2.PK_NO_CARNET_CONDUCTOR) violada 
+
+
+SQL> INSERT INTO CONDUCTOR VALUES (4321,'JOSE',3);
+INSERT INTO CONDUCTOR VALUES (4321,'JOSE',3)
+*
+ERROR en línea 1:
+ORA-00001: restricción única (AUTOBUS2.PK_NO_CARNET_CONDUCTOR) violada 
+
+
+SQL> INSERT INTO CONDUCTOR VALUES (1238,'PEDRO',8);
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO LUGAR VALUES ('SAN JOSE','CARTAGO','CASA');
+
+1 fila creada.
+
+SQL> INSERT INTO LUGAR VALUES ('SAN JOSE','ALAJUELA','TRABAJO');
+
+1 fila creada.
+
+SQL> INSERT INTO LUGAR VALUES ('SAN JOSE','HEREDIA','UNIVERSIDAD');
+
+1 fila creada.
+
+SQL> INSERT INTO LUGAR VALUES ('SAN JOSE','SAN JOSE','CASA');
+
+1 fila creada.
+
+SQL> INSERT INTO LUGAR VALUES ('SAN JOSE','SAN JOSE','TRABAJO');
+INSERT INTO LUGAR VALUES ('SAN JOSE','SAN JOSE','TRABAJO')
+*
+ERROR en línea 1:
+ORA-00001: restricción única (AUTOBUS2.PK_CIUDAD_SITIO_LUGAR) violada 
+
+
+SQL> 
+SQL> INSERT INTO AUT_CON_LUG VALUES (1234,'123456','SAN JOSE','CARTAGO',TO_TIMESTAMP('2020-10-10 10:10:10.123456','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO AUT_CON_LUG VALUES (4321,'654321','SAN JOSE','ALAJUELA',TO_TIMESTAMP('2020-10-10 10:10:10.123456','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO AUT_CON_LUG VALUES (1234,'654123','SAN JOSE','HEREDIA',TO_TIMESTAMP('2020-10-10 10:10:10.123456','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO AUT_CON_LUG VALUES (4321,'321654','SAN JOSE','SAN JOSE',TO_TIMESTAMP('2020-10-10 10:10:10.123456','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> INSERT INTO AUT_CON_LUG VALUES (1238,'321456','SAN JOSE','SAN JOSE',TO_TIMESTAMP('2020-10-10 10:10:10.123456','YYYY-MM-DD HH24:MI:SS.FF'));
+
+1 fila creada.
+
+SQL> 
+SQL> --CONSULTAS
+SQL> --1. Mostrar la matricula y la licencia de los autobuses que tengan categoria A o B
+SQL> SELECT MATRICULA, LICENCIA FROM AUTOBUS WHERE CATEGORIA IN ('A','B');
+
+MATRIC ||LICENCIA                                                                                                                                                                                                                                                                                           
+------ ||--------                                                                                                                                                                                                                                                                                           
+123456 ||12345678                                                                                                                                                                                                                                                                                           
+654321 ||87654321                                                                                                                                                                                                                                                                                           
+
+SQL> 
+SQL> --Mostrar tablas
+SQL> SELECT * FROM AUTOBUS;
+
+MATRIC ||LICENCIA ||C                                                                                                                                                                                                                                                                                       
+------ ||-------- ||-                                                                                                                                                                                                                                                                                       
+123456 ||12345678 ||A                                                                                                                                                                                                                                                                                       
+654321 ||87654321 ||B                                                                                                                                                                                                                                                                                       
+654123 ||12345678 ||C                                                                                                                                                                                                                                                                                       
+321654 ||87654321 ||D                                                                                                                                                                                                                                                                                       
+321456 ||12345678 ||F                                                                                                                                                                                                                                                                                       
+
+SQL> SELECT * FROM CONDUCTOR;
+
+ NO_CARNET ||NOMBRE                    ||EXPERIENCIA                                                                                                                                                                                                                                                        
+---------- ||------------------------- ||-----------                                                                                                                                                                                                                                                        
+      1234 ||MELISSA                   ||          2                                                                                                                                                                                                                                                        
+      4321 ||JUAN                      ||          7                                                                                                                                                                                                                                                        
+      1238 ||PEDRO                     ||          8                                                                                                                                                                                                                                                        
+
+SQL> SELECT * FROM LUGAR;
+
+CIUDAD          ||SITIO           ||ACTIVIDAD                                                                                                                                                                                                                                                               
+--------------- ||--------------- ||---------------                                                                                                                                                                                                                                                         
+SAN JOSE        ||CARTAGO         ||CASA                                                                                                                                                                                                                                                                    
+SAN JOSE        ||ALAJUELA        ||TRABAJO                                                                                                                                                                                                                                                                 
+SAN JOSE        ||HEREDIA         ||UNIVERSIDAD                                                                                                                                                                                                                                                             
+SAN JOSE        ||SAN JOSE        ||CASA                                                                                                                                                                                                                                                                    
+
+SQL> 
+SQL> prompt USER CONSTRAINTS
+USER CONSTRAINTS
+SQL> COLUMN CONSTRAINT_NAME FORMAT A27
+SQL> column table_name format a12
+SQL> column owner format a9
+SQL> select owner,table_name,constraint_name,constraint_type,
+  2  	deferrable,deferred
+  3  	from user_constraints
+  4  	where table_name IN ('AUTOBUS','CONDUCTOR', 'LUGAR', 'AUT_CON_LUG')
+  5  	ORDER BY 4;
+
+OWNER     ||TABLE_NAME   ||CONSTRAINT_NAME             ||C ||DEFERRABLE     ||DEFERRED                                                                                                                                                                                                                      
+--------- ||------------ ||--------------------------- ||- ||-------------- ||---------                                                                                                                                                                                                                     
+AUTOBUS2  ||AUTOBUS      ||CK_CATEGORIA                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUT_CON_LUG  ||SYS_C009717                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUT_CON_LUG  ||SYS_C009716                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUTOBUS      ||SYS_C009707                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUTOBUS      ||SYS_C009708                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||CONDUCTOR    ||SYS_C009709                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUT_CON_LUG  ||SYS_C009715                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||LUGAR        ||SYS_C009711                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUTOBUS      ||SYS_C009706                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||LUGAR        ||SYS_C009712                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUT_CON_LUG  ||SYS_C009713                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUT_CON_LUG  ||SYS_C009714                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||CONDUCTOR    ||SYS_C009710                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||LUGAR        ||PK_CIUDAD_SITIO_LUGAR       ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUT_CON_LUG  ||PK_NO_CARNET_MATRICULA_CIUD ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||             ||AD_SITIO_AUT_CON_LUG        ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+AUTOBUS2  ||CONDUCTOR    ||PK_NO_CARNET_CONDUCTOR      ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUTOBUS      ||PK_MATRICULA_AUTOBUS        ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUT_CON_LUG  ||FK_NO_CARNET_AUT_CON_LUG    ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUT_CON_LUG  ||FK_MATRICULA_AUT_CON_LUG    ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+AUTOBUS2  ||AUT_CON_LUG  ||FK_CIUDAD_SITIO_AUT_CON_LUG ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+
+20 filas seleccionadas.
+
+SQL> 
+SQL> spool off

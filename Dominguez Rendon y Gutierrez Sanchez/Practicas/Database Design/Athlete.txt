@@ -1,0 +1,424 @@
+SQL> --Borrar tablas
+SQL> DROP TABLE FOOTBALL;
+
+Tabla borrada.
+
+SQL> DROP TABLE GOLF;
+
+Tabla borrada.
+
+SQL> DROP TABLE TENNIS;
+
+Tabla borrada.
+
+SQL> DROP TABLE ATHLETE_SPORT;
+
+Tabla borrada.
+
+SQL> DROP TABLE ATHLETE;
+
+Tabla borrada.
+
+SQL> 
+SQL> 
+SQL> --Crear tablas
+SQL> 
+SQL> CREATE TABLE ATHLETE(
+  2      SSNO VARCHAR2(11) NOT NULL,
+  3      WEIGHT NUMBER(3,0) NOT NULL,
+  4      NAME_A VARCHAR2(8) NOT NULL,
+  5      GENDER VARCHAR(1) NOT NULL,
+  6      HEIGHT NUMBER(3,2) NOT NULL
+  7  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE ATHLETE_SPORT(
+  2      SSNO VARCHAR2(11) NOT NULL,
+  3      SPORT VARCHAR2(8) NOT NULL
+  4  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE TENNIS(
+  2      SSNO VARCHAR2(11) NOT NULL,
+  3      STATE_RANKING NUMBER(2,0) NOT NULL
+  4  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE GOLF(
+  2      SSNO VARCHAR2(11) NOT NULL,
+  3      HANDICAP NUMBER(1,0) NOT NULL
+  4  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE FOOTBALL(
+  2      SSNO VARCHAR2(11) NOT NULL,
+  3      POSITION VARCHAR2(15)NOT NULL
+  4  );
+
+Tabla creada.
+
+SQL> 
+SQL> --RESTRICCIONES PK
+SQL> ALTER TABLE ATHLETE
+  2  ADD CONSTRAINT ATHLETE_PK PRIMARY KEY (SSNO);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE ATHLETE_SPORT
+  2  ADD CONSTRAINT ATHLETE_SPORT_PK PRIMARY KEY (SSNO,SPORT);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE TENNIS
+  2  ADD CONSTRAINT TENNIS_PK PRIMARY KEY (SSNO);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE GOLF
+  2  ADD CONSTRAINT GOLF_PK PRIMARY KEY (SSNO);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE FOOTBALL
+  2  ADD CONSTRAINT FOOTBALL_PK PRIMARY KEY (SSNO);
+
+Tabla modificada.
+
+SQL> 
+SQL> --RESTRICCIONES FK
+SQL> ALTER TABLE ATHLETE_SPORT
+  2  ADD CONSTRAINT ATHLETE_SPORT_FK FOREIGN KEY (SSNO) REFERENCES ATHLETE (SSNO);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE TENNIS
+  2  ADD CONSTRAINT TENNIS_FK FOREIGN KEY (SSNO) REFERENCES ATHLETE (SSNO);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE GOLF
+  2  ADD CONSTRAINT GOLF_FK FOREIGN KEY (SSNO) REFERENCES ATHLETE (SSNO);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE FOOTBALL
+  2  ADD CONSTRAINT FOOTBALL_FK FOREIGN KEY (SSNO) REFERENCES ATHLETE (SSNO);
+
+Tabla modificada.
+
+SQL> 
+SQL> --RESCTRICCIONES CHECK
+SQL> ALTER TABLE ATHLETE
+  2  ADD CONSTRAINT ATHLETE_GENDER_CK CHECK (GENDER IN ('M','F'));
+
+Tabla modificada.
+
+SQL> ADD CONSTRAINT ATHLETE_HEIGHT_CK CHECK (HEIGHT<7);
+SP2-0734: inicio "ADD CONSTR..." de comando desconocido - resto de la línea ignorado.
+SQL> 
+SQL> ALTER TABLE ATHLETE_SPORT
+  2  ADD CONSTRAINT ATHLETE_SPORT_CK CHECK (SPORT IN ('TENNIS','GOLF','FOOTBALL'));
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE TENNIS
+  2  ADD CONSTRAINT TENNIS_STATE_RANKING_CK CHECK (STATE_RANKING<50);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE GOLF
+  2  ADD CONSTRAINT GOLF_HANDICAP_CK CHECK (HANDICAP<5);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE FOOTBALL
+  2  ADD CONSTRAINT FOOTBALL_POSITION_CK CHECK (POSITION IN ('QUARTERBACK','TACKLE','FULL BACK'));
+
+Tabla modificada.
+
+SQL> 
+SQL> 
+SQL> --INSERTAR DATOS
+SQL> INSERT INTO ATHLETE VALUES ('239-92-0983', 140, 'Kumar', 'M',5.95);
+
+1 fila creada.
+
+SQL> INSERT INTO ATHLETE VALUES ('398-08-0928', 200, 'Kelvin', 'M',6.02);
+
+1 fila creada.
+
+SQL> INSERT INTO ATHLETE VALUES ('322-00-1234', 135, 'Sarah', 'F',5.6);
+
+1 fila creada.
+
+SQL> INSERT INTO ATHLETE VALUES ('873-97-9877', 165, 'Arjun', 'M',6.01);
+
+1 fila creada.
+
+SQL> INSERT INTO ATHLETE VALUES ('876-09-9873', 145, 'Deesha', 'F',5.5);
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO ATHLETE_SPORT VALUES ('239-92-0983', 'GOLF');
+
+1 fila creada.
+
+SQL> INSERT INTO ATHLETE_SPORT VALUES ('398-08-0928', 'FOOTBALL');
+
+1 fila creada.
+
+SQL> INSERT INTO ATHLETE_SPORT VALUES ('322-00-1234', 'TENNIS');
+
+1 fila creada.
+
+SQL> INSERT INTO ATHLETE_SPORT VALUES ('873-97-9877', 'GOLF');
+
+1 fila creada.
+
+SQL> INSERT INTO ATHLETE_SPORT VALUES ('876-09-9873', 'TENNIS');
+
+1 fila creada.
+
+SQL> INSERT INTO ATHLETE_SPORT VALUES ('876-09-9873', 'GOLF');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO TENNIS VALUES ('322-00-1234', 23);
+
+1 fila creada.
+
+SQL> INSERT INTO TENNIS VALUES ('876-09-9873', 47);
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO GOLF VALUES ('239-92-0983', 3);
+
+1 fila creada.
+
+SQL> INSERT INTO GOLF VALUES ('873-97-9877', 1);
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO FOOTBALL VALUES ('398-08-0928', 'TACKLE');
+
+1 fila creada.
+
+SQL> INSERT INTO FOOTBALL VALUES ('239-92-0983', 'QUARTERBACK');
+
+1 fila creada.
+
+SQL> INSERT INTO FOOTBALL VALUES ('398-08-0928', 'FULL BACK');
+INSERT INTO FOOTBALL VALUES ('398-08-0928', 'FULL BACK')
+*
+ERROR en línea 1:
+ORA-00001: restricción única (ATLETA.FOOTBALL_PK) violada 
+
+
+SQL> 
+SQL> --CONSULTAS
+SQL> --1. Listar todos los atletas
+SQL> SELECT * FROM ATHLETE;
+
+SSNO        ||    WEIGHT ||NAME_A   ||G ||    HEIGHT                                                                                                                                                                                                                                                        
+----------- ||---------- ||-------- ||- ||----------                                                                                                                                                                                                                                                        
+239-92-0983 ||       140 ||Kumar    ||M ||      5.95                                                                                                                                                                                                                                                        
+398-08-0928 ||       200 ||Kelvin   ||M ||      6.02                                                                                                                                                                                                                                                        
+322-00-1234 ||       135 ||Sarah    ||F ||       5.6                                                                                                                                                                                                                                                        
+873-97-9877 ||       165 ||Arjun    ||M ||      6.01                                                                                                                                                                                                                                                        
+876-09-9873 ||       145 ||Deesha   ||F ||       5.5                                                                                                                                                                                                                                                        
+
+SQL> 
+SQL> --2. Listar todos los atletas que juegan golf
+SQL> SELECT * FROM ATHLETE WHERE SSNO IN (SELECT SSNO FROM ATHLETE_SPORT WHERE SPORT = 'GOLF');
+
+SSNO        ||    WEIGHT ||NAME_A   ||G ||    HEIGHT                                                                                                                                                                                                                                                        
+----------- ||---------- ||-------- ||- ||----------                                                                                                                                                                                                                                                        
+239-92-0983 ||       140 ||Kumar    ||M ||      5.95                                                                                                                                                                                                                                                        
+873-97-9877 ||       165 ||Arjun    ||M ||      6.01                                                                                                                                                                                                                                                        
+876-09-9873 ||       145 ||Deesha   ||F ||       5.5                                                                                                                                                                                                                                                        
+
+SQL> 
+SQL> --3. Listar todos los atletas que juegan golf y su handicap, ordenados por handicap
+SQL> SELECT * FROM ATHLETE WHERE SSNO IN (SELECT SSNO FROM ATHLETE_SPORT WHERE SPORT = 'GOLF') AND SSNO IN (SELECT SSNO FROM GOLF) ORDER BY SSNO;
+
+SSNO        ||    WEIGHT ||NAME_A   ||G ||    HEIGHT                                                                                                                                                                                                                                                        
+----------- ||---------- ||-------- ||- ||----------                                                                                                                                                                                                                                                        
+239-92-0983 ||       140 ||Kumar    ||M ||      5.95                                                                                                                                                                                                                                                        
+873-97-9877 ||       165 ||Arjun    ||M ||      6.01                                                                                                                                                                                                                                                        
+
+SQL> 
+SQL> --4. Listar todos los atletas que juegan TENNIS y su ranking, ordenados por ranking
+SQL> SELECT * FROM ATHLETE WHERE SSNO IN (SELECT SSNO FROM ATHLETE_SPORT WHERE SPORT = 'TENNIS') AND SSNO IN (SELECT SSNO FROM TENNIS) ORDER BY SSNO;
+
+SSNO        ||    WEIGHT ||NAME_A   ||G ||    HEIGHT                                                                                                                                                                                                                                                        
+----------- ||---------- ||-------- ||- ||----------                                                                                                                                                                                                                                                        
+322-00-1234 ||       135 ||Sarah    ||F ||       5.6                                                                                                                                                                                                                                                        
+876-09-9873 ||       145 ||Deesha   ||F ||       5.5                                                                                                                                                                                                                                                        
+
+SQL> 
+SQL> --5. Listar todos los atletas que juegan FOOTBALL y su posicion, ordenados por posicion
+SQL> SELECT * FROM ATHLETE WHERE SSNO IN (SELECT SSNO FROM ATHLETE_SPORT WHERE SPORT = 'FOOTBALL') AND SSNO IN (SELECT SSNO FROM FOOTBALL) ORDER BY SSNO;
+
+SSNO        ||    WEIGHT ||NAME_A   ||G ||    HEIGHT                                                                                                                                                                                                                                                        
+----------- ||---------- ||-------- ||- ||----------                                                                                                                                                                                                                                                        
+398-08-0928 ||       200 ||Kelvin   ||M ||      6.02                                                                                                                                                                                                                                                        
+
+SQL> 
+SQL> 
+SQL> --COLUMNAS DE USUARIO
+SQL> COL TABLE_NAME FORMAT A15
+SQL> COL DATA_TYPE  FORMAT A15
+SQL> COL DATA_SCALE FORMAT 999.99
+SQL> COL NULLABLE   FORMAT A2
+SQL> SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE, DATA_LENGTH,
+  2  	DATA_PRECISION,DATA_SCALE,NULLABLE
+  3  	FROM USER_TAB_COLUMNS
+  4  	WHERE TABLE_NAME IN ( 'ATHLETE','ATHLETE_SPORT','TENNIS','GOLF','FOOTBALL')
+  5  	ORDER BY 1,2;
+
+TABLE_NAME      ||COLUMN_NAME                                                                                                                      ||DATA_TYPE       ||DATA_LENGTH ||DATA_PRECISION ||DATA_SCALE ||NU                                                                                       
+--------------- ||-------------------------------------------------------------------------------------------------------------------------------- ||--------------- ||----------- ||-------------- ||---------- ||--                                                                                       
+ATHLETE         ||GENDER                                                                                                                           ||VARCHAR2        ||          1 ||s/dato         ||s/dato     ||N                                                                                        
+ATHLETE         ||HEIGHT                                                                                                                           ||NUMBER          ||         22 ||             3 ||      2.00 ||N                                                                                        
+ATHLETE         ||NAME_A                                                                                                                           ||VARCHAR2        ||          8 ||s/dato         ||s/dato     ||N                                                                                        
+ATHLETE         ||SSNO                                                                                                                             ||VARCHAR2        ||         11 ||s/dato         ||s/dato     ||N                                                                                        
+ATHLETE         ||WEIGHT                                                                                                                           ||NUMBER          ||         22 ||             3 ||       .00 ||N                                                                                        
+ATHLETE_SPORT   ||SPORT                                                                                                                            ||VARCHAR2        ||          8 ||s/dato         ||s/dato     ||N                                                                                        
+ATHLETE_SPORT   ||SSNO                                                                                                                             ||VARCHAR2        ||         11 ||s/dato         ||s/dato     ||N                                                                                        
+FOOTBALL        ||POSITION                                                                                                                         ||VARCHAR2        ||         15 ||s/dato         ||s/dato     ||N                                                                                        
+FOOTBALL        ||SSNO                                                                                                                             ||VARCHAR2        ||         11 ||s/dato         ||s/dato     ||N                                                                                        
+GOLF            ||HANDICAP                                                                                                                         ||NUMBER          ||         22 ||             1 ||       .00 ||N                                                                                        
+GOLF            ||SSNO                                                                                                                             ||VARCHAR2        ||         11 ||s/dato         ||s/dato     ||N                                                                                        
+TENNIS          ||SSNO                                                                                                                             ||VARCHAR2        ||         11 ||s/dato         ||s/dato     ||N                                                                                        
+TENNIS          ||STATE_RANKING                                                                                                                    ||NUMBER          ||         22 ||             2 ||       .00 ||N                                                                                        
+
+13 filas seleccionadas.
+
+SQL> 
+SQL> --MOSTRAR Restricciones
+SQL> prompt USER CONSTRAINTS
+USER CONSTRAINTS
+SQL> COLUMN CONSTRAINT_NAME FORMAT A27
+SQL> column table_name format a12
+SQL> column owner format a9
+SQL> select owner,table_name,constraint_name,constraint_type,
+  2  	deferrable,deferred
+  3  	from user_constraints
+  4  	where table_name IN ('ATHLETE','ATHLETE_SPORT','TENNIS','GOLF','FOOTBALL')
+  5  	ORDER BY 4;
+
+OWNER     ||TABLE_NAME   ||CONSTRAINT_NAME             ||C ||DEFERRABLE     ||DEFERRED                                                                                                                                                                                                                      
+--------- ||------------ ||--------------------------- ||- ||-------------- ||---------                                                                                                                                                                                                                     
+ATLETA    ||FOOTBALL     ||FOOTBALL_POSITION_CK        ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ATHLETE      ||ATHLETE_GENDER_CK           ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||TENNIS       ||TENNIS_STATE_RANKING_CK     ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ATHLETE_SPOR ||ATHLETE_SPORT_CK            ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||T            ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+ATLETA    ||ATHLETE      ||SYS_C009928                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ATHLETE      ||SYS_C009929                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ATHLETE      ||SYS_C009930                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ATHLETE      ||SYS_C009931                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ATHLETE_SPOR ||SYS_C009932                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||T            ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+ATLETA    ||ATHLETE_SPOR ||SYS_C009933                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||T            ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+ATLETA    ||TENNIS       ||SYS_C009934                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ATHLETE      ||SYS_C009927                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||TENNIS       ||SYS_C009935                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||GOLF         ||SYS_C009936                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||GOLF         ||SYS_C009937                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||FOOTBALL     ||SYS_C009938                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||FOOTBALL     ||SYS_C009939                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||GOLF         ||GOLF_HANDICAP_CK            ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||GOLF         ||GOLF_PK                     ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||FOOTBALL     ||FOOTBALL_PK                 ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||TENNIS       ||TENNIS_PK                   ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ATHLETE_SPOR ||ATHLETE_SPORT_PK            ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||T            ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+ATLETA    ||ATHLETE      ||ATHLETE_PK                  ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ATHLETE_SPOR ||ATHLETE_SPORT_FK            ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||T            ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+ATLETA    ||TENNIS       ||TENNIS_FK                   ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||GOLF         ||GOLF_FK                     ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||FOOTBALL     ||FOOTBALL_FK                 ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+
+27 filas seleccionadas.
+
+SQL> 
+SQL> --Mostrar objetos del usuario
+SQL> COL OBJECT_NAME FORMAT A25
+SQL> COL OBJECT__TYPE FORMAT A12
+SQL> COL OBJECT_ID   FORMAT 99,999
+SQL> SELECT OBJECT_NAME, OBJECT_TYPE, OBJECT_ID
+  2  	FROM USER_OBJECTS
+  3  	WHERE OBJECT_TYPE IN ('TABLE','INDEX', 'VIEW')
+  4  	ORDER BY 2,1;
+
+OBJECT_NAME               ||OBJECT_TYPE             ||OBJECT_ID                                                                                                                                                                                                                                             
+------------------------- ||----------------------- ||---------                                                                                                                                                                                                                                             
+ATHLETE_PK                ||INDEX                   ||   79,060                                                                                                                                                                                                                                             
+ATHLETE_SPORT_PK          ||INDEX                   ||   79,061                                                                                                                                                                                                                                             
+FOOTBALL_PK               ||INDEX                   ||   79,064                                                                                                                                                                                                                                             
+GOLF_PK                   ||INDEX                   ||   79,063                                                                                                                                                                                                                                             
+TENNIS_PK                 ||INDEX                   ||   79,062                                                                                                                                                                                                                                             
+ATHLETE                   ||TABLE                   ||   79,055                                                                                                                                                                                                                                             
+ATHLETE_SPORT             ||TABLE                   ||   79,056                                                                                                                                                                                                                                             
+FOOTBALL                  ||TABLE                   ||   79,059                                                                                                                                                                                                                                             
+GOLF                      ||TABLE                   ||   79,058                                                                                                                                                                                                                                             
+TENNIS                    ||TABLE                   ||   79,057                                                                                                                                                                                                                                             
+
+10 filas seleccionadas.
+
+SQL> 
+SQL> --MOSTRAR INDICES
+SQL> 
+SQL> COL INDEX_NAME FORMAT A20
+SQL> COL TABLE_NAME FORMAT A30
+SQL> COL COLUMN_NAME FORMAT A15
+SQL> COL COLUMN_POSITION FORMAT 999
+SQL> COL COLUMN_LENGTH   FORMAT 999
+SQL> select index_name, table_name,column_name, column_position, column_length
+  2  	char_length
+  3  	from user_ind_columns
+  4  	where table_name in ( 'ATHLETE','ATHLETE_SPORT','TENNIS','GOLF','FOOTBALL');
+
+INDEX_NAME           ||TABLE_NAME                     ||COLUMN_NAME     ||COLUMN_POSITION ||CHAR_LENGTH                                                                                                                                                                                                     
+-------------------- ||------------------------------ ||--------------- ||--------------- ||-----------                                                                                                                                                                                                     
+ATHLETE_PK           ||ATHLETE                        ||SSNO            ||              1 ||         11                                                                                                                                                                                                     
+ATHLETE_SPORT_PK     ||ATHLETE_SPORT                  ||SSNO            ||              1 ||         11                                                                                                                                                                                                     
+ATHLETE_SPORT_PK     ||ATHLETE_SPORT                  ||SPORT           ||              2 ||          8                                                                                                                                                                                                     
+FOOTBALL_PK          ||FOOTBALL                       ||SSNO            ||              1 ||         11                                                                                                                                                                                                     
+GOLF_PK              ||GOLF                           ||SSNO            ||              1 ||         11                                                                                                                                                                                                     
+TENNIS_PK            ||TENNIS                         ||SSNO            ||              1 ||         11                                                                                                                                                                                                     
+
+6 filas seleccionadas.
+
+SQL> 
+SQL> spool off

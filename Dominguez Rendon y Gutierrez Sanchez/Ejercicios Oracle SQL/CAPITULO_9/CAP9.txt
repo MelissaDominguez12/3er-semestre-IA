@@ -1,0 +1,878 @@
+SQL> REM  File:        CAP9.sql
+SQL> REM  Description: Ejercicios del capitulo 10 del libro Oracle By Example
+SQL> REM  Created:    Diciembre 2023
+SQL> REM  Tittle:     Set Operators
+SQL> REM ******************************************************************
+SQL> 
+SQL> PROMPT CAP 9 ORACLE BY EXAMPLE
+CAP 9 ORACLE BY EXAMPLE
+SQL> PROMPT NOVIEMBRE 2023
+NOVIEMBRE 2023
+SQL> PROMPT "EJERCICIO 1: LAB 9.1 a)"
+"EJERCICIO 1: LAB 9.1 a)"
+SQL> REM (Rischert, 2010, 424)
+SQL> SELECT first_name, last_name,
+  2  'Instructor' "Type"
+  3  FROM instructor
+  4  UNION ALL
+  5  SELECT first_name, last_name,
+  6  'Student'
+  7  FROM student;
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Fernand                   Hanks                     Instructor                  
+Tom                       Wojick                    Instructor                  
+Nina                      Schorin                   Instructor                  
+Gary                      Pertez                    Instructor                  
+Anita                     Morris                    Instructor                  
+Todd                      Smythe                    Instructor                  
+Marilyn                   Frantzen                  Instructor                  
+Charles                   Lowry                     Instructor                  
+Rick                      Chow                      Instructor                  
+Irene                     Willig                    Instructor                  
+Jim                       Joas                      Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Sally                     Naso                      Student                     
+Frantz                    McLean                    Student                     
+P.                        Balterzar                 Student                     
+Denise                    Brownstein                Student                     
+Maria                     Arias                     Student                     
+Oscar                     McGill                    Student                     
+Michael                   Brown                     Student                     
+Debra                     Boyce                     Student                     
+Beth                      Satterfield               Student                     
+Ricardo                   Kurtz                     Student                     
+Simon                     Ramesh                    Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+E.A.                      Torres                    Student                     
+Anthony                   Bullock                   Student                     
+Jeffrey                   Delbrun                   Student                     
+Salewa                    Zuckerberg                Student                     
+Dennis                    Mehta                     Student                     
+Christine                 Sheppard                  Student                     
+O.                        Garnes                    Student                     
+Phil                      Gilloon                   Student                     
+Deborah                   Reyes                     Student                     
+Alan                      Affinito                  Student                     
+Steven                    M. Orent                  Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Frank                     Viotty                    Student                     
+Al                        Jamerncy                  Student                     
+Verona                    Grant                     Student                     
+Regina                    Bose                      Student                     
+Victor                    Meshaj                    Student                     
+J.                        Dalvi                     Student                     
+Edwin                     Allende                   Student                     
+J.                        Segall                    Student                     
+Gene                      Bresser, HR Rep.          Student                     
+Michael                   Lefbowitz                 Student                     
+Mary                      Axch                      Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Angel                     Cook                      Student                     
+Arun                      Griffen                   Student                     
+Alfred                    Hutheesing                Student                     
+Freedon                   annunziato                Student                     
+Bernadette                Montanez                  Student                     
+A.                        Tucker                    Student                     
+Lloyd                     Kellam                    Student                     
+David                     Thares                    Student                     
+Jenny                     Goldsmith                 Student                     
+Barbara                   Robichaud                 Student                     
+Yvonne                    Williams                  Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Reynaldo                  Chatman                   Student                     
+Madhav                    Dusenberry                Student                     
+Jeffrey                   Citron                    Student                     
+Eric                      Da Silva                  Student                     
+Robert                    Segall                    Student                     
+Sheradha                  Malone                    Student                     
+Frank                     Pace                      Student                     
+M.                        Diokno                    Student                     
+Edgar                     Moffat                    Student                     
+Bessie                    Heedles                   Student                     
+Mohamed                   Valentine                 Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Adrienne                  Lopez                     Student                     
+George                    Kocka                     Student                     
+Janet                     Jung                      Student                     
+Kathleen                  Mulroy                    Student                     
+Joel                      Brendler                  Student                     
+Michael                   Carcia                    Student                     
+Gerry                     Tripp                     Student                     
+Rommel                    Frost                     Student                     
+Roger                     Snow                      Student                     
+Z.A.                      Scrittorale               Student                     
+Joseph                    Yourish                   Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Daniel                    Ordes                     Student                     
+Bharat                    Roberts                   Student                     
+Sarah                     Wilson                    Student                     
+Irv                       Dalvi                     Student                     
+Meryl                     Owens                     Student                     
+Frank                     Bunnell                   Student                     
+Tamara                    Zapulla                   Student                     
+Evan                      Fielding                  Student                     
+Catherine                 Frangopoulos              Student                     
+Nana                      Barogh                    Student                     
+Walter                    Boremmann                 Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Melvina                   Chamnonkool               Student                     
+Lorrane                   Velasco                   Student                     
+Suzanne M.                Abid                      Student                     
+Suzanna                   Velasco                   Student                     
+George                    Merriman                  Student                     
+Jean                      Griffith                  Student                     
+Vinnie                    Moon                      Student                     
+Donna                     Walston                   Student                     
+Radharam                  King                      Student                     
+Lorraine                  Harty                     Student                     
+Adele                     Rothstein                 Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Kate                      Page                      Student                     
+Julius                    Kwong                     Student                     
+Ronald                    Tangaribuan               Student                     
+Sharon                    Thompson                  Student                     
+Charles                   Caro                      Student                     
+Jose                      Benitez                   Student                     
+Kevin                     Porch                     Student                     
+Hedy                      Naso                      Student                     
+John                      De Simone                 Student                     
+George                    Ross                      Student                     
+Florence                  Valamas                   Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Evelyn                    Liggons                   Student                     
+Thomas E.                 La Blank                  Student                     
+George                    Korka                     Student                     
+Bill                      Engongoro                 Student                     
+Virginia                  Ocampo                    Student                     
+Jonathan                  Jaele                     Student                     
+Benita                    Perkins                   Student                     
+Salewa                    Lindeman                  Student                     
+Paul                      Sikinger                  Student                     
+Robin                     Kelly                     Student                     
+Rosemary                  Ellman                    Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Shirley                   Murray                    Student                     
+Brian                     Robles                    Student                     
+D.                        Dewitt                    Student                     
+Austin V.                 Cadet                     Student                     
+Rawan                     Rosenberg                 Student                     
+Yu                        Sentell                   Student                     
+Bridget                   Hagel                     Student                     
+Howard                    Leopta                    Student                     
+Kathleen                  Mastandora                Student                     
+Gabriel                   Smith                     Student                     
+Raymond                   Cheevens                  Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Kevin                     Lin                       Student                     
+Lorraine                  Tucker                    Student                     
+John                      Mithane                   Student                     
+Craig                     Anglin                    Student                     
+Zalman                    Draquez                   Student                     
+Reeva                     Yeroushalmi               Student                     
+Leonard                   Millstein                 Student                     
+Jack                      Kasperovich               Student                     
+Lorelei                   McNeal                    Student                     
+William                   Gallo                     Student                     
+Craig                     Padron                    Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Joel                      Krot                      Student                     
+Allan                     Simmons                   Student                     
+Michael                   Miroff                    Student                     
+Roger                     Cowie                     Student                     
+Asian                     Chirichella               Student                     
+Yvonne                    Allende                   Student                     
+Sengita                   MacDonald, Jr.            Student                     
+Paul                      Braun                     Student                     
+Anna                      Bathmanapan               Student                     
+Shirley                   Leung                     Student                     
+V.                        Greenberg                 Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Rafael A.                 Torres                    Student                     
+V.                        Saliternan                Student                     
+Melvin                    Martin                    Student                     
+Vera                      Wetcel                    Student                     
+James E.                  Norman                    Student                     
+Margaret                  Lloyd                     Student                     
+Jerry                     Abdou                     Student                     
+Frank                     M. Orent                  Student                     
+Yvonne                    Winnicki                  Student                     
+Mike                      Madej                     Student                     
+Paula                     Valentine                 Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Brian                     Saluja                    Student                     
+Frances                   Lawson                    Student                     
+Barry                     Dunkon                    Student                     
+Rita                      Archor                    Student                     
+George                    Milano                    Student                     
+Kardik                    Guarino                   Student                     
+Preston                   Larcia                    Student                     
+Norman                    Callender                 Student                     
+Salondra                  Galik                     Student                     
+Carlos                    Airall                    Student                     
+Joseph                    Jimenes                   Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Henry                     Masser                    Student                     
+Maria                     Allende                   Student                     
+John                      Velie                     Student                     
+Bernice                   Dermody                   Student                     
+Daniel                    McHowell                  Student                     
+Cathy                     Austin                    Student                     
+George                    Eakheit                   Student                     
+Mark                      Miller                    Student                     
+Jeannette                 Smagler                   Student                     
+Oscar                     Archer                    Student                     
+Gilbert                   Ginestra                  Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Price                     Marten                    Student                     
+Pat                       Puetrino                  Student                     
+Piotr                     Padel                     Student                     
+Lynwood A.                Thorton                   Student                     
+John                      Tabs                      Student                     
+Mei-Wah                   Zopf                      Student                     
+Paula                     Mwangi                    Student                     
+Artie                     Ward                      Student                     
+Sarah                     Annina                    Student                     
+Jane                      Jackson                   Student                     
+Steven                    Gallagher                 Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Preston                   Cross                     Student                     
+Helga                     Towle                     Student                     
+Piang                     Nyziak                    Student                     
+David                     Eng                       Student                     
+Kevin                     Porch                     Student                     
+Marianne                  De Armas                  Student                     
+Ray                       Schafer                   Student                     
+R.                        Sprouse                   Student                     
+Peter                     Carey                     Student                     
+Joane                     Buckberg                  Student                     
+Edith                     Daly                      Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Morty                     Miller                    Student                     
+Margaret                  Mandel                    Student                     
+Alan                      Galik                     Student                     
+Debra                     Shah                      Student                     
+Paul                      Intal                     Student                     
+Romeo                     Ittoop                    Student                     
+John                      Ancean                    Student                     
+Tom                       Vargas                    Student                     
+Valerie                   Avia                      Student                     
+Fermin                    Galik                     Student                     
+Calvin                    Kiraly                    Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Fred                      Crocitto                  Student                     
+J.                        Landry                    Student                     
+Laetia                    Enison                    Student                     
+Angel                     Moskowitz                 Student                     
+Judith                    Olvsade                   Student                     
+Catherine                 Mierzwa                   Student                     
+Judy                      Sethi                     Student                     
+Larry                     Walter                    Student                     
+Maria                     Martin                    Student                     
+Peggy                     Noviello                  Student                     
+Thomas                    Thomas                    Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Anil                      Kulina                    Student                     
+Winsome                   Laporte                   Student                     
+N                         Kuehn                     Student                     
+Hiedi                     Lopez                     Student                     
+Mardig                    Abdou                     Student                     
+Ralph                     Alexander                 Student                     
+Sean                      Pineda                    Student                     
+Julita                    Lippen                    Student                     
+Pierre                    Radicola                  Student                     
+Daniel                    Wicelinski                Student                     
+Gary                      Aung                      Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Jeff                      Runyan                    Student                     
+Omaira                    Grant                     Student                     
+Lula                      Oates                     Student                     
+James                     Reed                      Student                     
+Angela                    Torres                    Student                     
+Michelle                  Masser                    Student                     
+Hazel                     Lasseter                  Student                     
+James                     Miller                    Student                     
+John                      Smith                     Student                     
+Angelo                    Garshman                  Student                     
+Derrick                   Baltazar                  Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Robert                    Boyd                      Student                     
+Monica                    Waldman                   Student                     
+Gerard                    Biers                     Student                     
+David                     Essner                    Student                     
+Paul                      Lefkowitz                 Student                     
+Joseph                    German                    Student                     
+Judy                      Cahouet                   Student                     
+D.                        Orent                     Student                     
+Judith                    Prochaska                 Student                     
+Regina                    Gates                     Student                     
+Arlyne                    Sheppard                  Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Thomas                    Edwards                   Student                     
+Mrudula                   Philpotts                 Student                     
+Dawn                      Dennis                    Student                     
+Scott                     Grant                     Student                     
+Shirley                   Jameson                   Student                     
+Roy                       Limate                    Student                     
+Thomas                    Edwards                   Student                     
+John T.                   Beitler                   Student                     
+Eilene                    Grant                     Student                     
+Genny                     Andrew                    Student                     
+Nicole                    Gillen                    Student                     
+
+FIRST_NAME                LAST_NAME                 Type                        
+------------------------- ------------------------- ----------                  
+Sylvia                    Perrin                    Student                     
+Peter                     Daly                      Student                     
+May                       Jodoin                    Student                     
+
+278 filas seleccionadas.
+
+SQL> 
+SQL> PROMPT "EJERCICIO 2: LAB 9.1 b)"
+"EJERCICIO 2: LAB 9.1 b)"
+SQL> REM (Rischert, 2010, 424)
+SQL> SELECT zip
+  2  FROM instructor
+  3  UNION
+  4  SELECT zip
+  5  FROM student;
+
+ZIP                                                                             
+-----                                                                           
+10015                                                                           
+10025                                                                           
+10035                                                                           
+10005                                                                           
+                                                                                
+01247                                                                           
+02124                                                                           
+02155                                                                           
+02189                                                                           
+02563                                                                           
+06483                                                                           
+
+ZIP                                                                             
+-----                                                                           
+06605                                                                           
+06798                                                                           
+06820                                                                           
+06830                                                                           
+06850                                                                           
+06851                                                                           
+06853                                                                           
+06870                                                                           
+06877                                                                           
+06880                                                                           
+06902                                                                           
+
+ZIP                                                                             
+-----                                                                           
+06903                                                                           
+06905                                                                           
+06907                                                                           
+07003                                                                           
+07008                                                                           
+07010                                                                           
+07011                                                                           
+07012                                                                           
+07016                                                                           
+07023                                                                           
+07024                                                                           
+
+ZIP                                                                             
+-----                                                                           
+07029                                                                           
+07036                                                                           
+07040                                                                           
+07042                                                                           
+07044                                                                           
+07047                                                                           
+07055                                                                           
+07057                                                                           
+07060                                                                           
+07065                                                                           
+07070                                                                           
+
+ZIP                                                                             
+-----                                                                           
+07078                                                                           
+07090                                                                           
+07093                                                                           
+07094                                                                           
+07096                                                                           
+07104                                                                           
+07107                                                                           
+07111                                                                           
+07112                                                                           
+07302                                                                           
+07304                                                                           
+
+ZIP                                                                             
+-----                                                                           
+07306                                                                           
+07307                                                                           
+07401                                                                           
+07421                                                                           
+07430                                                                           
+07444                                                                           
+07450                                                                           
+10048                                                                           
+10954                                                                           
+10956                                                                           
+10965                                                                           
+
+ZIP                                                                             
+-----                                                                           
+11021                                                                           
+11030                                                                           
+11042                                                                           
+11050                                                                           
+11101                                                                           
+11102                                                                           
+11104                                                                           
+11105                                                                           
+11106                                                                           
+11201                                                                           
+11203                                                                           
+
+ZIP                                                                             
+-----                                                                           
+11204                                                                           
+11205                                                                           
+11206                                                                           
+11207                                                                           
+11208                                                                           
+11209                                                                           
+11212                                                                           
+11213                                                                           
+11214                                                                           
+11215                                                                           
+11216                                                                           
+
+ZIP                                                                             
+-----                                                                           
+11217                                                                           
+11218                                                                           
+11219                                                                           
+11220                                                                           
+11221                                                                           
+11222                                                                           
+11224                                                                           
+11225                                                                           
+11226                                                                           
+11228                                                                           
+11229                                                                           
+
+ZIP                                                                             
+-----                                                                           
+11230                                                                           
+11232                                                                           
+11233                                                                           
+11234                                                                           
+11235                                                                           
+11236                                                                           
+11238                                                                           
+11303                                                                           
+11354                                                                           
+11355                                                                           
+11357                                                                           
+
+ZIP                                                                             
+-----                                                                           
+11358                                                                           
+11360                                                                           
+11365                                                                           
+11366                                                                           
+11368                                                                           
+11369                                                                           
+11372                                                                           
+11373                                                                           
+11375                                                                           
+11377                                                                           
+11385                                                                           
+
+ZIP                                                                             
+-----                                                                           
+11412                                                                           
+11413                                                                           
+11414                                                                           
+11415                                                                           
+11419                                                                           
+11420                                                                           
+11422                                                                           
+11426                                                                           
+11428                                                                           
+11432                                                                           
+11433                                                                           
+
+ZIP                                                                             
+-----                                                                           
+11434                                                                           
+11435                                                                           
+11510                                                                           
+11530                                                                           
+11552                                                                           
+11561                                                                           
+11565                                                                           
+11576                                                                           
+11717                                                                           
+11743                                                                           
+11746                                                                           
+
+ZIP                                                                             
+-----                                                                           
+11758                                                                           
+11766                                                                           
+11787                                                                           
+13760                                                                           
+43224                                                                           
+48104                                                                           
+
+149 filas seleccionadas.
+
+SQL> 
+SQL> PROMPT "EJERCICIO 3: LAB 9.1 d)"
+"EJERCICIO 3: LAB 9.1 d)"
+SQL> REM (Rischert, 2010, 424)
+SQL> SELECT course_no, description
+  2  FROM course
+  3  WHERE prerequisite IS NOT NULL
+  4  ORDER BY 1
+  5  UNION
+  6  SELECT course_no, description
+  7  FROM course
+  8  WHERE prerequisite IS NULL;
+UNION
+*
+ERROR en línea 5:
+ORA-00933: comando SQL no terminado correctamente 
+
+
+SQL> 
+SQL> PROMPT "EJERCICIO 4: LAB 9.2 b)"
+"EJERCICIO 4: LAB 9.2 b)"
+SQL> REM (Rischert, 2010, 436)
+SQL> SELECT course_no, section_no, 'No Enrollments' "Status"
+  2  FROM section
+  3  MINUS
+  4  SELECT course_no, section_no, 'No Enrollments'
+  5  FROM section s
+  6  WHERE EXISTS (SELECT section_id
+  7  FROM enrollment e
+  8  WHERE e.section_id = s.section_id)
+  9  ORDER BY 1, 2;
+
+ COURSE_NO SECTION_NO Status                                                    
+---------- ---------- --------------                                            
+        25          9 No Enrollments                                            
+       124          4 No Enrollments                                            
+       125          6 No Enrollments                                            
+       130          3 No Enrollments                                            
+       132          3 No Enrollments                                            
+       134          2 No Enrollments                                            
+       135          3 No Enrollments                                            
+       140          3 No Enrollments                                            
+       142          3 No Enrollments                                            
+       144          2 No Enrollments                                            
+       145          3 No Enrollments                                            
+
+ COURSE_NO SECTION_NO Status                                                    
+---------- ---------- --------------                                            
+       210          1 No Enrollments                                            
+       220          1 No Enrollments                                            
+       350          3 No Enrollments                                            
+
+14 filas seleccionadas.
+
+SQL> PROMPT "EJERCICIO 5:
+"EJERCICIO 5:
+SQL>  LAB 9.2 c)"
+SP2-0734: inicio "LAB 9.2 c)..." de comando desconocido - resto de la línea ignorado.
+SQL> REM (Rischert, 2010, 436)
+SQL> SELECT zip
+  2  FROM instructor
+  3  INTERSECT
+  4  SELECT zip
+  5  FROM student;
+
+ZIP                                                                             
+-----                                                                           
+10025                                                                           
+
+SQL> 
+SQL> PROMPT "EJERCICIO 6: LAB 9.2 d)"
+"EJERCICIO 6: LAB 9.2 d)"
+SQL> REM (Rischert, 2010, 436)
+SQL> SELECT student_id
+  2  FROM student
+  3  INTERSECT
+  4  SELECT student_id
+  5  FROM enrollment;
+
+STUDENT_ID                                                                      
+----------                                                                      
+       102                                                                      
+       103                                                                      
+       104                                                                      
+       105                                                                      
+       106                                                                      
+       107                                                                      
+       108                                                                      
+       109                                                                      
+       110                                                                      
+       111                                                                      
+       112                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       113                                                                      
+       114                                                                      
+       117                                                                      
+       118                                                                      
+       119                                                                      
+       120                                                                      
+       121                                                                      
+       122                                                                      
+       123                                                                      
+       124                                                                      
+       127                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       128                                                                      
+       129                                                                      
+       130                                                                      
+       133                                                                      
+       134                                                                      
+       135                                                                      
+       136                                                                      
+       137                                                                      
+       138                                                                      
+       139                                                                      
+       140                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       141                                                                      
+       142                                                                      
+       143                                                                      
+       144                                                                      
+       145                                                                      
+       146                                                                      
+       147                                                                      
+       148                                                                      
+       149                                                                      
+       150                                                                      
+       151                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       152                                                                      
+       153                                                                      
+       154                                                                      
+       156                                                                      
+       157                                                                      
+       158                                                                      
+       159                                                                      
+       160                                                                      
+       161                                                                      
+       162                                                                      
+       163                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       164                                                                      
+       165                                                                      
+       166                                                                      
+       167                                                                      
+       168                                                                      
+       169                                                                      
+       170                                                                      
+       171                                                                      
+       172                                                                      
+       173                                                                      
+       174                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       175                                                                      
+       176                                                                      
+       178                                                                      
+       179                                                                      
+       180                                                                      
+       181                                                                      
+       182                                                                      
+       184                                                                      
+       185                                                                      
+       186                                                                      
+       187                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       188                                                                      
+       189                                                                      
+       190                                                                      
+       191                                                                      
+       192                                                                      
+       193                                                                      
+       194                                                                      
+       195                                                                      
+       196                                                                      
+       197                                                                      
+       198                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       199                                                                      
+       200                                                                      
+       201                                                                      
+       202                                                                      
+       203                                                                      
+       204                                                                      
+       205                                                                      
+       206                                                                      
+       207                                                                      
+       208                                                                      
+       209                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       210                                                                      
+       211                                                                      
+       212                                                                      
+       214                                                                      
+       215                                                                      
+       216                                                                      
+       217                                                                      
+       218                                                                      
+       220                                                                      
+       221                                                                      
+       223                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       224                                                                      
+       225                                                                      
+       227                                                                      
+       228                                                                      
+       229                                                                      
+       230                                                                      
+       232                                                                      
+       233                                                                      
+       234                                                                      
+       235                                                                      
+       236                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       237                                                                      
+       238                                                                      
+       240                                                                      
+       241                                                                      
+       242                                                                      
+       243                                                                      
+       244                                                                      
+       245                                                                      
+       246                                                                      
+       247                                                                      
+       248                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       250                                                                      
+       251                                                                      
+       252                                                                      
+       253                                                                      
+       254                                                                      
+       256                                                                      
+       257                                                                      
+       258                                                                      
+       259                                                                      
+       260                                                                      
+       261                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       262                                                                      
+       263                                                                      
+       264                                                                      
+       265                                                                      
+       266                                                                      
+       267                                                                      
+       268                                                                      
+       269                                                                      
+       270                                                                      
+       271                                                                      
+       272                                                                      
+
+STUDENT_ID                                                                      
+----------                                                                      
+       273                                                                      
+       274                                                                      
+       275                                                                      
+       276                                                                      
+       277                                                                      
+       278                                                                      
+       279                                                                      
+       280                                                                      
+       281                                                                      
+       282                                                                      
+       283                                                                      
+
+165 filas seleccionadas.
+
+SQL> 
+SQL> PROMPT "FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 9"
+"FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 9"
+SQL> 
+SQL> spool OFF

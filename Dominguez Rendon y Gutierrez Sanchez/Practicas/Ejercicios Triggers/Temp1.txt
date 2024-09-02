@@ -1,0 +1,98 @@
+SQL> SET SERVEROUTPUT ON;
+SQL> 
+SQL> CREATE OR REPLACE TRIGGER temp_aur
+  2  AFTER UPDATE ON TEMP1
+  3  FOR EACH ROW
+  4  BEGIN
+  5    dbms_output.put_line('AUR old N:' || :old.N || ' M:' || :old.M);
+  6    dbms_output.put_line('AUR new N:' || :new.N || ' M:' || :new.M);
+  7  END;
+  8  /
+
+Disparador creado.
+
+SQL> 
+SQL> INSERT INTO TEMP1 (N) VALUES (1);
+
+1 fila creada.
+
+SQL> UPDATE TEMP1 SET N = N + 1 WHERE N >= 1;
+BUR old N:5 M:2                                                                 
+BUR new N:7 M:2                                                                 
+AUR old N:5 M:2                                                                 
+AUR new N:7 M:2                                                                 
+BUR old N:4 M:2                                                                 
+BUR new N:6 M:2                                                                 
+AUR old N:4 M:2                                                                 
+AUR new N:6 M:2                                                                 
+BUR old N:4 M:2                                                                 
+BUR new N:6 M:2                                                                 
+AUR old N:4 M:2                                                                 
+AUR new N:6 M:2                                                                 
+BUR old N:1 M:5                                                                 
+BUR new N:3 M:5                                                                 
+AUR old N:1 M:5                                                                 
+AUR new N:3 M:5                                                                 
+
+4 filas actualizadas.
+
+SQL> UPDATE TEMP1 SET M = 2 WHERE M = 5;
+BUR old N:3 M:5                                                                 
+BUR new N:4 M:2                                                                 
+AUR old N:3 M:5                                                                 
+AUR new N:4 M:2                                                                 
+
+1 fila actualizada.
+
+SQL> 
+SQL> CREATE OR REPLACE TRIGGER temp_bur
+  2  BEFORE UPDATE ON TEMP1
+  3  FOR EACH ROW
+  4  BEGIN
+  5  :NEW.N := :NEW.N + 1;
+  6  dbms_output.put_line('BUR old N:'||:old.n|| ' M:'||:old.M);
+  7  dbms_output.put_line('BUR new N:'||:new.n|| ' M:'||:new.M);
+  8  END;
+  9  /
+
+Disparador creado.
+
+SQL> 
+SQL> INSERT INTO TEMP1 (n) VALUES (1);
+
+1 fila creada.
+
+SQL> UPDATE TEMP1 SET n=n+1 WHERE n>=1;
+BUR old N:7 M:2                                                                 
+BUR new N:9 M:2                                                                 
+AUR old N:7 M:2                                                                 
+AUR new N:9 M:2                                                                 
+BUR old N:6 M:2                                                                 
+BUR new N:8 M:2                                                                 
+AUR old N:6 M:2                                                                 
+AUR new N:8 M:2                                                                 
+BUR old N:6 M:2                                                                 
+BUR new N:8 M:2                                                                 
+AUR old N:6 M:2                                                                 
+AUR new N:8 M:2                                                                 
+BUR old N:4 M:2                                                                 
+BUR new N:6 M:2                                                                 
+AUR old N:4 M:2                                                                 
+AUR new N:6 M:2                                                                 
+BUR old N:1 M:5                                                                 
+BUR new N:3 M:5                                                                 
+AUR old N:1 M:5                                                                 
+AUR new N:3 M:5                                                                 
+
+5 filas actualizadas.
+
+SQL> UPDATE TEMP1 SET m=2 WHERE M=5;
+BUR old N:3 M:5                                                                 
+BUR new N:4 M:2                                                                 
+AUR old N:3 M:5                                                                 
+AUR new N:4 M:2                                                                 
+
+1 fila actualizada.
+
+SQL> 
+SQL> spool off;

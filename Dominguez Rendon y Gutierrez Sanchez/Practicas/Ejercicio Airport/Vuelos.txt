@@ -1,0 +1,187 @@
+SQL> 
+SQL> set linesize 300
+SQL> set pagesize 90
+SQL> set feddback on
+SP2-0158: opción SET desconocida "feddback"
+SQL> set colsep ' ||'
+SQL> clear screen
+
+SQL> 
+SQL> 
+SQL> --Cambiar idioma
+SQL> ALTER SESSION SET NLS_DATE_LANGUAGE  = 'ENGLISH';
+
+Sesión modificada.
+
+SQL> 
+SQL> --Borrar tablas
+SQL> DROP TABLE VUELOS;
+
+Tabla borrada.
+
+SQL> 
+SQL> --Crear tabla
+SQL> 
+SQL> CREATE TABLE VUELOS (
+  2      PILOT VARCHAR2(15),
+  3      FLIGHT NUMBER(3),
+  4      FECHA TIMESTAMP
+  5  );
+
+Tabla creada.
+
+SQL> 
+SQL> --Insertar datos
+SQL> 
+SQL> INSERT INTO VUELOS VALUES ('ALEXANDRA', 231, '05/12/2018');
+
+1 fila creada.
+
+SQL> INSERT INTO VUELOS VALUES ('MELISSA', 132, '01/01/2020');
+
+1 fila creada.
+
+SQL> INSERT INTO VUELOS VALUES ('ANGELICA', 245, '02/01/2020');
+
+1 fila creada.
+
+SQL> INSERT INTO VUELOS VALUES ('YAEL', 211, '03/03/2020');
+
+1 fila creada.
+
+SQL> INSERT INTO VUELOS VALUES ('JHONY', 127, '06/04/2020');
+
+1 fila creada.
+
+SQL> INSERT INTO VUELOS VALUES ('JUAN', 133, '01/01/2020');
+
+1 fila creada.
+
+SQL> INSERT INTO VUELOS VALUES ('ALEX', 232, '01/09/2021');
+
+1 fila creada.
+
+SQL> INSERT INTO VUELOS VALUES ('SOFIA', 492, '21/01/2020');
+
+1 fila creada.
+
+SQL> INSERT INTO VUELOS VALUES ('MARCO', 818, '01/01/2023');
+
+1 fila creada.
+
+SQL> INSERT INTO VUELOS VALUES ('RUBEN', 081, '15/03/2021');
+
+1 fila creada.
+
+SQL> INSERT INTO VUELOS VALUES ('VALERIA', 223, '01/05/2020');
+
+1 fila creada.
+
+SQL> 
+SQL> --Consultas
+SQL> 
+SQL> 
+SQL> SELECT FLIGHT VUELO,
+  2           PILOT PILOTO,
+  3           TO_CHAR(FECHA, 'DD/MM/YYYY HH24:MI:SS') FECHA
+  4  FROM VUELOS;
+
+     VUELO ||PILOTO          ||FECHA                                                                                                                                                                                                                                                                        
+---------- ||--------------- ||---------------------------                                                                                                                                                                                                                                                  
+       231 ||ALEXANDRA       ||05/12/2020 18:00:00                                                                                                                                                                                                                                                          
+       132 ||MELISSA         ||01/01/2020 20:00:00                                                                                                                                                                                                                                                          
+       245 ||ANGELICA        ||02/01/2020 20:00:00                                                                                                                                                                                                                                                          
+       211 ||YAEL            ||03/03/2020 20:00:00                                                                                                                                                                                                                                                          
+       127 ||JHONY           ||06/04/2020 20:00:00                                                                                                                                                                                                                                                          
+       133 ||JUAN            ||01/01/2020 20:00:00                                                                                                                                                                                                                                                          
+       232 ||ALEX            ||01/09/2020 21:00:00                                                                                                                                                                                                                                                          
+       492 ||SOFIA           ||21/01/2020 20:00:00                                                                                                                                                                                                                                                          
+       818 ||MARCO           ||01/01/2020 23:00:00                                                                                                                                                                                                                                                          
+        81 ||RUBEN           ||15/03/2020 21:00:00                                                                                                                                                                                                                                                          
+       223 ||VALERIA         ||01/05/2020 20:00:00                                                                                                                                                                                                                                                          
+
+11 filas seleccionadas.
+
+SQL> 
+SQL> --ORDENADOS POR VUELOS
+SQL> 
+SQL> SELECT FLIGHT VUELO,
+  2           PILOT PILOTO,
+  3           TO_CHAR(FECHA, 'DD/MM/YYYY HH24:MI:SS') FECHA
+  4           FROM VUELOS
+  5           ORDER BY 1;
+
+     VUELO ||PILOTO          ||FECHA                                                                                                                                                                                                                                                                        
+---------- ||--------------- ||---------------------------                                                                                                                                                                                                                                                  
+        81 ||RUBEN           ||15/03/2020 21:00:00                                                                                                                                                                                                                                                          
+       127 ||JHONY           ||06/04/2020 20:00:00                                                                                                                                                                                                                                                          
+       132 ||MELISSA         ||01/01/2020 20:00:00                                                                                                                                                                                                                                                          
+       133 ||JUAN            ||01/01/2020 20:00:00                                                                                                                                                                                                                                                          
+       211 ||YAEL            ||03/03/2020 20:00:00                                                                                                                                                                                                                                                          
+       223 ||VALERIA         ||01/05/2020 20:00:00                                                                                                                                                                                                                                                          
+       231 ||ALEXANDRA       ||05/12/2020 18:00:00                                                                                                                                                                                                                                                          
+       232 ||ALEX            ||01/09/2020 21:00:00                                                                                                                                                                                                                                                          
+       245 ||ANGELICA        ||02/01/2020 20:00:00                                                                                                                                                                                                                                                          
+       492 ||SOFIA           ||21/01/2020 20:00:00                                                                                                                                                                                                                                                          
+       818 ||MARCO           ||01/01/2020 23:00:00                                                                                                                                                                                                                                                          
+
+11 filas seleccionadas.
+
+SQL> 
+SQL> 
+SQL> --CONFIGURAR PAG Y LINEA
+SQL> 
+SQL> set colsep ' ||'
+SQL> COLUMN FECHA FORMAT A27
+SQL> COLUMN HORAS_MIN FORMAT A15
+SQL> SELECT FLIGHT AS VUELO,
+  2         PILOT AS PILOTO,
+  3         TO_CHAR(FECHA, 'DD/MM/YYYY') AS FECHA,
+  4         EXTRACT(HOUR FROM FECHA) || ':' || EXTRACT(MINUTE FROM FECHA) AS HORAS_MIN
+  5  FROM VUELOS
+  6  ORDER BY 1;
+
+     VUELO ||PILOTO          ||FECHA                       ||HORAS_MIN                                                                                                                                                                                                                                      
+---------- ||--------------- ||--------------------------- ||---------------                                                                                                                                                                                                                                
+        81 ||RUBEN           ||15/03/2020                  ||21:0                                                                                                                                                                                                                                           
+       127 ||JHONY           ||06/04/2020                  ||20:0                                                                                                                                                                                                                                           
+       132 ||MELISSA         ||01/01/2020                  ||20:0                                                                                                                                                                                                                                           
+       133 ||JUAN            ||01/01/2020                  ||20:0                                                                                                                                                                                                                                           
+       211 ||YAEL            ||03/03/2020                  ||20:0                                                                                                                                                                                                                                           
+       223 ||VALERIA         ||01/05/2020                  ||20:0                                                                                                                                                                                                                                           
+       231 ||ALEXANDRA       ||05/12/2020                  ||18:0                                                                                                                                                                                                                                           
+       232 ||ALEX            ||01/09/2020                  ||21:0                                                                                                                                                                                                                                           
+       245 ||ANGELICA        ||02/01/2020                  ||20:0                                                                                                                                                                                                                                           
+       492 ||SOFIA           ||21/01/2020                  ||20:0                                                                                                                                                                                                                                           
+       818 ||MARCO           ||01/01/2020                  ||23:0                                                                                                                                                                                                                                           
+
+11 filas seleccionadas.
+
+SQL> 
+SQL> --ORDENAR POR HORAS DE SALIDA
+SQL> 
+SQL> SELECT FLIGHT AS VUELO,
+  2         PILOT AS PILOTO,
+  3         TO_CHAR(FECHA, 'DD/MM/YYYY') AS FECHA,
+  4         EXTRACT(HOUR FROM FECHA) || ':' || EXTRACT(MINUTE FROM FECHA) AS HORAS_MIN
+  5  FROM VUELOS
+  6  ORDER BY HORAS_MIN;
+
+     VUELO ||PILOTO          ||FECHA                       ||HORAS_MIN                                                                                                                                                                                                                                      
+---------- ||--------------- ||--------------------------- ||---------------                                                                                                                                                                                                                                
+       231 ||ALEXANDRA       ||05/12/2020                  ||18:0                                                                                                                                                                                                                                           
+       245 ||ANGELICA        ||02/01/2020                  ||20:0                                                                                                                                                                                                                                           
+       211 ||YAEL            ||03/03/2020                  ||20:0                                                                                                                                                                                                                                           
+       127 ||JHONY           ||06/04/2020                  ||20:0                                                                                                                                                                                                                                           
+       223 ||VALERIA         ||01/05/2020                  ||20:0                                                                                                                                                                                                                                           
+       132 ||MELISSA         ||01/01/2020                  ||20:0                                                                                                                                                                                                                                           
+       133 ||JUAN            ||01/01/2020                  ||20:0                                                                                                                                                                                                                                           
+       492 ||SOFIA           ||21/01/2020                  ||20:0                                                                                                                                                                                                                                           
+        81 ||RUBEN           ||15/03/2020                  ||21:0                                                                                                                                                                                                                                           
+       232 ||ALEX            ||01/09/2020                  ||21:0                                                                                                                                                                                                                                           
+       818 ||MARCO           ||01/01/2020                  ||23:0                                                                                                                                                                                                                                           
+
+11 filas seleccionadas.
+
+SQL> 
+SQL> spool off

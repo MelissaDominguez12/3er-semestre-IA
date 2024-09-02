@@ -1,0 +1,239 @@
+SQL> --Cambiar idioma
+SQL> ALTER SESSION SET NLS_DATE_LANGUAGE  = 'ENGLISH';
+
+Sesión modificada.
+
+SQL> 
+SQL> --Borrar tablas
+SQL> DROP TABLE AUTOBUS     CASCADE CONSTRAINTS;
+DROP TABLE AUTOBUS     CASCADE CONSTRAINTS
+           *
+ERROR en línea 1:
+ORA-00942: la tabla o vista no existe 
+
+
+SQL> DROP TABLE CONDUCTOR   CASCADE CONSTRAINTS;
+DROP TABLE CONDUCTOR   CASCADE CONSTRAINTS
+           *
+ERROR en línea 1:
+ORA-00942: la tabla o vista no existe 
+
+
+SQL> DROP TABLE CONDU_AUTO  CASCADE CONSTRAINTS;
+DROP TABLE CONDU_AUTO  CASCADE CONSTRAINTS
+           *
+ERROR en línea 1:
+ORA-00942: la tabla o vista no existe 
+
+
+SQL> 
+SQL> --Crear tablas
+SQL> CREATE TABLE AUTOBUS(
+  2  	MATRICULA   VARCHAR2(6)  NOT NULL,
+  3  	LICENCIA    VARCHAR2(8)  NOT NULL,
+  4  	CATEGORIA   VARCHAR(1)   NOT NULL);
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE CONDUCTOR(
+  2  	NO_CARNET    NUMBER(4,0) NOT NULL,
+  3  	NOMBRE       VARCHAR(25) NOT NULL,
+  4  	EXPERIENCIA  NUMBER(2,0));
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE CONDU_AUTO(
+  2  	NO_CARNET    NUMBER(4,0) NOT NULL,
+  3  	MATRICULA    VARCHAR(6)  NOT NULL,
+  4  	TRAYECTO     VARCHAR(30) NOT NULL);
+
+Tabla creada.
+
+SQL> 
+SQL> --Reestricciones PK
+SQL> ALTER TABLE AUTOBUS
+  2  ADD CONSTRAINT PK_MATRICULA_AUTOBUS PRIMARY KEY (MATRICULA);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE CONDUCTOR
+  2  ADD CONSTRAINT PK_NO_CARNET_CONDUCTOR PRIMARY KEY(NO_CARNET);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE CONDU_AUTO
+  2  ADD CONSTRAINT PK_CARNET_MATRICULA_CONDU_AUTO PRIMARY KEY (NO_CARNET, MATRICULA);
+
+Tabla modificada.
+
+SQL> 
+SQL> --Restricciones FK
+SQL> ALTER TABLE CONDU_AUTO
+  2  ADD CONSTRAINT FK_CARNET_CONDU_AUTO FOREIGN KEY (NO_CARNET) REFERENCES CONDUCTOR(NO_CARNET)
+  3  ADD CONSTRAINT FK_MATRICULA_CONDU_AUTO FOREIGN KEY (MATRICULA) REFERENCES AUTOBUS(MATRICULA);
+
+Tabla modificada.
+
+SQL> 
+SQL> --Restricciones CHECK
+SQL> ALTER TABLE AUTOBUS
+  2  	ADD CONSTRAINT CK_CATEGORIA CHECK ( CATEGORIA IN  ('A','B','C','D','F'));
+
+Tabla modificada.
+
+SQL> 
+SQL> --Insertar datos
+SQL> 
+SQL> INSERT INTO AUTOBUS VALUES ('123456','12345678','A');
+
+1 fila creada.
+
+SQL> INSERT INTO AUTOBUS VALUES ('123457','12345679','B');
+
+1 fila creada.
+
+SQL> INSERT INTO AUTOBUS VALUES ('123458','12345680','C');
+
+1 fila creada.
+
+SQL> INSERT INTO AUTOBUS VALUES ('123459','12345681','D');
+
+1 fila creada.
+
+SQL> INSERT INTO AUTOBUS VALUES ('123460','12345682','F');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO CONDUCTOR VALUES (1234,'MELISSA',2);
+
+1 fila creada.
+
+SQL> INSERT INTO CONDUCTOR VALUES (1235,'JUAN',3);
+
+1 fila creada.
+
+SQL> INSERT INTO CONDUCTOR VALUES (1236,'PEDRO',4);
+
+1 fila creada.
+
+SQL> INSERT INTO CONDUCTOR VALUES (1237,'MARIA',5);
+
+1 fila creada.
+
+SQL> INSERT INTO CONDUCTOR VALUES (1238,'JUANA',6);
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO CONDU_AUTO VALUES (1234,'123456','SAN JOSE - CARTAGO');
+
+1 fila creada.
+
+SQL> INSERT INTO CONDU_AUTO VALUES (1235,'123457','SAN JOSE - HEREDIA');
+
+1 fila creada.
+
+SQL> INSERT INTO CONDU_AUTO VALUES (1236,'123458','SAN JOSE - ALAJUELA');
+
+1 fila creada.
+
+SQL> INSERT INTO CONDU_AUTO VALUES (1237,'123459','SAN JOSE - PUNTARENAS');
+
+1 fila creada.
+
+SQL> INSERT INTO CONDU_AUTO VALUES (1238,'123460','SAN JOSE - LIMON');
+
+1 fila creada.
+
+SQL> 
+SQL> --Consultas
+SQL> --1. Mostrar la matricula y la licencia de los autobuses que tengan categoria A o B
+SQL> SELECT MATRICULA, LICENCIA FROM AUTOBUS WHERE CATEGORIA IN ('A','B');
+
+MATRIC ||LICENCIA                                                                                                                                                                                                                                                                                           
+------ ||--------                                                                                                                                                                                                                                                                                           
+123456 ||12345678                                                                                                                                                                                                                                                                                           
+123457 ||12345679                                                                                                                                                                                                                                                                                           
+
+SQL> 
+SQL> --2. Mostrar el nombre y la experiencia de los conductores que tengan experiencia mayor a 3 a¤os
+SQL> SELECT NOMBRE, EXPERIENCIA FROM CONDUCTOR WHERE EXPERIENCIA > 3;
+
+NOMBRE                    ||EXPERIENCIA                                                                                                                                                                                                                                                                     
+------------------------- ||-----------                                                                                                                                                                                                                                                                     
+PEDRO                     ||          4                                                                                                                                                                                                                                                                     
+MARIA                     ||          5                                                                                                                                                                                                                                                                     
+JUANA                     ||          6                                                                                                                                                                                                                                                                     
+
+SQL> 
+SQL> --3. Mostrar tablas
+SQL> SELECT * FROM AUTOBUS;
+
+MATRIC ||LICENCIA ||C                                                                                                                                                                                                                                                                                       
+------ ||-------- ||-                                                                                                                                                                                                                                                                                       
+123456 ||12345678 ||A                                                                                                                                                                                                                                                                                       
+123457 ||12345679 ||B                                                                                                                                                                                                                                                                                       
+123458 ||12345680 ||C                                                                                                                                                                                                                                                                                       
+123459 ||12345681 ||D                                                                                                                                                                                                                                                                                       
+123460 ||12345682 ||F                                                                                                                                                                                                                                                                                       
+
+SQL> SELECT * FROM CONDUCTOR;
+
+ NO_CARNET ||NOMBRE                    ||EXPERIENCIA                                                                                                                                                                                                                                                        
+---------- ||------------------------- ||-----------                                                                                                                                                                                                                                                        
+      1234 ||MELISSA                   ||          2                                                                                                                                                                                                                                                        
+      1235 ||JUAN                      ||          3                                                                                                                                                                                                                                                        
+      1236 ||PEDRO                     ||          4                                                                                                                                                                                                                                                        
+      1237 ||MARIA                     ||          5                                                                                                                                                                                                                                                        
+      1238 ||JUANA                     ||          6                                                                                                                                                                                                                                                        
+
+SQL> SELECT * FROM CONDU_AUTO;
+
+ NO_CARNET ||MATRIC ||TRAYECTO                                                                                                                                                                                                                                                                              
+---------- ||------ ||------------------------------                                                                                                                                                                                                                                                        
+      1234 ||123456 ||SAN JOSE - CARTAGO                                                                                                                                                                                                                                                                    
+      1235 ||123457 ||SAN JOSE - HEREDIA                                                                                                                                                                                                                                                                    
+      1236 ||123458 ||SAN JOSE - ALAJUELA                                                                                                                                                                                                                                                                   
+      1237 ||123459 ||SAN JOSE - PUNTARENAS                                                                                                                                                                                                                                                                 
+      1238 ||123460 ||SAN JOSE - LIMON                                                                                                                                                                                                                                                                      
+
+SQL> 
+SQL> prompt USER CONSTRAINTS
+USER CONSTRAINTS
+SQL> COLUMN CONSTRAINT_NAME FORMAT A27
+SQL> column table_name format a12
+SQL> column owner format a9
+SQL> select owner,table_name,constraint_name,constraint_type,
+  2  	deferrable,deferred
+  3  	from user_constraints
+  4  	where table_name IN ('AUTOBUS','CONDUCTOR', 'CONDU_AUTO')
+  5  	ORDER BY 4;
+
+OWNER     ||TABLE_NAME   ||CONSTRAINT_NAME             ||C ||DEFERRABLE     ||DEFERRED                                                                                                                                                                                                                      
+--------- ||------------ ||--------------------------- ||- ||-------------- ||---------                                                                                                                                                                                                                     
+CHAN      ||AUTOBUS      ||SYS_C009672                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CHAN      ||AUTOBUS      ||SYS_C009673                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CHAN      ||AUTOBUS      ||SYS_C009674                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CHAN      ||CONDUCTOR    ||SYS_C009675                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CHAN      ||CONDUCTOR    ||SYS_C009676                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CHAN      ||CONDU_AUTO   ||SYS_C009677                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CHAN      ||AUTOBUS      ||CK_CATEGORIA                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CHAN      ||CONDU_AUTO   ||SYS_C009679                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CHAN      ||CONDU_AUTO   ||SYS_C009678                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CHAN      ||CONDUCTOR    ||PK_NO_CARNET_CONDUCTOR      ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CHAN      ||CONDU_AUTO   ||PK_CARNET_MATRICULA_CONDU_A ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||             ||UTO                         ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+CHAN      ||AUTOBUS      ||PK_MATRICULA_AUTOBUS        ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CHAN      ||CONDU_AUTO   ||FK_CARNET_CONDU_AUTO        ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CHAN      ||CONDU_AUTO   ||FK_MATRICULA_CONDU_AUTO     ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+
+14 filas seleccionadas.
+
+SQL> 
+SQL> spool off

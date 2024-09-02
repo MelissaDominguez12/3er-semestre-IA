@@ -1,0 +1,191 @@
+SQL> REM  File:        CAP5.sql
+SQL> REM  Description: Ejercicios del capitulo 5 del libro Oracle By Example
+SQL> REM  Created:    Octubre 2023
+SQL> REM  Tittle:     Date and Conversion Functions
+SQL> REM ******************************************************************
+SQL> 
+SQL> PROMPT CAP 5 ORACLE BY EXAMPLE
+CAP 5 ORACLE BY EXAMPLE
+SQL> PROMPT SEPTIEMBRE 2023
+SEPTIEMBRE 2023
+SQL> PROMPT "EJERCICIO 1: LAB 5.1 a)"
+"EJERCICIO 1: LAB 5.1 a)"
+SQL> REM (Rischert, 2010, 200)
+SQL> SELECT course_no, section_id,
+  2  TO_CHAR(start_date_time, 'DD-MON-YYYY HH24:MI')
+  3  FROM section;
+
+ COURSE_NO SECTION_ID TO_CHAR(START_DATE_TIME,'D                                
+---------- ---------- --------------------------                                
+       350         79 14-ABR-2003 09:30                                         
+        10         80 24-ABR-2003 09:30                                         
+        20         81 24-JUL-2003 09:30                                         
+        20         82 03-MAY-2003 09:30                                         
+        20         83 11-JUN-2003 09:30                                         
+        20         84 11-JUN-2003 09:30                                         
+        25         85 14-JUL-2003 10:30                                         
+        25         86 10-JUN-2003 09:30                                         
+        25         87 14-ABR-2003 09:30                                         
+        25         88 04-MAY-2003 09:30                                         
+        25         89 15-MAY-2003 09:30                                         
+
+ COURSE_NO SECTION_ID TO_CHAR(START_DATE_TIME,'D                                
+---------- ---------- --------------------------                                
+        25         90 12-JUN-2003 09:30                                         
+        25         91 12-JUN-2003 09:30                                         
+        25         92 13-JUN-2003 09:30                                         
+        25         93 13-JUN-2003 09:30                                         
+       146         94 24-JUL-2003 09:30                                         
+       147         95 14-ABR-2003 10:30                                         
+       204         96 14-ABR-2003 09:30                                         
+       210         97 07-MAY-2003 09:30                                         
+       220         98 15-ABR-2003 11:30                                         
+       230         99 07-MAY-2003 09:30                                         
+       230        100 09-JUN-2003 09:30                                         
+
+ COURSE_NO SECTION_ID TO_CHAR(START_DATE_TIME,'D                                
+---------- ---------- --------------------------                                
+       240        101 16-ABR-2003 09:30                                         
+       240        102 24-MAY-2003 09:30                                         
+       310        103 29-ABR-2003 09:30                                         
+       330        104 14-JUL-2003 10:30                                         
+       350        105 09-MAY-2003 09:30                                         
+       350        106 03-JUN-2003 09:30                                         
+       130        107 14-JUL-2003 09:30                                         
+       420        108 07-MAY-2003 09:30                                         
+       450        109 14-ABR-2003 10:30                                         
+       134        110 10-JUN-2003 09:30                                         
+       134        111 08-ABR-2004 09:30                                         
+
+ COURSE_NO SECTION_ID TO_CHAR(START_DATE_TIME,'D                                
+---------- ---------- --------------------------                                
+       135        112 16-MAY-2003 09:30                                         
+       135        113 02-JUN-2003 09:30                                         
+       135        114 15-ABR-2003 09:30                                         
+       135        115 07-MAY-2003 09:30                                         
+       140        116 14-JUL-2003 10:30                                         
+       140        117 02-JUN-2003 09:30                                         
+       140        118 09-MAY-2003 09:30                                         
+       142        119 14-JUL-2003 09:30                                         
+       142        120 10-JUN-2003 09:30                                         
+       142        121 09-ABR-2003 09:30                                         
+       144        122 15-ABR-2003 10:30                                         
+
+ COURSE_NO SECTION_ID TO_CHAR(START_DATE_TIME,'D                                
+---------- ---------- --------------------------                                
+       145        123 14-JUL-2003 09:30                                         
+       145        124 09-MAY-2003 09:30                                         
+       146        125 29-ABR-2003 09:30                                         
+       124        126 14-JUL-2003 09:30                                         
+       124        127 24-JUL-2003 09:30                                         
+       124        128 09-ABR-2003 09:30                                         
+       124        129 07-MAY-2003 09:30                                         
+       125        130 22-MAY-2003 09:30                                         
+       125        131 24-JUL-2003 09:30                                         
+       125        132 09-ABR-2003 09:30                                         
+       125        133 03-MAY-2003 09:30                                         
+
+ COURSE_NO SECTION_ID TO_CHAR(START_DATE_TIME,'D                                
+---------- ---------- --------------------------                                
+       125        134 11-JUN-2003 09:30                                         
+       130        135 15-ABR-2003 09:30                                         
+       130        136 24-ABR-2003 09:30                                         
+       130        137 03-MAY-2003 09:30                                         
+       132        138 21-MAY-2003 09:30                                         
+       132        139 09-JUN-2003 09:30                                         
+       134        140 16-ABR-2003 09:30                                         
+       100        141 14-ABR-2003 09:30                                         
+       100        142 24-JUL-2003 09:30                                         
+       100        143 03-JUN-2003 09:30                                         
+       100        144 04-MAY-2003 09:30                                         
+
+ COURSE_NO SECTION_ID TO_CHAR(START_DATE_TIME,'D                                
+---------- ---------- --------------------------                                
+       100        145 15-MAY-2003 09:30                                         
+       120        146 16-MAY-2003 09:30                                         
+       120        147 24-JUL-2003 09:30                                         
+       120        148 24-MAY-2003 09:30                                         
+       120        149 04-MAY-2003 09:30                                         
+       120        150 15-MAY-2003 09:30                                         
+       120        151 12-JUN-2003 09:30                                         
+       122        152 29-ABR-2003 09:30                                         
+       122        153 24-JUL-2003 09:30                                         
+       122        154 21-MAY-2003 09:30                                         
+       122        155 04-MAY-2003 09:30                                         
+
+ COURSE_NO SECTION_ID TO_CHAR(START_DATE_TIME,'D                                
+---------- ---------- --------------------------                                
+       122        156 15-MAY-2003 09:30                                         
+
+78 filas seleccionadas.
+
+SQL> 
+SQL> PROMPT "EJERCICIO 2: LAB 5.1 e)"
+"EJERCICIO 2: LAB 5.1 e)"
+SQL> REM (Rischert, 2010, 200)
+SQL> SELECT TO_CHAR(TO_DATE('31-DIC-1899', 'DD-MON-YYYY'),'Dy')
+  2  FROM dual;
+
+TO_                                                                             
+---                                                                             
+Dom                                                                             
+
+SQL> 
+SQL> PROMPT "EJERCICIO 3: LAB 5.2 c)"
+"EJERCICIO 3: LAB 5.2 c)"
+SQL> REM (Rischert, 2010, 214)
+SQL> SELECT TO_CHAR(SYSDATE, 'DD-MON-YYYY HH24:MI:SS') "Current",
+  2  TO_CHAR(SYSDATE+3, 'DD-MON-YYYY HH24:MI:SS') "Answer"
+  3  FROM dual;
+
+Current                       Answer                                            
+----------------------------- -----------------------------                     
+13-DIC-2023 07:41:35          16-DIC-2023 07:41:35                              
+
+SQL> 
+SQL> PROMPT "EJERCICIO 4: LAB 5.3 d)"
+"EJERCICIO 4: LAB 5.3 d)"
+SQL> REM (Rischert, 2010, 229)
+SQL> SELECT col_timestamp
+  2  FROM date_example
+  3  WHERE col_timestamp =
+  4  TO_TIMESTAMP('24-FEB-2009 04:25:32 PM',
+  5  'DD-MON-YYYY HH:MI:SS AM');
+
+COL_TIMESTAMP                                                                   
+---------------------------------------------------------------------------     
+24/02/09 16:25:32.000000                                                        
+
+SQL> 
+SQL> PROMPT "EJERCICIO 5: LAB 5.4 a)"
+"EJERCICIO 5: LAB 5.4 a)"
+SQL> REM (Rischert, 2010, 289)
+SQL> SELECT NUMTODSINTERVAL(360, 'SECOND'),
+  2  NUMTODSINTERVAL(360, 'MINUTE')
+  3  FROM dual;
+
+NUMTODSINTERVAL(360,'SECOND')                                                   
+---------------------------------------------------------------------------     
+NUMTODSINTERVAL(360,'MINUTE')                                                   
+---------------------------------------------------------------------------     
++000000000 00:06:00.000000000                                                   
++000000000 06:00:00.000000000                                                   
+                                                                                
+
+SQL> 
+SQL> PROMPT "EJERCICIO 6: LAB 5.5 c)"
+"EJERCICIO 6: LAB 5.5 c)"
+SQL> REM (Rischert, 2010, 299)
+SQL> SELECT zip, city
+  2  FROM zipcode
+  3  WHERE zip = TO_CHAR(10025);
+
+ZIP   CITY                                                                      
+----- -------------------------                                                 
+10025 New York                                                                  
+
+SQL> 
+SQL> PROMPT "FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 4"
+"FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 4"
+SQL> 
+SQL> spool OFF

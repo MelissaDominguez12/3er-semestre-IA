@@ -1,0 +1,236 @@
+SQL> PROMPT  CAP UNO
+CAP UNO
+SQL> 
+SQL> PROMPT "Ejercicio 1"
+"Ejercicio 1"
+SQL> rem (Rischert,2010,131)
+SQL>  SELECT description
+  2  	FROM course;
+
+DESCRIPTION                                                                     
+--------------------------------------------------                              
+DP Overview                                                                     
+Intro to Computers                                                              
+Intro to Programming                                                            
+Structured Programming Techniques                                               
+Hands-On Windows                                                                
+Intro to Java Programming                                                       
+Intermediate Java Programming                                                   
+Advanced Java Programming                                                       
+JDeveloper                                                                      
+Intro to Unix                                                                   
+Basics of Unix Admin                                                            
+
+DESCRIPTION                                                                     
+--------------------------------------------------                              
+Advanced Unix Admin                                                             
+Unix Tips and Techniques                                                        
+Structured Analysis                                                             
+Project Management                                                              
+Database Design                                                                 
+Internet Protocols                                                              
+Java for C/C++ Programmers                                                      
+GUI Programming                                                                 
+Intro to SQL                                                                    
+Oracle Tools                                                                    
+PL/SQL Programming                                                              
+
+DESCRIPTION                                                                     
+--------------------------------------------------                              
+Intro to Internet                                                               
+Intro to the Basic Language                                                     
+Operating Systems                                                               
+Network Administration                                                          
+JDeveloper Lab                                                                  
+Database System Principles                                                      
+JDeveloper Techniques                                                           
+DB Programming in Java                                                          
+
+30 filas seleccionadas.
+
+SQL> PROMPT "Ejercicio 2"
+"Ejercicio 2"
+SQL> rem (Rischert, 2010, 131)
+SQL> SELECT description
+  2   FROM course;
+
+DESCRIPTION                                                                     
+--------------------------------------------------                              
+DP Overview                                                                     
+Intro to Computers                                                              
+Intro to Programming                                                            
+Structured Programming Techniques                                               
+Hands-On Windows                                                                
+Intro to Java Programming                                                       
+Intermediate Java Programming                                                   
+Advanced Java Programming                                                       
+JDeveloper                                                                      
+Intro to Unix                                                                   
+Basics of Unix Admin                                                            
+
+DESCRIPTION                                                                     
+--------------------------------------------------                              
+Advanced Unix Admin                                                             
+Unix Tips and Techniques                                                        
+Structured Analysis                                                             
+Project Management                                                              
+Database Design                                                                 
+Internet Protocols                                                              
+Java for C/C++ Programmers                                                      
+GUI Programming                                                                 
+Intro to SQL                                                                    
+Oracle Tools                                                                    
+PL/SQL Programming                                                              
+
+DESCRIPTION                                                                     
+--------------------------------------------------                              
+Intro to Internet                                                               
+Intro to the Basic Language                                                     
+Operating Systems                                                               
+Network Administration                                                          
+JDeveloper Lab                                                                  
+Database System Principles                                                      
+JDeveloper Techniques                                                           
+DB Programming in Java                                                          
+
+30 filas seleccionadas.
+
+SQL>  set colsep "| * |"
+SQL> col description format a36
+SQL> col cost format 9999.99
+SQL> col course_no format 9999
+SQL> col prerequisite 9999
+SP2-0158: opción COLUMN desconocida "9999"
+SQL> 
+SQL> SELECT description, cost, course_no, prerequisite
+  2   FROM course;
+
+DESCRIPTION                         | * |    COST| * |COURSE_NO| * |PREREQUISITE
+------------------------------------| * |--------| * |---------| * |------------
+DP Overview                         | * | 1195.00| * |       10| * |            
+Intro to Computers                  | * | 1195.00| * |       20| * |            
+Intro to Programming                | * | 1195.00| * |       25| * |         140
+Structured Programming Techniques   | * | 1595.00| * |       80| * |         204
+Hands-On Windows                    | * | 1195.00| * |      100| * |          20
+Intro to Java Programming           | * | 1195.00| * |      120| * |          80
+Intermediate Java Programming       | * | 1195.00| * |      122| * |         120
+Advanced Java Programming           | * | 1195.00| * |      124| * |         122
+JDeveloper                          | * | 1195.00| * |      125| * |         122
+Intro to Unix                       | * | 1195.00| * |      130| * |         310
+Basics of Unix Admin                | * | 1195.00| * |      132| * |         130
+
+DESCRIPTION                         | * |    COST| * |COURSE_NO| * |PREREQUISITE
+------------------------------------| * |--------| * |---------| * |------------
+Advanced Unix Admin                 | * | 1195.00| * |      134| * |         132
+Unix Tips and Techniques            | * | 1095.00| * |      135| * |         134
+Structured Analysis                 | * | 1195.00| * |      140| * |          20
+Project Management                  | * | 1195.00| * |      142| * |          20
+Database Design                     | * | 1195.00| * |      144| * |         420
+Internet Protocols                  | * | 1195.00| * |      145| * |         310
+Java for C/C++ Programmers          | * | 1195.00| * |      146| * |            
+GUI Programming                     | * | 1195.00| * |      147| * |          20
+Intro to SQL                        | * | 1195.00| * |      204| * |          20
+Oracle Tools                        | * | 1195.00| * |      210| * |         220
+PL/SQL Programming                  | * | 1195.00| * |      220| * |          80
+
+DESCRIPTION                         | * |    COST| * |COURSE_NO| * |PREREQUISITE
+------------------------------------| * |--------| * |---------| * |------------
+Intro to Internet                   | * | 1095.00| * |      230| * |          10
+Intro to the Basic Language         | * | 1095.00| * |      240| * |          25
+Operating Systems                   | * | 1195.00| * |      310| * |            
+Network Administration              | * | 1195.00| * |      330| * |         130
+JDeveloper Lab                      | * | 1195.00| * |      350| * |         125
+Database System Principles          | * | 1195.00| * |      420| * |          25
+JDeveloper Techniques               | * | 1195.00| * |      430| * |         350
+DB Programming in Java              | * |        | * |      450| * |         350
+
+30 filas seleccionadas.
+
+SQL> 
+SQL>  set pagesize 99
+SQL>  set linesize 250
+SQL> 
+SQL> PROMPT "Ejercicio 3"
+"Ejercicio 3"
+SQL> rem (Rischert, 2010, 146)
+SQL> SELECT first_name, last_name, phone
+  2  FROM instructor
+  3  WHERE last_name = 'Schorin';
+
+FIRST_NAME               | * |LAST_NAME                | * |PHONE                                                                                                                                                                                         
+-------------------------| * |-------------------------| * |---------------                                                                                                                                                                               
+Nina                     | * |Schorin                  | * |2125551212                                                                                                                                                                                    
+
+SQL> 
+SQL> PROMPT "Ejercicio 4"
+"Ejercicio 4"
+SQL> rem (Rischert, 2010, 150)
+SQL> SELECT description, cost
+  2  FROM course
+  3  WHERE cost >= 1195;
+
+DESCRIPTION                         | * |    COST                                                                                                                                                                                                         
+------------------------------------| * |--------                                                                                                                                                                                                         
+DP Overview                         | * | 1195.00                                                                                                                                                                                                         
+Intro to Computers                  | * | 1195.00                                                                                                                                                                                                         
+Intro to Programming                | * | 1195.00                                                                                                                                                                                                         
+Structured Programming Techniques   | * | 1595.00                                                                                                                                                                                                         
+Hands-On Windows                    | * | 1195.00                                                                                                                                                                                                         
+Intro to Java Programming           | * | 1195.00                                                                                                                                                                                                         
+Intermediate Java Programming       | * | 1195.00                                                                                                                                                                                                         
+Advanced Java Programming           | * | 1195.00                                                                                                                                                                                                         
+JDeveloper                          | * | 1195.00                                                                                                                                                                                                         
+Intro to Unix                       | * | 1195.00                                                                                                                                                                                                         
+Basics of Unix Admin                | * | 1195.00                                                                                                                                                                                                         
+Advanced Unix Admin                 | * | 1195.00                                                                                                                                                                                                         
+Structured Analysis                 | * | 1195.00                                                                                                                                                                                                         
+Project Management                  | * | 1195.00                                                                                                                                                                                                         
+Database Design                     | * | 1195.00                                                                                                                                                                                                         
+Internet Protocols                  | * | 1195.00                                                                                                                                                                                                         
+Java for C/C++ Programmers          | * | 1195.00                                                                                                                                                                                                         
+GUI Programming                     | * | 1195.00                                                                                                                                                                                                         
+Intro to SQL                        | * | 1195.00                                                                                                                                                                                                         
+Oracle Tools                        | * | 1195.00                                                                                                                                                                                                         
+PL/SQL Programming                  | * | 1195.00                                                                                                                                                                                                         
+Operating Systems                   | * | 1195.00                                                                                                                                                                                                         
+Network Administration              | * | 1195.00                                                                                                                                                                                                         
+JDeveloper Lab                      | * | 1195.00                                                                                                                                                                                                         
+Database System Principles          | * | 1195.00                                                                                                                                                                                                         
+JDeveloper Techniques               | * | 1195.00                                                                                                                                                                                                         
+
+26 filas seleccionadas.
+
+SQL> 
+SQL> PROMPT "Ejercicio 5"
+"Ejercicio 5"
+SQL> rem (Rischert, 2010, 148)
+SQL> rem THE LIKE OPERATOR
+SQL> SELECT first_name, last_name, phone
+  2  FROM instructor
+  3  WHERE last_name LIKE 'S%';
+
+FIRST_NAME               | * |LAST_NAME                | * |PHONE                                                                                                                                                                                         
+-------------------------| * |-------------------------| * |---------------                                                                                                                                                                               
+Nina                     | * |Schorin                  | * |2125551212                                                                                                                                                                                    
+Todd                     | * |Smythe                   | * |2125551212                                                                                                                                                                                    
+
+SQL> 
+SQL> 
+SQL> PROMPT "Ejercicio 6"
+"Ejercicio 6"
+SQL> rem (Rischert, 2010, 148)
+SQL> SELECT first_name, last_name
+  2  FROM instructor
+  3  WHERE last_name LIKE '_o%';
+
+FIRST_NAME               | * |LAST_NAME                                                                                                                                                                                                                   
+-------------------------| * |-------------------------                                                                                                                                                                                                   
+Tom                      | * |Wojick                                                                                                                                                                                                                      
+Anita                    | * |Morris                                                                                                                                                                                                                      
+Charles                  | * |Lowry                                                                                                                                                                                                                       
+
+SQL> 
+SQL> 
+SQL> PROMPT "FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 2"
+"FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 2"
+SQL> spool off

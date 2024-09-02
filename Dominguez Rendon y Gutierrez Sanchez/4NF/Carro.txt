@@ -1,0 +1,503 @@
+SQL> 
+SQL> --4ta forma normal: dependencias funcionales multivaluadas
+SQL> 
+SQL> --Crear usuario
+SQL> REM ALTER SESSION SET "_ORACLE_SCRIPT"=TRUE;
+SQL> REM CREATE USER carro IDENTIFIED by carro
+SQL> REM DEFAULT TABLESPACE users
+SQL> REM TEMPORARY TABLESPACE temp;
+SQL> REM GRANT CONNECT, RESOURCE TO carro;
+SQL> REM GRANT UNLIMITED TABLESPACE TO carro;
+SQL> --Privilegio para crear vistas (tablas temporales)
+SQL> REM GRANT CREATE ANY VIEW TO carro;
+SQL> 
+SQL> --Ajustes del sistemas
+SQL> set linesize 300
+SQL> set pagesize 90
+SQL> set feedback on
+SQL> set colsep ' ||'
+SQL> clear screen
+
+SQL> 
+SQL> --Cambiar idioma
+SQL> ALTER SESSION SET NLS_DATE_LANGUAGE  = 'ENGLISH';
+
+Sesión modificada.
+
+SQL> 
+SQL> -- Borrar las tablas existentes
+SQL> DROP TABLE CARRO_INTERIORES_COLORES CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE CARRO_ADORNOS CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE INTERIORES_COLORES CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE ADORNOS CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE CARROS CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE MARCAS CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> 
+SQL> -- Crear tablas iniciales
+SQL> CREATE TABLE CARROS (
+  2     CAR VARCHAR2(10) PRIMARY KEY,
+  3     MODELO VARCHAR2(10),
+  4     MOTOR VARCHAR2(7),
+  5     COLOR VARCHAR2(10)
+  6  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE MARCAS (
+  2     MARCA VARCHAR2(10) PRIMARY KEY,
+  3     PAIS_ORIGEN VARCHAR2(20)
+  4  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE ADORNOS (
+  2     ADORNO VARCHAR2(10) PRIMARY KEY,
+  3     DESCRIPCION VARCHAR2(50)
+  4  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE INTERIORES_COLORES (
+  2     INTERIOR_COLOR VARCHAR2(10) PRIMARY KEY,
+  3     TONO_DE_INTERIORES VARCHAR2(20)
+  4  );
+
+Tabla creada.
+
+SQL> 
+SQL> -- Poblar tablas iniciales
+SQL> INSERT INTO MARCAS VALUES ('Ford', 'USA');
+
+1 fila creada.
+
+SQL> INSERT INTO MARCAS VALUES ('Chrysler', 'USA');
+
+1 fila creada.
+
+SQL> INSERT INTO MARCAS VALUES ('Toyota', 'Japan');
+
+1 fila creada.
+
+SQL> INSERT INTO MARCAS VALUES ('Chevrolet', 'USA');
+
+1 fila creada.
+
+SQL> INSERT INTO MARCAS VALUES ('Honda', 'Japan');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO ADORNOS VALUES ('Dash', 'Front Dashboard Ornament');
+
+1 fila creada.
+
+SQL> INSERT INTO ADORNOS VALUES ('Panoramic', 'Panoramic Ornament');
+
+1 fila creada.
+
+SQL> INSERT INTO ADORNOS VALUES ('Venture', 'Venture Ornament');
+
+1 fila creada.
+
+SQL> INSERT INTO ADORNOS VALUES ('Classic', 'Classic Ornament');
+
+1 fila creada.
+
+SQL> INSERT INTO ADORNOS VALUES ('Luxury', 'Luxury Ornament');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO INTERIORES_COLORES VALUES ('Black', 'Deep Black');
+
+1 fila creada.
+
+SQL> INSERT INTO INTERIORES_COLORES VALUES ('White', 'Pure White');
+
+1 fila creada.
+
+SQL> INSERT INTO INTERIORES_COLORES VALUES ('Red', 'Cherry Red');
+
+1 fila creada.
+
+SQL> INSERT INTO INTERIORES_COLORES VALUES ('Blue', 'Light Blue');
+
+1 fila creada.
+
+SQL> INSERT INTO INTERIORES_COLORES VALUES ('Green', 'Grass Green');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO CARROS VALUES ('Mustang1', 'Model1', 'Engine1', 'Red');
+
+1 fila creada.
+
+SQL> INSERT INTO CARROS VALUES ('Mustang2', 'Model1', 'Engine1', 'Red');
+
+1 fila creada.
+
+SQL> INSERT INTO CARROS VALUES ('Mustang3', 'Model2', 'Engine2', 'Blue');
+
+1 fila creada.
+
+SQL> INSERT INTO CARROS VALUES ('Cirrus1', 'Model3', 'Engine3', 'Green');
+
+1 fila creada.
+
+SQL> INSERT INTO CARROS VALUES ('Cirrus2', 'Model3', 'Engine3', 'Green');
+
+1 fila creada.
+
+SQL> INSERT INTO CARROS VALUES ('Camry1', 'Model4', 'Engine4', 'Black');
+
+1 fila creada.
+
+SQL> INSERT INTO CARROS VALUES ('Cruze1', 'Model5', 'Engine5', 'White');
+
+1 fila creada.
+
+SQL> INSERT INTO CARROS VALUES ('Accord1', 'Model6', 'Engine6', 'Blue');
+
+1 fila creada.
+
+SQL> INSERT INTO CARROS VALUES ('Civic1', 'Model7', 'Engine7', 'Green');
+
+1 fila creada.
+
+SQL> INSERT INTO CARROS VALUES ('Camry2', 'Model8', 'Engine8', 'Red');
+
+1 fila creada.
+
+SQL> 
+SQL> -- Crear tablas para reflejar la 4NF
+SQL> CREATE TABLE CARRO_ADORNOS (
+  2     CAR VARCHAR2(10),
+  3     ADORNO VARCHAR2(10),
+  4     PRIMARY KEY (CAR, ADORNO),
+  5     FOREIGN KEY (CAR) REFERENCES CARROS(CAR),
+  6     FOREIGN KEY (ADORNO) REFERENCES ADORNOS(ADORNO)
+  7  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE CARRO_INTERIORES_COLORES (
+  2     CAR VARCHAR2(10),
+  3     INTERIOR_COLOR VARCHAR2(10),
+  4     PRIMARY KEY (CAR, INTERIOR_COLOR),
+  5     FOREIGN KEY (CAR) REFERENCES CARROS(CAR),
+  6     FOREIGN KEY (INTERIOR_COLOR) REFERENCES INTERIORES_COLORES(INTERIOR_COLOR)
+  7  );
+
+Tabla creada.
+
+SQL> 
+SQL> -- Poblar tablas para reflejar la 4NF
+SQL> INSERT INTO CARRO_ADORNOS VALUES ('Mustang1', 'Dash');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_ADORNOS VALUES ('Mustang2', 'Panoramic');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_ADORNOS VALUES ('Mustang3', 'Dash');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_ADORNOS VALUES ('Cirrus1', 'Venture');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_ADORNOS VALUES ('Cirrus2', 'Venture');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_ADORNOS VALUES ('Camry1', 'Classic');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_ADORNOS VALUES ('Cruze1', 'Luxury');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_ADORNOS VALUES ('Accord1', 'Panoramic');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_ADORNOS VALUES ('Civic1', 'Venture');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_ADORNOS VALUES ('Camry2', 'Classic');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO CARRO_INTERIORES_COLORES VALUES ('Mustang1', 'Black');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_INTERIORES_COLORES VALUES ('Mustang2', 'White');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_INTERIORES_COLORES VALUES ('Mustang3', 'Black');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_INTERIORES_COLORES VALUES ('Cirrus1', 'Brown');
+INSERT INTO CARRO_INTERIORES_COLORES VALUES ('Cirrus1', 'Brown')
+*
+ERROR en línea 1:
+ORA-02291: restricción de integridad (CARRO.SYS_C0010130) violada - clave principal no encontrada 
+
+
+SQL> INSERT INTO CARRO_INTERIORES_COLORES VALUES ('Cirrus2', 'White');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_INTERIORES_COLORES VALUES ('Camry1', 'Red');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_INTERIORES_COLORES VALUES ('Cruze1', 'Blue');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_INTERIORES_COLORES VALUES ('Accord1', 'White');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_INTERIORES_COLORES VALUES ('Civic1', 'Black');
+
+1 fila creada.
+
+SQL> INSERT INTO CARRO_INTERIORES_COLORES VALUES ('Camry2', 'White');
+
+1 fila creada.
+
+SQL> 
+SQL> -- Consultas interesantes
+SQL> -- 1. Obtener todos los modelos de autom¢viles con sus adornos
+SQL> SELECT c.MODELO, ca.ADORNO
+  2  FROM CARROS c
+  3  JOIN CARRO_ADORNOS ca ON c.CAR = ca.CAR;
+
+MODELO     ||ADORNO                                                                                                                                                                                                                                                                                         
+---------- ||----------                                                                                                                                                                                                                                                                                     
+Model6     ||Panoramic                                                                                                                                                                                                                                                                                      
+Model4     ||Classic                                                                                                                                                                                                                                                                                        
+Model8     ||Classic                                                                                                                                                                                                                                                                                        
+Model3     ||Venture                                                                                                                                                                                                                                                                                        
+Model3     ||Venture                                                                                                                                                                                                                                                                                        
+Model7     ||Venture                                                                                                                                                                                                                                                                                        
+Model5     ||Luxury                                                                                                                                                                                                                                                                                         
+Model1     ||Dash                                                                                                                                                                                                                                                                                           
+Model1     ||Panoramic                                                                                                                                                                                                                                                                                      
+Model2     ||Dash                                                                                                                                                                                                                                                                                           
+
+10 filas seleccionadas.
+
+SQL> 
+SQL> -- 2. Encontrar los colores £nicos de los interiores y la cantidad de autom¢viles asociados a cada color de interiores
+SQL> SELECT INTERIOR_COLOR, COUNT(CAR) AS CANTIDAD_AUTOS
+  2  FROM CARRO_INTERIORES_COLORES
+  3  GROUP BY INTERIOR_COLOR;
+
+INTERIOR_C ||CANTIDAD_AUTOS                                                                                                                                                                                                                                                                                 
+---------- ||--------------                                                                                                                                                                                                                                                                                 
+White      ||             4                                                                                                                                                                                                                                                                                 
+Red        ||             1                                                                                                                                                                                                                                                                                 
+Black      ||             3                                                                                                                                                                                                                                                                                 
+Blue       ||             1                                                                                                                                                                                                                                                                                 
+
+4 filas seleccionadas.
+
+SQL> 
+SQL> 
+SQL> -- 3. Encontrar los modelos de autom¢viles que tienen m s de un adorno
+SQL> SELECT c.MODELO
+  2  FROM CARROS c
+  3  JOIN CARRO_ADORNOS ca ON c.CAR = ca.CAR
+  4  GROUP BY c.MODELO
+  5  HAVING COUNT(ca.ADORNO) > 1;
+
+MODELO                                                                                                                                                                                                                                                                                                      
+----------                                                                                                                                                                                                                                                                                                  
+Model3                                                                                                                                                                                                                                                                                                      
+Model1                                                                                                                                                                                                                                                                                                      
+
+2 filas seleccionadas.
+
+SQL> 
+SQL> 
+SQL> -- 4. Listar todos los adornos junto con la descripci¢n
+SQL> SELECT ADORNO, DESCRIPCION
+  2  FROM ADORNOS;
+
+ADORNO     ||DESCRIPCION                                                                                                                                                                                                                                                                                    
+---------- ||--------------------------------------------------                                                                                                                                                                                                                                             
+Dash       ||Front Dashboard Ornament                                                                                                                                                                                                                                                                       
+Panoramic  ||Panoramic Ornament                                                                                                                                                                                                                                                                             
+Venture    ||Venture Ornament                                                                                                                                                                                                                                                                               
+Classic    ||Classic Ornament                                                                                                                                                                                                                                                                               
+Luxury     ||Luxury Ornament                                                                                                                                                                                                                                                                                
+
+5 filas seleccionadas.
+
+SQL> 
+SQL> -- Mostrar tablas
+SQL> SELECT * FROM CARROS;
+
+CAR        ||MODELO     ||MOTOR   ||COLOR                                                                                                                                                                                                                                                                   
+---------- ||---------- ||------- ||----------                                                                                                                                                                                                                                                              
+Mustang1   ||Model1     ||Engine1 ||Red                                                                                                                                                                                                                                                                     
+Mustang2   ||Model1     ||Engine1 ||Red                                                                                                                                                                                                                                                                     
+Mustang3   ||Model2     ||Engine2 ||Blue                                                                                                                                                                                                                                                                    
+Cirrus1    ||Model3     ||Engine3 ||Green                                                                                                                                                                                                                                                                   
+Cirrus2    ||Model3     ||Engine3 ||Green                                                                                                                                                                                                                                                                   
+Camry1     ||Model4     ||Engine4 ||Black                                                                                                                                                                                                                                                                   
+Cruze1     ||Model5     ||Engine5 ||White                                                                                                                                                                                                                                                                   
+Accord1    ||Model6     ||Engine6 ||Blue                                                                                                                                                                                                                                                                    
+Civic1     ||Model7     ||Engine7 ||Green                                                                                                                                                                                                                                                                   
+Camry2     ||Model8     ||Engine8 ||Red                                                                                                                                                                                                                                                                     
+
+10 filas seleccionadas.
+
+SQL> SELECT * FROM MARCAS;
+
+MARCA      ||PAIS_ORIGEN                                                                                                                                                                                                                                                                                    
+---------- ||--------------------                                                                                                                                                                                                                                                                           
+Ford       ||USA                                                                                                                                                                                                                                                                                            
+Chrysler   ||USA                                                                                                                                                                                                                                                                                            
+Toyota     ||Japan                                                                                                                                                                                                                                                                                          
+Chevrolet  ||USA                                                                                                                                                                                                                                                                                            
+Honda      ||Japan                                                                                                                                                                                                                                                                                          
+
+5 filas seleccionadas.
+
+SQL> SELECT * FROM ADORNOS;
+
+ADORNO     ||DESCRIPCION                                                                                                                                                                                                                                                                                    
+---------- ||--------------------------------------------------                                                                                                                                                                                                                                             
+Dash       ||Front Dashboard Ornament                                                                                                                                                                                                                                                                       
+Panoramic  ||Panoramic Ornament                                                                                                                                                                                                                                                                             
+Venture    ||Venture Ornament                                                                                                                                                                                                                                                                               
+Classic    ||Classic Ornament                                                                                                                                                                                                                                                                               
+Luxury     ||Luxury Ornament                                                                                                                                                                                                                                                                                
+
+5 filas seleccionadas.
+
+SQL> SELECT * FROM INTERIORES_COLORES;
+
+INTERIOR_C ||TONO_DE_INTERIORES                                                                                                                                                                                                                                                                             
+---------- ||--------------------                                                                                                                                                                                                                                                                           
+Black      ||Deep Black                                                                                                                                                                                                                                                                                     
+White      ||Pure White                                                                                                                                                                                                                                                                                     
+Red        ||Cherry Red                                                                                                                                                                                                                                                                                     
+Blue       ||Light Blue                                                                                                                                                                                                                                                                                     
+Green      ||Grass Green                                                                                                                                                                                                                                                                                    
+
+5 filas seleccionadas.
+
+SQL> 
+SQL> -- Consultas para reflejar la 4NF
+SQL> SELECT * FROM CARRO_ADORNOS;
+
+CAR        ||ADORNO                                                                                                                                                                                                                                                                                         
+---------- ||----------                                                                                                                                                                                                                                                                                     
+Accord1    ||Panoramic                                                                                                                                                                                                                                                                                      
+Camry1     ||Classic                                                                                                                                                                                                                                                                                        
+Camry2     ||Classic                                                                                                                                                                                                                                                                                        
+Cirrus1    ||Venture                                                                                                                                                                                                                                                                                        
+Cirrus2    ||Venture                                                                                                                                                                                                                                                                                        
+Civic1     ||Venture                                                                                                                                                                                                                                                                                        
+Cruze1     ||Luxury                                                                                                                                                                                                                                                                                         
+Mustang1   ||Dash                                                                                                                                                                                                                                                                                           
+Mustang2   ||Panoramic                                                                                                                                                                                                                                                                                      
+Mustang3   ||Dash                                                                                                                                                                                                                                                                                           
+
+10 filas seleccionadas.
+
+SQL> SELECT * FROM CARRO_INTERIORES_COLORES;
+
+CAR        ||INTERIOR_C                                                                                                                                                                                                                                                                                     
+---------- ||----------                                                                                                                                                                                                                                                                                     
+Accord1    ||White                                                                                                                                                                                                                                                                                          
+Camry1     ||Red                                                                                                                                                                                                                                                                                            
+Camry2     ||White                                                                                                                                                                                                                                                                                          
+Cirrus2    ||White                                                                                                                                                                                                                                                                                          
+Civic1     ||Black                                                                                                                                                                                                                                                                                          
+Cruze1     ||Blue                                                                                                                                                                                                                                                                                           
+Mustang1   ||Black                                                                                                                                                                                                                                                                                          
+Mustang2   ||White                                                                                                                                                                                                                                                                                          
+Mustang3   ||Black                                                                                                                                                                                                                                                                                          
+
+9 filas seleccionadas.
+
+SQL> 
+SQL> --MOSTRAR Restricciones
+SQL> prompt USER CONSTRAINTS
+USER CONSTRAINTS
+SQL> COLUMN CONSTRAINT_NAME FORMAT A27
+SQL> column table_name format a12
+SQL> column owner format a9
+SQL> SELECT owner, table_name, constraint_name, constraint_type, deferrable, deferred
+  2  FROM user_constraints
+  3  WHERE table_name IN ('CARROS','MARCAS','ADORNOS','INTERIORES_COLORES','CARRO_ADORNOS','CARRO_INTERIORES_COLORES')
+  4  ORDER BY 4;
+
+OWNER     ||TABLE_NAME   ||CONSTRAINT_NAME             ||C ||DEFERRABLE     ||DEFERRED                                                                                                                                                                                                                      
+--------- ||------------ ||--------------------------- ||- ||-------------- ||---------                                                                                                                                                                                                                     
+CARRO     ||MARCAS       ||SYS_C0010122                ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CARRO     ||ADORNOS      ||SYS_C0010123                ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CARRO     ||CARROS       ||SYS_C0010121                ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+CARRO     ||CARRO_INTERI ||SYS_C0010128                ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||ORES_COLORES ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+CARRO     ||INTERIORES_C ||SYS_C0010124                ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||OLORES       ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+CARRO     ||CARRO_ADORNO ||SYS_C0010125                ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||S            ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+CARRO     ||CARRO_INTERI ||SYS_C0010130                ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||ORES_COLORES ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+CARRO     ||CARRO_INTERI ||SYS_C0010129                ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||ORES_COLORES ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+CARRO     ||CARRO_ADORNO ||SYS_C0010127                ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||S            ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+CARRO     ||CARRO_ADORNO ||SYS_C0010126                ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+          ||S            ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+
+10 filas seleccionadas.
+
+SQL> 
+SQL> spool off

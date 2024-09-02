@@ -1,0 +1,271 @@
+SQL> 
+SQL> PROMPT "CAP TRES ORACLE BY EXAMPLE "
+"CAP TRES ORACLE BY EXAMPLE "
+SQL> PROMPT "SEPTIEMBRE 2023"
+"SEPTIEMBRE 2023"
+SQL> PROMPT "EJERCICIO 1: LAB 3.1 a)"
+"EJERCICIO 1: LAB 3.1 a)"
+SQL> rem (Rischert, 2010, 154)
+SQL> SELECT last_name
+  2  FROM student
+  3  WHERE zip IN ('10048', '11102', '11209');
+
+LAST_NAME                                                                                                                                                                                                                                                 
+-------------------------                                                                                                                                                                                                                                 
+McLean                                                                                                                                                                                                                                                    
+Williams                                                                                                                                                                                                                                                  
+Wilson                                                                                                                                                                                                                                                    
+Allende                                                                                                                                                                                                                                                   
+Winnicki                                                                                                                                                                                                                                                  
+Masser                                                                                                                                                                                                                                                    
+Lefkowitz                                                                                                                                                                                                                                                 
+
+7 filas seleccionadas.
+
+SQL> 
+SQL> PROMPT "EJERCICIO 2: LAB 3.1 b)"
+"EJERCICIO 2: LAB 3.1 b)"
+SQL> rem (Rischert, 2010, 154)
+SQL> SELECT first_name, last_name
+  2  FROM instructor
+  3  WHERE (last_name LIKE '%i%' OR last_name LIKE '%I%')
+  4  AND zip = '10025';
+
+FIRST_NAME               | * |LAST_NAME                                                                                                                                                                                                                   
+-------------------------| * |-------------------------                                                                                                                                                                                                   
+Tom                      | * |Wojick                                                                                                                                                                                                                      
+Nina                     | * |Schorin                                                                                                                                                                                                                     
+
+SQL> 
+SQL> 
+SQL> PROMPT "EJERCICIO 3: LAB 3.1 g)"
+"EJERCICIO 3: LAB 3.1 g)"
+SQL> rem (Rischert, 2010, 155)
+SQL> SELECT DISTINCT cost
+  2  FROM course
+  3  WHERE prerequisite IS NULL;
+
+    COST                                                                                                                                                                                                                                                  
+--------                                                                                                                                                                                                                                                  
+ 1195.00                                                                                                                                                                                                                                                  
+
+SQL> 
+SQL> PROMPT "EJERCICIO 4: LAB 3.2 a)"
+"EJERCICIO 4: LAB 3.2 a)"
+SQL> rem (Rischert, 2010, 169)
+SQL> SELECT city, zip
+  2  FROM zipcode
+  3  WHERE state = 'NY'
+  4  OR state = 'CT'
+  5  ORDER BY zip;
+
+CITY                     | * |ZIP                                                                                                                                                                                                                         
+-------------------------| * |-----                                                                                                                                                                                                                       
+Ansonia                  | * |06401                                                                                                                                                                                                                       
+Middlefield              | * |06455                                                                                                                                                                                                                       
+Oxford                   | * |06483                                                                                                                                                                                                                       
+New Haven                | * |06520                                                                                                                                                                                                                       
+Bridgeport               | * |06605                                                                                                                                                                                                                       
+Woodbury                 | * |06798                                                                                                                                                                                                                       
+Greenwich                | * |06830                                                                                                                                                                                                                       
+Norwalk                  | * |06850                                                                                                                                                                                                                       
+Norwalk                  | * |06851                                                                                                                                                                                                                       
+Rowayton                 | * |06853                                                                                                                                                                                                                       
+Old Greenwich            | * |06870                                                                                                                                                                                                                       
+Ridgefield               | * |06877                                                                                                                                                                                                                       
+Westport                 | * |06880                                                                                                                                                                                                                       
+Weston                   | * |06883                                                                                                                                                                                                                       
+Wilton                   | * |06897                                                                                                                                                                                                                       
+Stamford                 | * |06902                                                                                                                                                                                                                       
+Stamford                 | * |06903                                                                                                                                                                                                                       
+Stamford                 | * |06905                                                                                                                                                                                                                       
+Stamford                 | * |06907                                                                                                                                                                                                                       
+Irvington                | * |07111                                                                                                                                                                                                                       
+Franklin Lakes           | * |07417                                                                                                                                                                                                                       
+Alpine                   | * |07620                                                                                                                                                                                                                       
+Oradell                  | * |07649                                                                                                                                                                                                                       
+New York                 | * |10004                                                                                                                                                                                                                       
+New York                 | * |10005                                                                                                                                                                                                                       
+New York                 | * |10014                                                                                                                                                                                                                       
+New York                 | * |10015                                                                                                                                                                                                                       
+New York                 | * |10017                                                                                                                                                                                                                       
+New York                 | * |10019                                                                                                                                                                                                                       
+New York                 | * |10025                                                                                                                                                                                                                       
+New York                 | * |10027                                                                                                                                                                                                                       
+New York                 | * |10035                                                                                                                                                                                                                       
+New York                 | * |10036                                                                                                                                                                                                                       
+New York                 | * |10048                                                                                                                                                                                                                       
+Nannet                   | * |10954                                                                                                                                                                                                                       
+New City                 | * |10956                                                                                                                                                                                                                       
+Central Nyack            | * |10960                                                                                                                                                                                                                       
+Pearl River              | * |10965                                                                                                                                                                                                                       
+Tappan                   | * |10983                                                                                                                                                                                                                       
+Great Neck               | * |11021                                                                                                                                                                                                                       
+Brooklyn                 | * |11029                                                                                                                                                                                                                       
+Manhasset                | * |11030                                                                                                                                                                                                                       
+New Hyde Park            | * |11040                                                                                                                                                                                                                       
+Long Beach               | * |11042                                                                                                                                                                                                                       
+Fort Washington          | * |11050                                                                                                                                                                                                                       
+Long Island City         | * |11101                                                                                                                                                                                                                       
+Astoria                  | * |11102                                                                                                                                                                                                                       
+Astoria                  | * |11103                                                                                                                                                                                                                       
+Sunnyside                | * |11104                                                                                                                                                                                                                       
+Astoria                  | * |11105                                                                                                                                                                                                                       
+Long Island City         | * |11106                                                                                                                                                                                                                       
+Brooklyn                 | * |11201                                                                                                                                                                                                                       
+Brooklyn                 | * |11203                                                                                                                                                                                                                       
+Brooklyn                 | * |11204                                                                                                                                                                                                                       
+Brooklyn                 | * |11205                                                                                                                                                                                                                       
+Brooklyn                 | * |11206                                                                                                                                                                                                                       
+Brooklyn                 | * |11207                                                                                                                                                                                                                       
+Brooklyn                 | * |11208                                                                                                                                                                                                                       
+Brooklyn                 | * |11209                                                                                                                                                                                                                       
+Brooklyn                 | * |11210                                                                                                                                                                                                                       
+Brooklyn                 | * |11211                                                                                                                                                                                                                       
+Brooklyn                 | * |11212                                                                                                                                                                                                                       
+Brooklyn                 | * |11213                                                                                                                                                                                                                       
+Brooklyn                 | * |11214                                                                                                                                                                                                                       
+Brooklyn                 | * |11215                                                                                                                                                                                                                       
+Brooklyn                 | * |11216                                                                                                                                                                                                                       
+Brooklyn                 | * |11217                                                                                                                                                                                                                       
+Brooklyn                 | * |11218                                                                                                                                                                                                                       
+Brooklyn                 | * |11219                                                                                                                                                                                                                       
+Brooklyn                 | * |11220                                                                                                                                                                                                                       
+Brooklyn                 | * |11221                                                                                                                                                                                                                       
+Brooklyn                 | * |11222                                                                                                                                                                                                                       
+Brooklyn                 | * |11223                                                                                                                                                                                                                       
+Brooklyn                 | * |11224                                                                                                                                                                                                                       
+Brooklyn                 | * |11225                                                                                                                                                                                                                       
+Brooklyn                 | * |11226                                                                                                                                                                                                                       
+Brooklyn                 | * |11228                                                                                                                                                                                                                       
+Brooklyn                 | * |11229                                                                                                                                                                                                                       
+Brooklyn                 | * |11230                                                                                                                                                                                                                       
+Brooklyn                 | * |11231                                                                                                                                                                                                                       
+Brooklyn                 | * |11232                                                                                                                                                                                                                       
+Brooklyn                 | * |11233                                                                                                                                                                                                                       
+Brooklyn                 | * |11234                                                                                                                                                                                                                       
+Brooklyn                 | * |11235                                                                                                                                                                                                                       
+Brooklyn                 | * |11236                                                                                                                                                                                                                       
+Brooklyn                 | * |11238                                                                                                                                                                                                                       
+West Islip               | * |11295                                                                                                                                                                                                                       
+Monbasset                | * |11303                                                                                                                                                                                                                       
+Jackson Hts.             | * |11322                                                                                                                                                                                                                       
+Flushing                 | * |11354                                                                                                                                                                                                                       
+Flushing                 | * |11355                                                                                                                                                                                                                       
+Whitestone               | * |11357                                                                                                                                                                                                                       
+Flushing                 | * |11358                                                                                                                                                                                                                       
+Bayside                  | * |11360                                                                                                                                                                                                                       
+Bayside                  | * |11361                                                                                                                                                                                                                       
+Douglaston               | * |11362                                                                                                                                                                                                                       
+
+CITY                     | * |ZIP                                                                                                                                                                                                                         
+-------------------------| * |-----                                                                                                                                                                                                                       
+Fresh Meadows            | * |11365                                                                                                                                                                                                                       
+Flushing                 | * |11366                                                                                                                                                                                                                       
+Corona                   | * |11368                                                                                                                                                                                                                       
+Elmhurst                 | * |11369                                                                                                                                                                                                                       
+Jackson Heights          | * |11370                                                                                                                                                                                                                       
+Jackson Heights          | * |11372                                                                                                                                                                                                                       
+Amherst                  | * |11373                                                                                                                                                                                                                       
+Rego Park                | * |11374                                                                                                                                                                                                                       
+Forest Hills             | * |11375                                                                                                                                                                                                                       
+Woodside                 | * |11377                                                                                                                                                                                                                       
+Ridgewood Queens         | * |11385                                                                                                                                                                                                                       
+Holliswood               | * |11403                                                                                                                                                                                                                       
+Hollis                   | * |11412                                                                                                                                                                                                                       
+Laurelton                | * |11413                                                                                                                                                                                                                       
+Howard Bank              | * |11414                                                                                                                                                                                                                       
+Kew Gardens              | * |11415                                                                                                                                                                                                                       
+Richmond Hills           | * |11418                                                                                                                                                                                                                       
+Richmond Hill            | * |11419                                                                                                                                                                                                                       
+Jamaica                  | * |11420                                                                                                                                                                                                                       
+Laurelton                | * |11422                                                                                                                                                                                                                       
+Bellrose                 | * |11426                                                                                                                                                                                                                       
+Queens Village           | * |11428                                                                                                                                                                                                                       
+Jamaica                  | * |11432                                                                                                                                                                                                                       
+Jamaica                  | * |11433                                                                                                                                                                                                                       
+Jamaica                  | * |11434                                                                                                                                                                                                                       
+Jamaica                  | * |11435                                                                                                                                                                                                                       
+Baldwin                  | * |11510                                                                                                                                                                                                                       
+Garden City              | * |11530                                                                                                                                                                                                                       
+Hempstead                | * |11550                                                                                                                                                                                                                       
+West Hempstead           | * |11552                                                                                                                                                                                                                       
+Long Beach               | * |11561                                                                                                                                                                                                                       
+Malverne                 | * |11565                                                                                                                                                                                                                       
+Jackson Heights          | * |11572                                                                                                                                                                                                                       
+Roslyn                   | * |11576                                                                                                                                                                                                                       
+Woodmere                 | * |11598                                                                                                                                                                                                                       
+Far Rockaway             | * |11694                                                                                                                                                                                                                       
+Centerach                | * |11720                                                                                                                                                                                                                       
+Central Islip            | * |11722                                                                                                                                                                                                                       
+Huntington               | * |11743                                                                                                                                                                                                                       
+Dix Hills                | * |11746                                                                                                                                                                                                                       
+Massapequa               | * |11758                                                                                                                                                                                                                       
+Huntington               | * |11766                                                                                                                                                                                                                       
+Port Jefferson           | * |11776                                                                                                                                                                                                                       
+Smithtown                | * |11787                                                                                                                                                                                                                       
+Hicksville               | * |11802                                                                                                                                                                                                                       
+Endicott                 | * |13760                                                                                                                                                                                                                       
+
+142 filas seleccionadas.
+
+SQL> 
+SQL> PROMPT "EJERCICIO 5: LAB 3.2 b)"
+"EJERCICIO 5: LAB 3.2 b)"
+SQL> rem (Rischert, 2010, 169)
+SQL> SELECT description, prerequisite
+  2  FROM course
+  3  WHERE prerequisite IS NOT NULL
+  4  ORDER BY description;
+
+DESCRIPTION                         | * |PREREQUISITE                                                                                                                                                                                                     
+------------------------------------| * |------------                                                                                                                                                                                                     
+Advanced Java Programming           | * |         122                                                                                                                                                                                                     
+Advanced Unix Admin                 | * |         132                                                                                                                                                                                                     
+Basics of Unix Admin                | * |         130                                                                                                                                                                                                     
+Database Design                     | * |         420                                                                                                                                                                                                     
+Database System Principles          | * |          25                                                                                                                                                                                                     
+DB Programming in Java              | * |         350                                                                                                                                                                                                     
+GUI Programming                     | * |          20                                                                                                                                                                                                     
+Hands-On Windows                    | * |          20                                                                                                                                                                                                     
+Intermediate Java Programming       | * |         120                                                                                                                                                                                                     
+Internet Protocols                  | * |         310                                                                                                                                                                                                     
+Intro to Internet                   | * |          10                                                                                                                                                                                                     
+Intro to Java Programming           | * |          80                                                                                                                                                                                                     
+Intro to Programming                | * |         140                                                                                                                                                                                                     
+Intro to SQL                        | * |          20                                                                                                                                                                                                     
+Intro to the Basic Language         | * |          25                                                                                                                                                                                                     
+Intro to Unix                       | * |         310                                                                                                                                                                                                     
+JDeveloper                          | * |         122                                                                                                                                                                                                     
+JDeveloper Lab                      | * |         125                                                                                                                                                                                                     
+JDeveloper Techniques               | * |         350                                                                                                                                                                                                     
+Network Administration              | * |         130                                                                                                                                                                                                     
+Oracle Tools                        | * |         220                                                                                                                                                                                                     
+PL/SQL Programming                  | * |          80                                                                                                                                                                                                     
+Project Management                  | * |          20                                                                                                                                                                                                     
+Structured Analysis                 | * |          20                                                                                                                                                                                                     
+Structured Programming Techniques   | * |         204                                                                                                                                                                                                     
+Unix Tips and Techniques            | * |         134                                                                                                                                                                                                     
+
+26 filas seleccionadas.
+
+SQL> 
+SQL> PROMPT "EJERCICIO 6: LAB 3.2 c)"
+"EJERCICIO 6: LAB 3.2 c)"
+SQL> rem (Rischert, 2010, 169)
+SQL> SELECT salutation, first_name, last_name
+  2  FROM student
+  3  WHERE last_name = 'Grant'
+  4  ORDER BY salutation DESC, first_name ASC;
+
+SALUT| * |FIRST_NAME               | * |LAST_NAME                                                                                                                                                                                                         
+-----| * |-------------------------| * |-------------------------                                                                                                                                                                                         
+Ms.  | * |Eilene                   | * |Grant                                                                                                                                                                                                             
+Ms.  | * |Verona                   | * |Grant                                                                                                                                                                                                             
+Mr.  | * |Omaira                   | * |Grant                                                                                                                                                                                                             
+Mr.  | * |Scott                    | * |Grant                                                                                                                                                                                                             
+
+SQL> 
+SQL> PROMPT "FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 3"
+"FIN DE LA EJECUCION DE LOS EJERCICIOS DEL CAPITULO 3"
+SQL> spool off

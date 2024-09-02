@@ -1,0 +1,405 @@
+SQL> --Cambiar idioma
+SQL> ALTER SESSION SET NLS_DATE_LANGUAGE  = 'ENGLISH';
+
+Sesión modificada.
+
+SQL> 
+SQL> --Borrar tablas
+SQL> DROP TABLE LOTS1A CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE LOTS1B CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE LOTS2 CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> 
+SQL> --Crear tablas
+SQL> 
+SQL> CREATE TABLE LOTS1A(
+  2      PROPERTY_ID# VARCHAR2(7) NOT NULL,
+  3      COUNTRY_NAME VARCHAR2(10) NOT NULL,
+  4      LOT# NUMBER(3) NOT NULL,
+  5      AREA NUMBER(5,2) NOT NULL
+  6  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE LOTS1B(
+  2      AREA NUMBER(5,2) NOT NULL,
+  3      PRICE NUMBER(7) NOT NULL
+  4  );
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE LOTS2(
+  2      COUNTRY_NAME VARCHAR2(15) NOT NULL,
+  3      TAX_RATE NUMBER(3,2) NOT NULL
+  4  );
+
+Tabla creada.
+
+SQL> 
+SQL> --Restricciones PK
+SQL> ALTER TABLE LOTS1A ADD CONSTRAINT PK_LOTS1A PRIMARY KEY (PROPERTY_ID#);
+
+Tabla modificada.
+
+SQL> ALTER TABLE LOTS1B ADD CONSTRAINT PK_LOTS1B PRIMARY KEY (AREA);
+
+Tabla modificada.
+
+SQL> ALTER TABLE LOTS2 ADD CONSTRAINT PK_LOTS2 PRIMARY KEY (COUNTRY_NAME);
+
+Tabla modificada.
+
+SQL> 
+SQL> --Restricciones FK
+SQL> ALTER TABLE LOTS1A ADD CONSTRAINT FK_LOTS1A_LOTS2_COUNTRY FOREIGN KEY (COUNTRY_NAME) REFERENCES LOTS2(COUNTRY_NAME);
+
+Tabla modificada.
+
+SQL> ALTER TABLE LOTS1A ADD CONSTRAINT FK_LOTS1A_LOTS1B_AREA FOREIGN KEY (AREA) REFERENCES LOTS1B(AREA);
+
+Tabla modificada.
+
+SQL> 
+SQL> 
+SQL> INSERT INTO LOTS1B VALUES (100.3,295000);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1B VALUES (210.3,395000);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1B VALUES (350.4,495000);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1B VALUES (410.3,595000);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1B VALUES (320.32,695000);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1B VALUES (420.2,1095000);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1B VALUES (400.51,895000);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1B VALUES (310.15,995000);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1B VALUES (218.4,328000);
+
+1 fila creada.
+
+SQL> --Violar precision
+SQL> INSERT INTO LOTS1B VALUES (123.216,11950000);
+INSERT INTO LOTS1B VALUES (123.216,11950000)
+                                   *
+ERROR en línea 1:
+ORA-01438: valor mayor que el que permite la precisión especificada para esta columna 
+
+
+SQL> 
+SQL> INSERT INTO LOTS2 VALUES ('Spain',0.21);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS2 VALUES ('France',0.20);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS2 VALUES ('Italy',0.22);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS2 VALUES ('Germany',0.19);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS2 VALUES ('Portugal',0.23);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS2 VALUES ('Greece',0.24);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS2 VALUES ('Belgium',0.18);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS2 VALUES ('Netherlands',0.17);
+
+1 fila creada.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> --Insertar datos
+SQL> INSERT INTO LOTS1A VALUES ('123-456','Spain',121,100.3);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1A VALUES ('123-457','France',122,210.3);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1A VALUES ('123-458','Italy',123,350.4);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1A VALUES ('123-459','Germany',124,410.3);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1A VALUES ('123-460','Portugal',125,320.32);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1A VALUES ('123-461','Greece',126,420.2);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1A VALUES ('123-462','Belgium',127,400.51);
+
+1 fila creada.
+
+SQL> INSERT INTO LOTS1A VALUES ('123-463','Netherlands',128,310.15);
+INSERT INTO LOTS1A VALUES ('123-463','Netherlands',128,310.15)
+                                     *
+ERROR en línea 1:
+ORA-12899: el valor es demasiado grande para la columna "FUNDAMENTOS"."LOTS1A"."COUNTRY_NAME" (real: 11, máximo: 10) 
+
+
+SQL> INSERT INTO LOTS1A VALUES ('123-464','Spain',129,218.4);
+
+1 fila creada.
+
+SQL> --Violar precision
+SQL> INSERT INTO LOTS1A VALUES ('123-465','Spain',130,123.216);
+INSERT INTO LOTS1A VALUES ('123-465','Spain',130,123.216)
+*
+ERROR en línea 1:
+ORA-02291: restricción de integridad (FUNDAMENTOS.FK_LOTS1A_LOTS1B_AREA) violada - clave principal no encontrada 
+
+
+SQL> 
+SQL> --Consultas
+SQL> 
+SQL> --1. Listar todos los lotes de Espa¤a y su precio
+SQL> SELECT LOTS1A.PROPERTY_ID#, LOTS1A.COUNTRY_NAME, LOTS1A.LOT#, LOTS1A.AREA, LOTS1B.PRICE
+  2  FROM LOTS1A, LOTS1B
+  3  WHERE LOTS1A.COUNTRY_NAME = 'Spain' AND LOTS1A.AREA = LOTS1B.AREA;
+
+PROPERT ||COUNTRY_NA ||      LOT# ||      AREA ||     PRICE                                                                                                                                                                                                                                                 
+------- ||---------- ||---------- ||---------- ||----------                                                                                                                                                                                                                                                 
+123-456 ||Spain      ||       121 ||     100.3 ||    295000                                                                                                                                                                                                                                                 
+123-464 ||Spain      ||       129 ||     218.4 ||    328000                                                                                                                                                                                                                                                 
+
+SQL> 
+SQL> --2. Listar todos los lotes de Espa¤a y su precio, ordenados por precio
+SQL> SELECT LOTS1A.PROPERTY_ID#, LOTS1A.COUNTRY_NAME, LOTS1A.LOT#, LOTS1A.AREA, LOTS1B.PRICE
+  2  FROM LOTS1A, LOTS1B
+  3  WHERE LOTS1A.COUNTRY_NAME = 'Spain' AND LOTS1A.AREA = LOTS1B.AREA
+  4  ORDER BY LOTS1B.PRICE;
+
+PROPERT ||COUNTRY_NA ||      LOT# ||      AREA ||     PRICE                                                                                                                                                                                                                                                 
+------- ||---------- ||---------- ||---------- ||----------                                                                                                                                                                                                                                                 
+123-456 ||Spain      ||       121 ||     100.3 ||    295000                                                                                                                                                                                                                                                 
+123-464 ||Spain      ||       129 ||     218.4 ||    328000                                                                                                                                                                                                                                                 
+
+SQL> 
+SQL> --DESPLEGAR TABLAS
+SQL> 
+SQL> --Tabla LOTS1A
+SQL> SELECT * FROM LOTS1A;
+
+PROPERT ||COUNTRY_NA ||      LOT# ||      AREA                                                                                                                                                                                                                                                              
+------- ||---------- ||---------- ||----------                                                                                                                                                                                                                                                              
+123-456 ||Spain      ||       121 ||     100.3                                                                                                                                                                                                                                                              
+123-457 ||France     ||       122 ||     210.3                                                                                                                                                                                                                                                              
+123-458 ||Italy      ||       123 ||     350.4                                                                                                                                                                                                                                                              
+123-459 ||Germany    ||       124 ||     410.3                                                                                                                                                                                                                                                              
+123-460 ||Portugal   ||       125 ||    320.32                                                                                                                                                                                                                                                              
+123-461 ||Greece     ||       126 ||     420.2                                                                                                                                                                                                                                                              
+123-462 ||Belgium    ||       127 ||    400.51                                                                                                                                                                                                                                                              
+123-464 ||Spain      ||       129 ||     218.4                                                                                                                                                                                                                                                              
+
+8 filas seleccionadas.
+
+SQL> 
+SQL> --Tabla LOTS1B
+SQL> SELECT * FROM LOTS1B;
+
+      AREA ||     PRICE                                                                                                                                                                                                                                                                                     
+---------- ||----------                                                                                                                                                                                                                                                                                     
+     100.3 ||    295000                                                                                                                                                                                                                                                                                     
+     210.3 ||    395000                                                                                                                                                                                                                                                                                     
+     350.4 ||    495000                                                                                                                                                                                                                                                                                     
+     410.3 ||    595000                                                                                                                                                                                                                                                                                     
+    320.32 ||    695000                                                                                                                                                                                                                                                                                     
+     420.2 ||   1095000                                                                                                                                                                                                                                                                                     
+    400.51 ||    895000                                                                                                                                                                                                                                                                                     
+    310.15 ||    995000                                                                                                                                                                                                                                                                                     
+     218.4 ||    328000                                                                                                                                                                                                                                                                                     
+
+9 filas seleccionadas.
+
+SQL> 
+SQL> --Tabla LOTS2
+SQL> SELECT * FROM LOTS2;
+
+COUNTRY_NAME    ||  TAX_RATE                                                                                                                                                                                                                                                                                
+--------------- ||----------                                                                                                                                                                                                                                                                                
+Spain           ||       .21                                                                                                                                                                                                                                                                                
+France          ||        .2                                                                                                                                                                                                                                                                                
+Italy           ||       .22                                                                                                                                                                                                                                                                                
+Germany         ||       .19                                                                                                                                                                                                                                                                                
+Portugal        ||       .23                                                                                                                                                                                                                                                                                
+Greece          ||       .24                                                                                                                                                                                                                                                                                
+Belgium         ||       .18                                                                                                                                                                                                                                                                                
+Netherlands     ||       .17                                                                                                                                                                                                                                                                                
+
+8 filas seleccionadas.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> --Columnas de usuario
+SQL> COL TABLE_NAME FORMAT A15
+SQL> COL DATA_TYPE  FORMAT A15
+SQL> COL DATA_SCALE FORMAT 999.99
+SQL> COL NULLABLE   FORMAT A2
+SQL> SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE, DATA_LENGTH,
+  2  	DATA_PRECISION,DATA_SCALE,NULLABLE
+  3  	FROM USER_TAB_COLUMNS
+  4  	WHERE TABLE_NAME IN ( 'LOTS1A','LOTS1B','LOTS2')
+  5  	ORDER BY 1,2;
+
+TABLE_NAME      ||COLUMN_NAME                                                                                                                      ||DATA_TYPE       ||DATA_LENGTH ||DATA_PRECISION ||DATA_SCALE ||NU                                                                                       
+--------------- ||-------------------------------------------------------------------------------------------------------------------------------- ||--------------- ||----------- ||-------------- ||---------- ||--                                                                                       
+LOTS1A          ||AREA                                                                                                                             ||NUMBER          ||         22 ||             5 ||      2.00 ||N                                                                                        
+LOTS1A          ||COUNTRY_NAME                                                                                                                     ||VARCHAR2        ||         10 ||s/dato         ||s/dato     ||N                                                                                        
+LOTS1A          ||LOT#                                                                                                                             ||NUMBER          ||         22 ||             3 ||       .00 ||N                                                                                        
+LOTS1A          ||PROPERTY_ID#                                                                                                                     ||VARCHAR2        ||          7 ||s/dato         ||s/dato     ||N                                                                                        
+LOTS1B          ||AREA                                                                                                                             ||NUMBER          ||         22 ||             5 ||      2.00 ||N                                                                                        
+LOTS1B          ||PRICE                                                                                                                            ||NUMBER          ||         22 ||             7 ||       .00 ||N                                                                                        
+LOTS2           ||COUNTRY_NAME                                                                                                                     ||VARCHAR2        ||         15 ||s/dato         ||s/dato     ||N                                                                                        
+LOTS2           ||TAX_RATE                                                                                                                         ||NUMBER          ||         22 ||             3 ||      2.00 ||N                                                                                        
+
+8 filas seleccionadas.
+
+SQL> 
+SQL> --Mostrar Restricciones
+SQL> prompt USER CONSTRAINTS
+USER CONSTRAINTS
+SQL> COLUMN CONSTRAINT_NAME FORMAT A27
+SQL> column table_name format a12
+SQL> column owner format a9
+SQL> select owner,table_name,constraint_name,constraint_type,
+  2  	deferrable,deferred
+  3  	from user_constraints
+  4  	where table_name IN ( 'LOTS1A','LOTS1B','LOTS2')
+  5  	ORDER BY 4;
+
+OWNER     ||TABLE_NAME   ||CONSTRAINT_NAME             ||C ||DEFERRABLE     ||DEFERRED                                                                                                                                                                                                                      
+--------- ||------------ ||--------------------------- ||- ||-------------- ||---------                                                                                                                                                                                                                     
+FUNDAMENT ||LOTS1A       ||SYS_C0010030                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+FUNDAMENT ||LOTS1A       ||SYS_C0010031                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+FUNDAMENT ||LOTS1A       ||SYS_C0010032                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+FUNDAMENT ||LOTS1A       ||SYS_C0010033                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+FUNDAMENT ||LOTS1B       ||SYS_C0010034                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+FUNDAMENT ||LOTS1B       ||SYS_C0010035                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+FUNDAMENT ||LOTS2        ||SYS_C0010036                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+FUNDAMENT ||LOTS2        ||SYS_C0010037                ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+FUNDAMENT ||LOTS1A       ||PK_LOTS1A                   ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+FUNDAMENT ||LOTS1B       ||PK_LOTS1B                   ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+FUNDAMENT ||LOTS2        ||PK_LOTS2                    ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+FUNDAMENT ||LOTS1A       ||FK_LOTS1A_LOTS2_COUNTRY     ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+FUNDAMENT ||LOTS1A       ||FK_LOTS1A_LOTS1B_AREA       ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+OS        ||             ||                            ||  ||               ||                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                            
+
+13 filas seleccionadas.
+
+SQL> 
+SQL> --Mostrar objetos del usuario
+SQL> COL OBJECT_NAME FORMAT A25
+SQL> COL OBJECT__TYPE FORMAT A12
+SQL> COL OBJECT_ID   FORMAT 99,999
+SQL> SELECT OBJECT_NAME, OBJECT_TYPE, OBJECT_ID
+  2  	FROM USER_OBJECTS
+  3  	WHERE OBJECT_TYPE IN ('TABLE','INDEX', 'VIEW')
+  4  	ORDER BY 2,1;
+
+OBJECT_NAME               ||OBJECT_TYPE             ||OBJECT_ID                                                                                                                                                                                                                                             
+------------------------- ||----------------------- ||---------                                                                                                                                                                                                                                             
+PK_LOTS1A                 ||INDEX                   ||   79,166                                                                                                                                                                                                                                             
+PK_LOTS1B                 ||INDEX                   ||   79,167                                                                                                                                                                                                                                             
+PK_LOTS2                  ||INDEX                   ||   79,168                                                                                                                                                                                                                                             
+LOTS1A                    ||TABLE                   ||   79,163                                                                                                                                                                                                                                             
+LOTS1B                    ||TABLE                   ||   79,164                                                                                                                                                                                                                                             
+LOTS2                     ||TABLE                   ||   79,165                                                                                                                                                                                                                                             
+
+6 filas seleccionadas.
+
+SQL> 
+SQL> --Mostrar ¡ndices
+SQL> COL INDEX_NAME FORMAT A20
+SQL> COL TABLE_NAME FORMAT A30
+SQL> COL COLUMN_NAME FORMAT A15
+SQL> COL COLUMN_POSITION FORMAT 999
+SQL> COL COLUMN_LENGTH   FORMAT 999
+SQL> select index_name, table_name,column_name, column_position, column_length
+  2  	char_length
+  3  	from user_ind_columns
+  4  	where table_name in ('LOTS1A','LOTS1B','LOTS2');
+
+INDEX_NAME           ||TABLE_NAME                     ||COLUMN_NAME     ||COLUMN_POSITION ||CHAR_LENGTH                                                                                                                                                                                                     
+-------------------- ||------------------------------ ||--------------- ||--------------- ||-----------                                                                                                                                                                                                     
+PK_LOTS1A            ||LOTS1A                         ||PROPERTY_ID#    ||              1 ||          7                                                                                                                                                                                                     
+PK_LOTS1B            ||LOTS1B                         ||AREA            ||              1 ||         22                                                                                                                                                                                                     
+PK_LOTS2             ||LOTS2                          ||COUNTRY_NAME    ||              1 ||         15                                                                                                                                                                                                     
+
+SQL> 
+SQL> spool off

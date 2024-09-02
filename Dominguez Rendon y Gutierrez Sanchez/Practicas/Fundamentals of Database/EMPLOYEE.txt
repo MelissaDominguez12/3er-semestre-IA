@@ -1,0 +1,459 @@
+SQL> 
+SQL> REM ALTER SESSION SET "_ORACLE_SCRIPT"=TRUE;
+SQL> REM CREATE USER empleado IDENTIFIED by empleado
+SQL> REM DEFAULT TABLESPACE users
+SQL> REM TEMPORARY TABLESPACE temp;
+SQL> REM GRANT CONNECT, RESOURCE TO empleado;
+SQL> REM GRANT UNLIMITED TABLESPACE TO empleado;
+SQL> 
+SQL> --Ajustes de sistema
+SQL> set linesize 300
+SQL> set pagesize 50
+SQL> set feddback on
+SP2-0158: opción SET desconocida "feddback"
+SQL> set colsep ' ||'
+SQL> set null s/dato
+SQL> clear screen
+
+SQL> 
+SQL> --Cambiar idioma
+SQL> ALTER SESSION SET NLS_DATE_LANGUAGE  = 'ENGLISH';
+
+Sesión modificada.
+
+SQL> 
+SQL> --Borrar tablas
+SQL> DROP TABLE EMPLOYEE    CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE SECRETARY   CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE TECHNICIAN  CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> DROP TABLE ENGINEER    CASCADE CONSTRAINTS;
+
+Tabla borrada.
+
+SQL> 
+SQL> --Crear tablas
+SQL> CREATE TABLE EMPLOYEE(
+  2  FNAME      VARCHAR2(10) NOT NULL,
+  3  LNAME      VARCHAR2(10) NOT NULL,
+  4  MINIT      VARCHAR2(10),
+  5  SSN        VARCHAR2(11)  NOT NULL,
+  6  BIRTH_DATE DATE         NOT NULL,
+  7  ADRESS     VARCHAR2(25) NOT NULL,
+  8  JOB_TYPE   VARCHAR2(10) NOT NULL);
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE SECRETARY(
+  2  SSN          VARCHAR2(11),
+  3  TYPING_SPEED VARCHAR2(10) NOT NULL);
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE TECHNICIAN(
+  2  SSN     VARCHAR2(11)  NOT NULL,
+  3  T_GRADE VARCHAR2(1)   NOT NULL);
+
+Tabla creada.
+
+SQL> 
+SQL> CREATE TABLE ENGINEER(
+  2  SSN VARCHAR2(11)      NOT NULL,
+  3  ENG_TYPE VARCHAR2(20) NOT NULL);
+
+Tabla creada.
+
+SQL> 
+SQL> --Restricciones PK
+SQL> ALTER TABLE EMPLOYEE
+  2  ADD CONSTRAINT PK_SSN_EMPLOYEE PRIMARY KEY (SSN);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE SECRETARY
+  2  ADD CONSTRAINT PK_SSN_SECRETARY PRIMARY KEY (SSN);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE TECHNICIAN
+  2  ADD CONSTRAINT PK_SSN_TECHNICIAN PRIMARY KEY(SSN);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE ENGINEER
+  2  ADD CONSTRAINT PK_SSN_ENGINEER PRIMARY KEY (SSN);
+
+Tabla modificada.
+
+SQL> 
+SQL> --Restricciones FK
+SQL> ALTER TABLE SECRETARY
+  2  ADD CONSTRAINT FK_SSN_SECRETARY FOREIGN KEY (SSN) REFERENCES EMPLOYEE(SSN);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE TECHNICIAN
+  2  ADD CONSTRAINT FK_SSN_TECHNICIAN FOREIGN KEY (SSN) REFERENCES EMPLOYEE(SSN);
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE ENGINEER
+  2  ADD CONSTRAINT FK_SSN_ENGINEER FOREIGN KEY (SSN) REFERENCES EMPLOYEE(SSN);
+
+Tabla modificada.
+
+SQL> 
+SQL> --Restricciones Check
+SQL> ALTER TABLE EMPLOYEE
+  2  ADD CONSTRAINT EMPLOYEE_JOB_TYPE_CK CHECK (JOB_TYPE IN ('Secretary','Technician','Engineer'));
+
+Tabla modificada.
+
+SQL> 
+SQL> ALTER TABLE TECHNICIAN
+  2  ADD CONSTRAINT TECHNICIAN_T_GRADE_CK CHECK (T_GRADE IN('A','B', 'C'));
+
+Tabla modificada.
+
+SQL> 
+SQL> 
+SQL> --Poblar tablas
+SQL> 
+SQL> --EMPLOYEE
+SQL> INSERT INTO EMPLOYEE (FNAME, LNAME, MINIT, SSN, BIRTH_DATE, ADRESS, JOB_TYPE)
+  2  VALUES ('John', 'Doe', 'M', '111-111-111', '31/05/2001', '123 Main St', 'Secretary');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO EMPLOYEE (FNAME, LNAME, MINIT, SSN, BIRTH_DATE, ADRESS, JOB_TYPE)
+  2  VALUES ('Jane', 'Smith', 'A', '222-222-222', '14/05/2004', '456 Oak St', 'Technician');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO EMPLOYEE (FNAME, LNAME, MINIT, SSN, BIRTH_DATE, ADRESS, JOB_TYPE)
+  2  VALUES ('Robert', 'Johnson', 'B', '333-333-333', '02/03/2001', '789 Elm St', 'Engineer');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO EMPLOYEE (FNAME, LNAME, MINIT, SSN, BIRTH_DATE, ADRESS, JOB_TYPE)
+  2  VALUES ('Susan', 'Williams', 'C', '444-444-444', '16/03/2005', '101 Pine Ave', 'Secretary');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO EMPLOYEE (FNAME, LNAME, MINIT, SSN, BIRTH_DATE, ADRESS, JOB_TYPE)
+  2  VALUES ('Michael', 'Brown', 'D', '555-555-555', '03/04/2004', '202 Cedar Dr', 'Technician');
+
+1 fila creada.
+
+SQL> 
+SQL> 
+SQL> --SECRETARY
+SQL> INSERT INTO SECRETARY (SSN, TYPING_SPEED)
+  2  VALUES ('111-111-111', 'Fast');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO SECRETARY (SSN, TYPING_SPEED)
+  2  VALUES ('222-222-222', 'Very Fast');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO SECRETARY (SSN, TYPING_SPEED)
+  2  VALUES ('333-333-333', 'Super Fast');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO SECRETARY (SSN, TYPING_SPEED)
+  2  VALUES ('444-444-444', 'Medium');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO SECRETARY (SSN, TYPING_SPEED)
+  2  VALUES ('555-555-555', 'Slow');
+
+1 fila creada.
+
+SQL> 
+SQL> 
+SQL> --TECHNICIAN
+SQL> INSERT INTO TECHNICIAN (SSN, T_GRADE)
+  2  VALUES ('111-111-111', 'A');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO TECHNICIAN (SSN, T_GRADE)
+  2  VALUES ('222-222-222', 'B');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO TECHNICIAN (SSN, T_GRADE)
+  2  VALUES ('333-333-333', 'C');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO TECHNICIAN (SSN, T_GRADE)
+  2  VALUES ('444-444-444', 'B');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO TECHNICIAN (SSN, T_GRADE)
+  2  VALUES ('555-555-555', 'A');
+
+1 fila creada.
+
+SQL> 
+SQL> 
+SQL> --ENGINEER
+SQL> INSERT INTO ENGINEER (SSN, ENG_TYPE)
+  2  VALUES ('111-111-111', 'Mechanical Engineer');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO ENGINEER (SSN, ENG_TYPE)
+  2  VALUES ('222-222-222', 'Civil Engineer');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO ENGINEER (SSN, ENG_TYPE)
+  2  VALUES ('333-333-333', 'Electrical Engineer');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO ENGINEER (SSN, ENG_TYPE)
+  2  VALUES ('444-444-444', 'Software Engineer');
+
+1 fila creada.
+
+SQL> 
+SQL> INSERT INTO ENGINEER (SSN, ENG_TYPE)
+  2  VALUES ('555-555-555', 'Chemical Engineer');
+
+1 fila creada.
+
+SQL> 
+SQL> 
+SQL> --Consultas
+SQL> --Obtener empleados y tipo de trabajo
+SQL> SELECT FNAME, LNAME, JOB_TYPE
+  2  FROM EMPLOYEE;
+
+FNAME      ||LNAME      ||JOB_TYPE                                                                                                                                                                                                                                                                          
+---------- ||---------- ||----------                                                                                                                                                                                                                                                                        
+John       ||Doe        ||Secretary                                                                                                                                                                                                                                                                         
+Jane       ||Smith      ||Technician                                                                                                                                                                                                                                                                        
+Robert     ||Johnson    ||Engineer                                                                                                                                                                                                                                                                          
+Susan      ||Williams   ||Secretary                                                                                                                                                                                                                                                                         
+Michael    ||Brown      ||Technician                                                                                                                                                                                                                                                                        
+
+SQL> 
+SQL> --Encontrar nombres y su tipo de trabajo de ingenieros
+SQL> SELECT FNAME, LNAME, JOB_TYPE
+  2  FROM EMPLOYEE
+  3  WHERE JOB_TYPE = 'Engineer';
+
+FNAME      ||LNAME      ||JOB_TYPE                                                                                                                                                                                                                                                                          
+---------- ||---------- ||----------                                                                                                                                                                                                                                                                        
+Robert     ||Johnson    ||Engineer                                                                                                                                                                                                                                                                          
+
+SQL> 
+SQL> --Encontrar t‚cnicos con grado A
+SQL> SELECT FNAME, LNAME
+  2  FROM EMPLOYEE
+  3  WHERE SSN IN (SELECT SSN FROM TECHNICIAN WHERE T_GRADE = 'A');
+
+FNAME      ||LNAME                                                                                                                                                                                                                                                                                          
+---------- ||----------                                                                                                                                                                                                                                                                                     
+John       ||Doe                                                                                                                                                                                                                                                                                            
+Michael    ||Brown                                                                                                                                                                                                                                                                                          
+
+SQL> 
+SQL> --Encontrar ingenieros que no son de software engineer
+SQL> SELECT FNAME, LNAME
+  2  FROM EMPLOYEE
+  3  WHERE SSN IN (SELECT SSN FROM ENGINEER WHERE ENG_TYPE <> 'Software Engineer');
+
+FNAME      ||LNAME                                                                                                                                                                                                                                                                                          
+---------- ||----------                                                                                                                                                                                                                                                                                     
+John       ||Doe                                                                                                                                                                                                                                                                                            
+Jane       ||Smith                                                                                                                                                                                                                                                                                          
+Robert     ||Johnson                                                                                                                                                                                                                                                                                        
+Michael    ||Brown                                                                                                                                                                                                                                                                                          
+
+SQL> 
+SQL> --Obtener empleados que tienen una direcci¢n con "St":
+SQL> SELECT FNAME, LNAME
+  2  FROM EMPLOYEE
+  3  WHERE INSTR(ADRESS, 'St') > 0;
+
+FNAME      ||LNAME                                                                                                                                                                                                                                                                                          
+---------- ||----------                                                                                                                                                                                                                                                                                     
+John       ||Doe                                                                                                                                                                                                                                                                                            
+Jane       ||Smith                                                                                                                                                                                                                                                                                          
+Robert     ||Johnson                                                                                                                                                                                                                                                                                        
+
+SQL> 
+SQL> --Encontrar los nombres y tipos de trabajo de los empleados que no sean ingenieros
+SQL> SELECT FNAME, LNAME, JOB_TYPE
+  2  FROM EMPLOYEE
+  3  WHERE JOB_TYPE <> 'Engineer';
+
+FNAME      ||LNAME      ||JOB_TYPE                                                                                                                                                                                                                                                                          
+---------- ||---------- ||----------                                                                                                                                                                                                                                                                        
+John       ||Doe        ||Secretary                                                                                                                                                                                                                                                                         
+Jane       ||Smith      ||Technician                                                                                                                                                                                                                                                                        
+Susan      ||Williams   ||Secretary                                                                                                                                                                                                                                                                         
+Michael    ||Brown      ||Technician                                                                                                                                                                                                                                                                        
+
+SQL> 
+SQL> 
+SQL> --Columnas de usuario
+SQL> COL TABLE_NAME FORMAT A15
+SQL> COL DATA_TYPE  FORMAT A15
+SQL> COL DATA_SCALE FORMAT 999.99
+SQL> COL NULLABLE   FORMAT A2
+SQL> SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE, DATA_LENGTH,
+  2  DATA_PRECISION,DATA_SCALE,NULLABLE
+  3  FROM USER_TAB_COLUMNS
+  4  WHERE TABLE_NAME IN ( 'EMPLOYEE','SECRETARY','TECHNICIAN','ENGINEER')
+  5  ORDER BY 1,2;
+
+TABLE_NAME      ||COLUMN_NAME     ||DATA_TYPE       ||DATA_LENGTH ||DATA_PRECISION ||DATA_SCALE ||NU                                                                                                                                                                                                        
+--------------- ||--------------- ||--------------- ||----------- ||-------------- ||---------- ||--                                                                                                                                                                                                        
+EMPLOYEE        ||ADRESS          ||VARCHAR2        ||         25 ||s/dato         ||s/dato     ||N                                                                                                                                                                                                         
+EMPLOYEE        ||BIRTH_DATE      ||DATE            ||          7 ||s/dato         ||s/dato     ||N                                                                                                                                                                                                         
+EMPLOYEE        ||FNAME           ||VARCHAR2        ||         10 ||s/dato         ||s/dato     ||N                                                                                                                                                                                                         
+EMPLOYEE        ||JOB_TYPE        ||VARCHAR2        ||         10 ||s/dato         ||s/dato     ||N                                                                                                                                                                                                         
+EMPLOYEE        ||LNAME           ||VARCHAR2        ||         10 ||s/dato         ||s/dato     ||N                                                                                                                                                                                                         
+EMPLOYEE        ||MINIT           ||VARCHAR2        ||         10 ||s/dato         ||s/dato     ||Y                                                                                                                                                                                                         
+EMPLOYEE        ||SSN             ||VARCHAR2        ||         11 ||s/dato         ||s/dato     ||N                                                                                                                                                                                                         
+ENGINEER        ||ENG_TYPE        ||VARCHAR2        ||         20 ||s/dato         ||s/dato     ||N                                                                                                                                                                                                         
+ENGINEER        ||SSN             ||VARCHAR2        ||         11 ||s/dato         ||s/dato     ||N                                                                                                                                                                                                         
+SECRETARY       ||SSN             ||VARCHAR2        ||         11 ||s/dato         ||s/dato     ||N                                                                                                                                                                                                         
+SECRETARY       ||TYPING_SPEED    ||VARCHAR2        ||         10 ||s/dato         ||s/dato     ||N                                                                                                                                                                                                         
+TECHNICIAN      ||SSN             ||VARCHAR2        ||         11 ||s/dato         ||s/dato     ||N                                                                                                                                                                                                         
+TECHNICIAN      ||T_GRADE         ||VARCHAR2        ||          1 ||s/dato         ||s/dato     ||N                                                                                                                                                                                                         
+
+13 filas seleccionadas.
+
+SQL> 
+SQL> --Mostrar Restricciones
+SQL> prompt USER CONSTRAINTS
+USER CONSTRAINTS
+SQL> COLUMN CONSTRAINT_NAME FORMAT A27
+SQL> column table_name format a12
+SQL> column owner format a9
+SQL> select owner,table_name,constraint_name,constraint_type,
+  2  deferrable,deferred
+  3  from user_constraints
+  4  where table_name IN ('EMPLOYEE','SECRETARY','TECHNICIAN','ENGINEER')
+  5  ORDER BY 4;
+
+OWNER     ||TABLE_NAME   ||CONSTRAINT_NAME             ||C ||DEFERRABLE     ||DEFERRED                                                                                                                                                                                                                      
+--------- ||------------ ||--------------------------- ||- ||-------------- ||---------                                                                                                                                                                                                                     
+ATLETA    ||EMPLOYEE     ||SYS_C009851                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||TECHNICIAN   ||SYS_C009858                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||TECHNICIAN   ||TECHNICIAN_T_GRADE_CK       ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||EMPLOYEE     ||EMPLOYEE_JOB_TYPE_CK        ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ENGINEER     ||SYS_C009861                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||SECRETARY    ||SYS_C009857                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||EMPLOYEE     ||SYS_C009856                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||EMPLOYEE     ||SYS_C009855                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||TECHNICIAN   ||SYS_C009859                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||EMPLOYEE     ||SYS_C009852                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||EMPLOYEE     ||SYS_C009853                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||EMPLOYEE     ||SYS_C009854                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ENGINEER     ||SYS_C009860                 ||C ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||EMPLOYEE     ||PK_SSN_EMPLOYEE             ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||TECHNICIAN   ||PK_SSN_TECHNICIAN           ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||SECRETARY    ||PK_SSN_SECRETARY            ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ENGINEER     ||PK_SSN_ENGINEER             ||P ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||ENGINEER     ||FK_SSN_ENGINEER             ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||TECHNICIAN   ||FK_SSN_TECHNICIAN           ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+ATLETA    ||SECRETARY    ||FK_SSN_SECRETARY            ||R ||NOT DEFERRABLE ||IMMEDIATE                                                                                                                                                                                                                     
+
+20 filas seleccionadas.
+
+SQL> 
+SQL> --Mostrar objetos del usuario
+SQL> COL OBJECT_NAME FORMAT A25
+SQL> COL OBJECT__TYPE FORMAT A12
+SQL> COL OBJECT_ID   FORMAT 99,999
+SQL> SELECT OBJECT_NAME, OBJECT_TYPE, OBJECT_ID
+  2  FROM USER_OBJECTS
+  3  WHERE OBJECT_TYPE IN ('TABLE','INDEX', 'VIEW')
+  4  ORDER BY 2,1;
+
+OBJECT_NAME               ||OBJECT_TYPE             ||OBJECT_ID                                                                                                                                                                                                                                             
+------------------------- ||----------------------- ||---------                                                                                                                                                                                                                                             
+ATHLETE_PK                ||INDEX                   ||   79,261                                                                                                                                                                                                                                             
+ATHLETE_SPORT_PK          ||INDEX                   ||   79,262                                                                                                                                                                                                                                             
+FOOTBALL_PK               ||INDEX                   ||   79,265                                                                                                                                                                                                                                             
+GOLF_PK                   ||INDEX                   ||   79,264                                                                                                                                                                                                                                             
+PK_SSN_EMPLOYEE           ||INDEX                   ||   79,278                                                                                                                                                                                                                                             
+PK_SSN_ENGINEER           ||INDEX                   ||   79,281                                                                                                                                                                                                                                             
+PK_SSN_SECRETARY          ||INDEX                   ||   79,279                                                                                                                                                                                                                                             
+PK_SSN_TECHNICIAN         ||INDEX                   ||   79,280                                                                                                                                                                                                                                             
+TENNIS_PK                 ||INDEX                   ||   79,263                                                                                                                                                                                                                                             
+ATHLETE                   ||TABLE                   ||   79,256                                                                                                                                                                                                                                             
+ATHLETE_SPORT             ||TABLE                   ||   79,257                                                                                                                                                                                                                                             
+EMPLOYEE                  ||TABLE                   ||   79,274                                                                                                                                                                                                                                             
+ENGINEER                  ||TABLE                   ||   79,277                                                                                                                                                                                                                                             
+FOOTBALL                  ||TABLE                   ||   79,260                                                                                                                                                                                                                                             
+GOLF                      ||TABLE                   ||   79,259                                                                                                                                                                                                                                             
+SECRETARY                 ||TABLE                   ||   79,275                                                                                                                                                                                                                                             
+TECHNICIAN                ||TABLE                   ||   79,276                                                                                                                                                                                                                                             
+TENNIS                    ||TABLE                   ||   79,258                                                                                                                                                                                                                                             
+
+18 filas seleccionadas.
+
+SQL> 
+SQL> --Mostrar ¡ndices
+SQL> COL INDEX_NAME FORMAT A20
+SQL> COL TABLE_NAME FORMAT A30
+SQL> COL COLUMN_NAME FORMAT A15
+SQL> COL COLUMN_POSITION FORMAT 999
+SQL> COL COLUMN_LENGTH   FORMAT 999
+SQL> select index_name, table_name,column_name, column_position, column_length
+  2  char_length
+  3  from user_ind_columns
+  4  where table_name in ('EMPLOYEE','SECRETARY','TECHNICIAN','ENGINEER');
+
+INDEX_NAME           ||TABLE_NAME                     ||COLUMN_NAME     ||COLUMN_POSITION ||CHAR_LENGTH                                                                                                                                                                                                     
+-------------------- ||------------------------------ ||--------------- ||--------------- ||-----------                                                                                                                                                                                                     
+PK_SSN_EMPLOYEE      ||EMPLOYEE                       ||SSN             ||              1 ||         11                                                                                                                                                                                                     
+PK_SSN_ENGINEER      ||ENGINEER                       ||SSN             ||              1 ||         11                                                                                                                                                                                                     
+PK_SSN_SECRETARY     ||SECRETARY                      ||SSN             ||              1 ||         11                                                                                                                                                                                                     
+PK_SSN_TECHNICIAN    ||TECHNICIAN                     ||SSN             ||              1 ||         11                                                                                                                                                                                                     
+
+SQL> 
+SQL> SPOOL OFF
